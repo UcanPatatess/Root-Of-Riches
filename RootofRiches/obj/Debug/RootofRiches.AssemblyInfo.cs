@@ -11,13 +11,13 @@
 using System;
 using System.Reflection;
 
-[assembly: System.Reflection.AssemblyCompanyAttribute("GlobalTurnIn")]
+[assembly: System.Reflection.AssemblyCompanyAttribute("RootofRiches")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyDescriptionAttribute("Time to make some gill..")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("0.0.0.13")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("0.0.0.13+c33a695a1ae621e16ca30fd6060beaac77fd572f")]
-[assembly: System.Reflection.AssemblyProductAttribute("GlobalTurnIn")]
-[assembly: System.Reflection.AssemblyTitleAttribute("GlobalTurnIn")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("0.0.0.13+de5e36779df105edf75adf6e4165017d95736c9c")]
+[assembly: System.Reflection.AssemblyProductAttribute("RootofRiches")]
+[assembly: System.Reflection.AssemblyTitleAttribute("RootofRiches")]
 [assembly: System.Reflection.AssemblyVersionAttribute("0.0.0.13")]
 [assembly: System.Runtime.Versioning.TargetPlatformAttribute("Windows7.0")]
 [assembly: System.Runtime.Versioning.SupportedOSPlatformAttribute("Windows7.0")]

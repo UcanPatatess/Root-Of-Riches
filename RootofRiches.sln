@@ -5,7 +5,7 @@ VisualStudioVersion = 17.12.35506.116
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECommons", "ECommons\ECommons\ECommons.csproj", "{AF998137-16C9-4CA4-B8F6-9C9A75F49ADE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GlobalTurnIn", "GlobalTurnIn\GlobalTurnIn.csproj", "{35B8C800-0E79-4C07-818E-E93C4C84CAA6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RootofRiches", "RootofRiches\RootofRiches.csproj", "{7C54AAA2-3E04-4CA2-AA07-DDAD91ADF35E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,10 @@ Global
 		{AF998137-16C9-4CA4-B8F6-9C9A75F49ADE}.Debug|x64.Build.0 = Debug|x64
 		{AF998137-16C9-4CA4-B8F6-9C9A75F49ADE}.Release|x64.ActiveCfg = Release|x64
 		{AF998137-16C9-4CA4-B8F6-9C9A75F49ADE}.Release|x64.Build.0 = Release|x64
-		{35B8C800-0E79-4C07-818E-E93C4C84CAA6}.Debug|x64.ActiveCfg = Debug|x64
-		{35B8C800-0E79-4C07-818E-E93C4C84CAA6}.Debug|x64.Build.0 = Debug|x64
-		{35B8C800-0E79-4C07-818E-E93C4C84CAA6}.Release|x64.ActiveCfg = Release|x64
-		{35B8C800-0E79-4C07-818E-E93C4C84CAA6}.Release|x64.Build.0 = Release|x64
+		{7C54AAA2-3E04-4CA2-AA07-DDAD91ADF35E}.Debug|x64.ActiveCfg = Debug|x64
+		{7C54AAA2-3E04-4CA2-AA07-DDAD91ADF35E}.Debug|x64.Build.0 = Debug|x64
+		{7C54AAA2-3E04-4CA2-AA07-DDAD91ADF35E}.Release|x64.ActiveCfg = Release|x64
+		{7C54AAA2-3E04-4CA2-AA07-DDAD91ADF35E}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
