@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Media\\Documents\\GitHub\\GlobalTurnInV2\\GlobalTurnIn\\GlobalTurnIn.csproj": {}
+    "D:\\Media\\Documents\\GitHub\\Root-Of-Riches\\GlobalTurnIn\\GlobalTurnIn.csproj": {}
   },
   "projects": {
-    "D:\\Media\\Documents\\GitHub\\GlobalTurnInV2\\ECommons\\ECommons\\ECommons.csproj": {
+    "D:\\Media\\Documents\\GitHub\\Root-Of-Riches\\ECommons\\ECommons\\ECommons.csproj": {
       "version": "2.2.0.2",
       "restore": {
-        "projectUniqueName": "D:\\Media\\Documents\\GitHub\\GlobalTurnInV2\\ECommons\\ECommons\\ECommons.csproj",
+        "projectUniqueName": "D:\\Media\\Documents\\GitHub\\Root-Of-Riches\\ECommons\\ECommons\\ECommons.csproj",
         "projectName": "ECommons",
-        "projectPath": "D:\\Media\\Documents\\GitHub\\GlobalTurnInV2\\ECommons\\ECommons\\ECommons.csproj",
+        "projectPath": "D:\\Media\\Documents\\GitHub\\Root-Of-Riches\\ECommons\\ECommons\\ECommons.csproj",
         "packagesPath": "C:\\Users\\nateb\\.nuget\\packages\\",
-        "outputPath": "D:\\Media\\Documents\\GitHub\\GlobalTurnInV2\\ECommons\\ECommons\\obj\\",
+        "outputPath": "D:\\Media\\Documents\\GitHub\\Root-Of-Riches\\ECommons\\ECommons\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -72,14 +72,14 @@
         }
       }
     },
-    "D:\\Media\\Documents\\GitHub\\GlobalTurnInV2\\GlobalTurnIn\\GlobalTurnIn.csproj": {
+    "D:\\Media\\Documents\\GitHub\\Root-Of-Riches\\GlobalTurnIn\\GlobalTurnIn.csproj": {
       "version": "0.0.0.13",
       "restore": {
-        "projectUniqueName": "D:\\Media\\Documents\\GitHub\\GlobalTurnInV2\\GlobalTurnIn\\GlobalTurnIn.csproj",
+        "projectUniqueName": "D:\\Media\\Documents\\GitHub\\Root-Of-Riches\\GlobalTurnIn\\GlobalTurnIn.csproj",
         "projectName": "GlobalTurnIn",
-        "projectPath": "D:\\Media\\Documents\\GitHub\\GlobalTurnInV2\\GlobalTurnIn\\GlobalTurnIn.csproj",
+        "projectPath": "D:\\Media\\Documents\\GitHub\\Root-Of-Riches\\GlobalTurnIn\\GlobalTurnIn.csproj",
         "packagesPath": "C:\\Users\\nateb\\.nuget\\packages\\",
-        "outputPath": "D:\\Media\\Documents\\GitHub\\GlobalTurnInV2\\GlobalTurnIn\\obj\\",
+        "outputPath": "D:\\Media\\Documents\\GitHub\\Root-Of-Riches\\GlobalTurnIn\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -100,8 +100,8 @@
           "net8.0-windows7.0": {
             "targetAlias": "net8.0-windows",
             "projectReferences": {
-              "D:\\Media\\Documents\\GitHub\\GlobalTurnInV2\\ECommons\\ECommons\\ECommons.csproj": {
-                "projectPath": "D:\\Media\\Documents\\GitHub\\GlobalTurnInV2\\ECommons\\ECommons\\ECommons.csproj"
+              "D:\\Media\\Documents\\GitHub\\Root-Of-Riches\\ECommons\\ECommons\\ECommons.csproj": {
+                "projectPath": "D:\\Media\\Documents\\GitHub\\Root-Of-Riches\\ECommons\\ECommons\\ECommons.csproj"
               }
             }
           }
