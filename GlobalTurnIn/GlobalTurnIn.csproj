@@ -10,9 +10,6 @@
     <IsPackable>false</IsPackable>
   </PropertyGroup>
     
-    <ItemGroup>
-        <ProjectReference Include="..\ECommons\ECommons\ECommons.csproj" />
-    </ItemGroup>  
   <ItemGroup>
     <Folder Include="IPC\" />
   </ItemGroup>
