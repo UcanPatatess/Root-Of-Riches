@@ -1,0 +1,48 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v8.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v8.0": {
+      "GlobalTurnIn/0.0.0.13": {
+        "dependencies": {
+          "DalamudPackager": "11.0.0",
+          "ECommons": "2.2.0.2"
+        },
+        "runtime": {
+          "GlobalTurnIn.dll": {}
+        }
+      },
+      "DalamudPackager/11.0.0": {},
+      "ECommons/2.2.0.2": {
+        "runtime": {
+          "ECommons.dll": {
+            "assemblyVersion": "2.2.0.2",
+            "fileVersion": "2.2.0.2"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "GlobalTurnIn/0.0.0.13": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "DalamudPackager/11.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-bjT7XUlhIJSmsE/O76b7weUX+evvGQctbQB8aKXt94o+oPWxHpCepxAGMs7Thow3AzCyqWs7cOpp9/2wcgRRQA==",
+      "path": "dalamudpackager/11.0.0",
+      "hashPath": "dalamudpackager.11.0.0.nupkg.sha512"
+    },
+    "ECommons/2.2.0.2": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

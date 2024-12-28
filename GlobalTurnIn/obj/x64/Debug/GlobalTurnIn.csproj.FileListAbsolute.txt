@@ -1,0 +1,15 @@
+D:\Media\Documents\GitHub\GlobalTurnInV2\GlobalTurnIn\bin\x64\Debug\GlobalTurnIn.deps.json
+D:\Media\Documents\GitHub\GlobalTurnInV2\GlobalTurnIn\bin\x64\Debug\GlobalTurnIn.dll
+D:\Media\Documents\GitHub\GlobalTurnInV2\GlobalTurnIn\bin\x64\Debug\GlobalTurnIn.pdb
+D:\Media\Documents\GitHub\GlobalTurnInV2\GlobalTurnIn\bin\x64\Debug\ECommons.dll
+D:\Media\Documents\GitHub\GlobalTurnInV2\GlobalTurnIn\bin\x64\Debug\ECommons.pdb
+D:\Media\Documents\GitHub\GlobalTurnInV2\GlobalTurnIn\bin\x64\Debug\ECommons.xml
+D:\Media\Documents\GitHub\GlobalTurnInV2\GlobalTurnIn\obj\x64\Debug\GlobalTurnIn.csproj.AssemblyReference.cache
+D:\Media\Documents\GitHub\GlobalTurnInV2\GlobalTurnIn\obj\x64\Debug\GlobalTurnIn.GeneratedMSBuildEditorConfig.editorconfig
+D:\Media\Documents\GitHub\GlobalTurnInV2\GlobalTurnIn\obj\x64\Debug\GlobalTurnIn.AssemblyInfoInputs.cache
+D:\Media\Documents\GitHub\GlobalTurnInV2\GlobalTurnIn\obj\x64\Debug\GlobalTurnIn.AssemblyInfo.cs
+D:\Media\Documents\GitHub\GlobalTurnInV2\GlobalTurnIn\obj\x64\Debug\GlobalTurnIn.csproj.CoreCompileInputs.cache
+D:\Media\Documents\GitHub\GlobalTurnInV2\GlobalTurnIn\obj\x64\Debug\GlobalTurnIn.sourcelink.json
+D:\Media\Documents\GitHub\GlobalTurnInV2\GlobalTurnIn\obj\x64\Debug\GlobalTu.465D5555.Up2Date
+D:\Media\Documents\GitHub\GlobalTurnInV2\GlobalTurnIn\obj\x64\Debug\GlobalTurnIn.dll
+D:\Media\Documents\GitHub\GlobalTurnInV2\GlobalTurnIn\obj\x64\Debug\GlobalTurnIn.pdb
