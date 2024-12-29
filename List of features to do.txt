@@ -1,0 +1,10 @@
+Main Features to work on:
+→ Impliment config for Turnins into Main Window
+→ Clean up Turnin Tab in general
+→ Auto Retainer features
+  → Do retainers
+  → Run Subs
+
+Smaller features to do:
+→ With the run counter, add funny haha's (jokes... things at run #69, 500, 666... ect)
+→ After every run, do a random dad joke 

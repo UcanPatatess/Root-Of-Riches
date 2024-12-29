@@ -1,3 +1,4 @@
+using Dalamud.Interface.Windowing;
 using Dalamud.Plugin;
 using ECommons;
 using ECommons.Automation.NeoTaskManager;
@@ -15,20 +16,27 @@ namespace RootofRiches;
 
 public class Plugin : IDalamudPlugin
 {
-    private const string Command = "/globalt";
-    private static string[] Aliases => ["/pgt", "/pglobal"];
     public string Name => "RootofRiches";
     internal static Plugin P = null!;
-    private readonly Config config;
+    private Config config;
     
     public static Config C => P.config;
 
+    // internal window names
+    internal WindowSystem windowSystem;
+    internal MainWindow mainWindow;
+    internal DebugWindow debugWindow;
+    internal SettingMenu settingMenu;
+
+    // IPC's/Internals
     internal TaskManager taskManager;
     internal AutoRetainerIPC autoRetainer;
     internal DeliverooIPC deliveroo;
     internal LifestreamIPC lifestream;
     internal NavmeshIPC navmesh;
     internal BossModIPC bossmod;
+
+    // Timers
     internal Stopwatch stopwatch;
     internal TimeSpan totalRunTime;
     internal TimeSpan fastestRun;
@@ -39,24 +47,49 @@ public class Plugin : IDalamudPlugin
     {
         P = this;
         ECommonsMain.Init(pluginInterface, P, ECommons.Module.DalamudReflector, ECommons.Module.ObjectFunctions);
+        new ECommons.Schedulers.TickScheduler(Load);
+    }
+
+    public void Load() 
+    {
+        EzConfig.Migrate<Config>();
         config = EzConfig.Init<Config>();
 
-        EzConfigGui.Init(new MainWindow().Draw);
-        EzConfigGui.WindowSystem.AddWindow(new SettingMenu());
-        EzConfigGui.WindowSystem.AddWindow(new DebugWindow());
-        EzCmd.Add(Command, OnCommand, "Open Interface");
-        Aliases.ToList().ForEach(a => EzCmd.Add(a, OnCommand, $"{Command} Alias"));
-
+        // IPC's
         taskManager = new();
         autoRetainer = new();
         deliveroo = new();
         lifestream = new();
         navmesh = new();
         bossmod = new();
+
+        // Windows
+        windowSystem = new();
+        mainWindow = new();
+        debugWindow = new();
+        settingMenu = new();
+
+        Svc.PluginInterface.UiBuilder.Draw += windowSystem.Draw;
+        Svc.PluginInterface.UiBuilder.OpenMainUi += () =>
+        {
+            mainWindow.IsOpen = true;
+        };
+        Svc.PluginInterface.UiBuilder.OpenConfigUi += () =>
+        {
+            settingMenu.IsOpen = true;
+        };
+        EzCmd.Add("/rootofriches", OnCommand, """
+                   Open plugin interface
+                   /ror - alias for /rootofriches
+                   /rootofriches s|settings - Opens the turnin settings
+                   """);
+        EzCmd.Add("/ror", OnCommand);
+
         stopwatch = new();
         Svc.Framework.Update += Tick;
         C.SessionStats.Reset();
     }
+
     private void Tick(object _)
     {
         _ = IsThereTradeItem();
@@ -71,19 +104,24 @@ public class Plugin : IDalamudPlugin
     public void Dispose()
     {
         Safe(() => Svc.Framework.Update -= Tick);
+        Safe(() => Svc.PluginInterface.UiBuilder.Draw -= windowSystem.Draw);
         ECommonsMain.Dispose();
         Safe(TextAdvanceManager.UnlockTA);
         Safe(YesAlreadyManager.Unlock);
     }
     private void OnCommand(string command, string args)
     {
-        if (args == "debug")
+        if (args.EqualsIgnoreCaseAny("d", "debug"))
         {
-            EzConfigGui.WindowSystem.Windows.FirstOrDefault(w => w.WindowName == DebugWindow.WindowName)!.IsOpen ^= true;
+            debugWindow.IsOpen = !debugWindow.IsOpen;
         }
-        else if (args.StartsWith("s"))
-            EzConfigGui.WindowSystem.Windows.First(w => w is SettingMenu).IsOpen ^= true;
+        else if (args.EqualsIgnoreCaseAny("s", "settings"))
+        {
+            settingMenu.IsOpen = !settingMenu.IsOpen;
+        }
         else
-            EzConfigGui.Window.IsOpen = !EzConfigGui.Window.IsOpen;
+        {
+            mainWindow.IsOpen = !mainWindow.IsOpen;
+        }
     }
 }
