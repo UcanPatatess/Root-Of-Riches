@@ -271,40 +271,54 @@ internal class MainWindow : Window
         ImGui.Separator();
     }
 
-    private static int TotalA4NGear = 0;
-    private static double TotalFCPoints = 0;
-    private static int TotalGCBase = 0;
-    private static int TotalGC10 = 0;
-    private static int TotalGC15 = 0;
-    private static int OilclothBase = 0;
-    private static int Oilcloth10 = 0;
-    private static int Oilcloth15 = 0;
-    private static int A4NJewelry = 0;
-    private static int A4NHand = 0;
-    private static int A4NShoes = 0;
-    private static int A4NBody = 0;
-    private static int A4NLeg = 0;
-    private static int VendorGil = 0;
-    private static int A4NiLvl = 190;
-    private static int SealBase = 1093;
-    private static int Seal10 = 1203;
-    private static int Seal15 = 1257;
-    private static int OilclothBuy = 600;
-    private static int OilclothSell = 360;
-    private static double FCPointCalc = 1.5;
-    private static int A4NBodySell = 978;
-    private static int A4NLegSell = 978;
-    private static int A4NShoeSell = 587;
-    private static int A4NHandSell = 587;
-    private static int A4NJewelrySell = 445;
-    private static int A4NBoltpR = 2;
-    private static int A4NShaftpR = 2;
-    private static int A4NSpringpR = 2;
-    private static int A4NPedalpR = 1;
-    private static int A4NCrankpR = 1;
+    private void DrawTurnin()
+    {
+        string[,] ExchangeTable = new string[,]
+        {
+            { "Exchangeable Armor", $"{TotalExchangeItem}" }
+        };
+
+        string[,] AlexanderRaidTable = new string[,]
+        {
+            { "Gordian", "A1-4", $"{GordianTurnInCount}" },
+            { "Alexandrian", "A9-12", $"{AlexandrianTurnInCount}" },
+        };
+
+        string[,] OmegaRaidTable = new string[,]
+        {
+            { "Deltascape", "O1-4", $"{DeltascapeTurnInCount}" },
+        };
+
+        if (ImGui.BeginTable("RoRAmountofArmorPieces", 2, ImGuiTableFlags.Borders | ImGuiTableFlags.RowBg))
+        {
+            // Render table rows
+            for (int i = 0; i < ExchangeTable.GetLength(0); i++)
+            {
+                ImGui.TableNextRow();
+
+                for (int col = 0; col < 2; col++)
+                {
+                    ImGui.TableSetColumnIndex(col);
+
+                    // Calculate the available space and text size
+                    var text = ExchangeTable[i, col];
+                    var textSize = ImGui.CalcTextSize(text);
+                    var columnWidth = ImGui.GetColumnWidth();
+                    var cursorPosX = ImGui.GetCursorPosX();
+
+                    // Set the cursor position to center the text
+                    ImGui.SetCursorPosX(cursorPosX + (columnWidth - textSize.X) / 2.0f);
+                    ImGui.Text(text);
+                }
+            }
+
+            ImGui.EndTable();
+        }
+    }
 
     private void DrawItemCalculator()
     {
+        // All references have been moved for this to the Data.cs file
         string[,] testTableData = new string[,]
         {
             { "Jewelry", $"{A4NJewelry:N0}"},
@@ -537,15 +551,18 @@ internal class MainWindow : Window
         {
             if (ImGui.BeginTabItem("Turnin Items"))
             {
-                ImGui.Text($"Current task (Ice) is: {icurrentTask}");
-                ImGui.Text($"Current task is: {CurrentTask()}");
-                ImGui.Text($"Number of task: {P.taskManager.NumQueuedTasks}");
-                ImGui.Text($"Exchange Item Count: " + TotalExchangeItem);
-                ImGui.SameLine();
-                ImGui.Text($"GordianTurnIn Count: " + GordianTurnInCount);
-                ImGui.Text($"AlexandrianTurnIn Count: " + AlexandrianTurnInCount);
-                ImGui.SameLine();
-                ImGui.Text($"DeltascapeTurnIn Count: " + DeltascapeTurnInCount);
+                ImGui.Text($"Current task → {icurrentTask}");
+                // ImGui.Text($"Current task is: {CurrentTask()}"); // Neotask task listing
+                ImGui.Text($"Number of task → {P.taskManager.NumQueuedTasks}");
+                DrawTurnin();
+                ImGui.Text($"# of Exhangable Armor Pieces → {TotalExchangeItem}");
+                ImGui.Spacing();
+                ImGui.Text("Alexander Raid Series");
+                ImGui.Text($"Gordian (A1-4) Parts Count → {GordianTurnInCount}");
+                ImGui.Text($"Alexandrian (A9-12) Parts Count → {AlexandrianTurnInCount}");
+                ImGui.Spacing();
+                ImGui.Text("Omega Raid Series");
+                ImGui.Text($"Deltascape (O1-4) Parts Count → {DeltascapeTurnInCount}");
                 if (ImGui.Button(SchedulerMain.DoWeTick ? "Stop" : "Start Turnin"))
                 {
                     if (SchedulerMain.DoWeTick)
