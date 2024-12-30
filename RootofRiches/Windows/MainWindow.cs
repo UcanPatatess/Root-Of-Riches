@@ -21,7 +21,7 @@ internal class MainWindow : Window
     public MainWindow() : 
         base($"Root of Riches {P.GetType().Assembly.GetName().Version}") 
     {
-        Flags = ImGuiWindowFlags.NoScrollbar | ImGuiWindowFlags.NoScrollWithMouse | ImGuiWindowFlags.NoCollapse;
+        Flags = ImGuiWindowFlags.NoCollapse;
         SizeConstraints = new WindowSizeConstraints
         {
             MinimumSize = new Vector2(100, 100),
@@ -69,14 +69,22 @@ internal class MainWindow : Window
     {   
         DrawStats(stat);
 
+        // Get the window height
+        float windowHeight = ImGui.GetWindowHeight();
+
+        // Set the cursor position for the button
+        float buttonYPos = windowHeight - 30 - ImGui.GetStyle().WindowPadding.Y; // Subtract button height and bottom padding
+        ImGui.SetCursorPosY(buttonYPos);
+
         bool isCtrlHeld = ImGui.GetIO().KeyCtrl;
         using (var _ = ImRaii.PushStyle(ImGuiStyleVar.Alpha, 0.5f, !ImGui.GetIO().KeyCtrl))
-            reset = ImGui.Button("RESET STATS", new Vector2(ImGui.GetContentRegionAvail().X, ImGui.GetContentRegionAvail().Y)) && ImGui.GetIO().KeyCtrl;
+        {
+            reset = ImGui.Button("RESET STATS", new Vector2(ImGui.GetContentRegionAvail().X, 30)) && ImGui.GetIO().KeyCtrl;
+        }
         if (ImGui.IsItemHovered()) ImGui.SetTooltip(isCtrlHeld ? "Press to reset your stats." : "Hold Ctrl to enable the button.");
     }
     private void DrawStats(Stats stat)
     {
-        ImGui.BeginChild("Stats", new Vector2(0, ImGui.GetContentRegionAvail().Y - 30f), true);
         ImGui.Columns(3, null, false);
         ImGui.NextColumn();
         ImGuiEx.CenterColumnText(ImGuiColors.DalamudRed, "Root Of Riches", true);
@@ -100,8 +108,9 @@ internal class MainWindow : Window
         ImGuiEx.CenterColumnText($"{stat.TotalRunTime.ToString(@"hh\:mm\:ss")}");
         ImGui.NextColumn();
         ImGuiEx.CenterColumnText($"{stat.FastestRun.ToString(@"mm\:ss\.fff")}");
-
-        ImGui.EndChild();
+        ImGui.Columns(1, null, false);
+        ImGui.Separator();
+        ImGui.Dummy(new Vector2(0, 20));
     }
     private void DrawA4N()
     {
@@ -270,23 +279,19 @@ internal class MainWindow : Window
 
         ImGui.Separator();
     }
-
+    
     private void DrawTurnin()
     {
         string[,] ExchangeTable = new string[,]
         {
-            { "Exchangeable Armor", $"{TotalExchangeItem}" }
+            { "Exchangeable Armor", $"{TotalExchangeItem:N0}" }
         };
 
-        string[,] AlexanderRaidTable = new string[,]
+        string[,] NormalRaidParts = new string[,]
         {
-            { "Gordian", "A1-4", $"{GordianTurnInCount}" },
-            { "Alexandrian", "A9-12", $"{AlexandrianTurnInCount}" },
-        };
-
-        string[,] OmegaRaidTable = new string[,]
-        {
-            { "Deltascape", "O1-4", $"{DeltascapeTurnInCount}" },
+            { "Gordian", "A1-4", $"{GordianTurnInCount:N0}" },
+            { "Alexandrian", "A9-12", $"{AlexandrianTurnInCount:N0}" },
+            { "Deltascape", "O1-4", $"{DeltascapeTurnInCount:N0}" },
         };
 
         if (ImGui.BeginTable("RoRAmountofArmorPieces", 2, ImGuiTableFlags.Borders | ImGuiTableFlags.RowBg))
@@ -302,6 +307,55 @@ internal class MainWindow : Window
 
                     // Calculate the available space and text size
                     var text = ExchangeTable[i, col];
+                    var textSize = ImGui.CalcTextSize(text);
+                    var columnWidth = ImGui.GetColumnWidth();
+                    var cursorPosX = ImGui.GetCursorPosX();
+
+                    // Set the cursor position to center the text
+                    ImGui.SetCursorPosX(cursorPosX + (columnWidth - textSize.X) / 2.0f);
+                    ImGui.Text(text);
+                }
+            }
+
+            ImGui.EndTable();
+        }
+        if (ImGui.BeginTable("ROR NRaid Piece Total", 3, ImGuiTableFlags.Borders | ImGuiTableFlags.RowBg))
+        {
+            // Set up columns without automatic headers
+            ImGui.TableSetupColumn("Raid Series");
+            ImGui.TableSetupColumn("Raid Tier");
+            ImGui.TableSetupColumn("Total Armor Amount");
+
+            // Custom header row
+            ImGui.TableNextRow(ImGuiTableRowFlags.Headers);
+
+            string[] headers = { "Raid Series", "Raid Tier", "Total Armor Amount" };
+            for (int col = 0; col < headers.Length; col++)
+            {
+                ImGui.TableSetColumnIndex(col);
+
+                // Calculate the available space and text size
+                var header = headers[col];
+                var textSize = ImGui.CalcTextSize(header);
+                var columnWidth = ImGui.GetColumnWidth();
+                var cursorPosX = ImGui.GetCursorPosX();
+
+                // Set the cursor position to center the text
+                ImGui.SetCursorPosX(cursorPosX + (columnWidth - textSize.X) / 2.0f);
+                ImGui.Text(header);
+            }
+
+            // Render table rows
+            for (int i = 0; i < NormalRaidParts.GetLength(0); i++)
+            {
+                ImGui.TableNextRow();
+
+                for (int col = 0; col < 3; col++)
+                {
+                    ImGui.TableSetColumnIndex(col);
+
+                    // Calculate the available space and text size
+                    var text = NormalRaidParts[i, col];
                     var textSize = ImGui.CalcTextSize(text);
                     var columnWidth = ImGui.GetColumnWidth();
                     var cursorPosX = ImGui.GetCursorPosX();
@@ -529,6 +583,118 @@ internal class MainWindow : Window
 
     }
 
+    bool maxItem = C.MaxItem;
+    bool maxArmory = C.MaxArmory;
+    int maxArmoryFreeSlot = C.MaxArmoryFreeSlot;
+    bool sellOilCloth = C.SellOilCloth;
+    bool teleportToFC = C.TeleportToFC;
+    string[] options = { "Vendor Turn-in", "Gc Turn-in" };
+    int selectedOption = C.VendorTurnIn ? 0 : 1; // Map boolean state to dropdown index
+
+    public bool ChangeArmory = C.ChangeArmory;
+
+    private void TempUi()
+    {
+        ImGui.BeginChild("Turnin Settings");
+
+        // Setting up the columns for layout
+        ImGui.Columns(2, "Turnin Settings Columns", false);
+
+        // Columm 1
+        // Get the window width
+        float windowWidth = ImGui.GetWindowWidth();
+
+        // Set the width of the first column to half the window width
+        ImGui.SetColumnWidth(0, windowWidth / 2);
+
+        ImGui.Text("Inventory Settings");
+        ImGui.Spacing();
+        ImGui.Text("Free Main Inventory Slots");
+        ImGuiComponents.HelpMarker("Select how many slots you want in the inventory open.\nGood to use if you're buying multiple stack of Oilcloth for instance.");
+        ImGui.PushItemWidth(130);
+        if (ImGui.InputInt("##maxarmoryfreeslot", ref maxArmoryFreeSlot))
+        {
+            if (maxArmoryFreeSlot < 0) maxArmoryFreeSlot = 0;
+            C.MaxArmoryFreeSlot = maxArmoryFreeSlot;
+        }
+        if (ImGui.Checkbox("Maximize Inventory##maxitem", ref maxItem))
+        {
+            C.MaxItem = maxItem;
+            C.ChangeArmory = false;
+        }
+        ImGui.SameLine();
+        ImGuiComponents.HelpMarker("Maximize inventory by buying one of a single item.");
+        using (ImRaii.Disabled(!C.MaxItem))
+        {
+            if (maxItem == false)
+            {
+                C.MaxArmory = false;
+                maxArmory = false;
+            }
+            if (ImGui.Checkbox("Fill Armory##maxarmory", ref maxArmory))
+            {
+                C.ChangeArmory = false;
+                C.MaxArmory = maxArmory;
+            }
+        }
+
+        ImGui.NewLine();
+
+        ImGui.NextColumn();
+
+        // Column 2
+        ImGui.Text("Turn-in Settings");
+        ImGui.Separator();
+
+        // VendorTurnIn
+        ImGui.PushItemWidth(130);
+        ImGui.NewLine();
+        if (ImGui.Combo("##turn-insettings", ref selectedOption, options, options.Length))
+        {
+            // Update the property based on the selected option
+            C.VendorTurnIn = (selectedOption == 0);
+        }
+        string helpMarkerContent = C.VendorTurnIn
+        ? "Stay off the rankings and sell to your retainer."
+        : "You will gain more gil, but be careful of the rankings.";
+        ImGui.SameLine();
+        ImGuiComponents.HelpMarker(helpMarkerContent);
+        ImGui.PopItemWidth();
+        using (ImRaii.Disabled(!C.VendorTurnIn))
+        {
+            if (!C.VendorTurnIn)
+                teleportToFC = false;
+
+            if (ImGui.Checkbox("Teleport to FC##teleporttofc", ref teleportToFC))
+            {
+                C.TeleportToFC = teleportToFC;
+            }
+            ImGui.SameLine();
+            ImGuiComponents.HelpMarker("Teleport to your Fc to sell gears.");
+        }
+        if (ImGui.Checkbox("Sell OilCloth Turn-in##SellOilCloth", ref sellOilCloth))
+        {
+            C.SellOilCloth = sellOilCloth;
+        }
+
+        ImGui.Columns(1);
+
+        if (ImGui.Button(SchedulerMain.DoWeTick ? "Stop" : "Start Turnin"))
+        {
+            if (SchedulerMain.DoWeTick)
+            {
+                SchedulerMain.DisablePlugin(); // Call DisablePlugin if running
+            }
+            else
+            {
+                SchedulerMain.EnablePlugin(); // Call EnablePlugin if not running
+                SchedulerMain.RunTurnin = true;
+            }
+        }
+
+        ImGui.EndChild();
+    }
+
     private void DrawAmountCalculator()
     {
         // wanna add a loop calculator here, that way you can see how many loops/
@@ -545,6 +711,8 @@ internal class MainWindow : Window
     private string nRepairMode = C.RepairMode;
     private string[] nrepairOptions = { "Self Repair", "Repair at NPC"};
     private float repairThreshold = C.RepairSlider;
+
+    // Imported from Settings
     public override void Draw()
     {
         if (ImGui.BeginTabBar("##Main Window Tabs"))
@@ -555,6 +723,7 @@ internal class MainWindow : Window
                 // ImGui.Text($"Current task is: {CurrentTask()}"); // Neotask task listing
                 ImGui.Text($"Number of task → {P.taskManager.NumQueuedTasks}");
                 DrawTurnin();
+                /*
                 ImGui.Text($"# of Exhangable Armor Pieces → {TotalExchangeItem}");
                 ImGui.Spacing();
                 ImGui.Text("Alexander Raid Series");
@@ -563,21 +732,9 @@ internal class MainWindow : Window
                 ImGui.Spacing();
                 ImGui.Text("Omega Raid Series");
                 ImGui.Text($"Deltascape (O1-4) Parts Count → {DeltascapeTurnInCount}");
-                if (ImGui.Button(SchedulerMain.DoWeTick ? "Stop" : "Start Turnin"))
-                {
-                    if (SchedulerMain.DoWeTick)
-                    {
-                        SchedulerMain.DisablePlugin(); // Call DisablePlugin if running
-                    }
-                    else
-                    {
-                        SchedulerMain.EnablePlugin(); // Call EnablePlugin if not running
-                        SchedulerMain.RunTurnin = true;
-                    }
-                }
-                ImGui.SameLine();
-                if (ImGuiEx.IconButton(FontAwesomeIcon.Wrench, "Settings"))
-                    EzConfigGui.WindowSystem.Windows.FirstOrDefault(w => w.WindowName == SettingMenu.WindowName)!.IsOpen ^= true;
+                */
+                TempUi();
+
                 ImGui.EndTabItem();
             }
             if (ImGui.BeginTabItem("Normal Raid Farm"))

@@ -1,6 +1,4 @@
 Main Features to work on:
-→ Impliment config for Turnins into Main Window
-→ Clean up Turnin Tab in general
 → Auto Retainer features
   → Do retainers
   → Run Subs
