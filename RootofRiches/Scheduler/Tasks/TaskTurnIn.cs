@@ -32,7 +32,7 @@ namespace RootofRiches.Scheduler.Tasks
             SlotINV = SlotINV - C.MaxArmoryFreeSlot;
             bool isItemPurchasedFromArmory = false;
             int lastArmoryType = -1;
-            int armoryExchaneAmount =0;
+            int armoryExchaneAmount = 0;
             bool SelectIconStirngBool = true;
             UpdateDict();
 
@@ -51,17 +51,20 @@ namespace RootofRiches.Scheduler.Tasks
                 
                 int ArmoryType = 0;
                 if (ItemIdArmoryTable.TryGetValue(gearItem, out int category))
+                {
                     ArmoryType = category;
+                }
 
                 int SlotArmoryINV = GetFreeSlotsInContainer(ArmoryType);
 
                 if (ArmoryType != lastArmoryType)
                 {
+                    PLogInfo($"{ArmoryType} was not the same as {lastArmoryType}, setting it now");
                     isItemPurchasedFromArmory = false; // Reset the flag for the new armory
                     lastArmoryType = ArmoryType; // Update the last armory type
                     armoryExchaneAmount += 1;
                 }
-                if (isItemPurchasedFromArmory || armoryExchaneAmount > 8)
+                if (isItemPurchasedFromArmory || armoryExchaneAmount > 9)
                 {
                     SlotArmoryINV = 0; // Don't consider armory slots if we've already purchased
                 }
@@ -76,6 +79,7 @@ namespace RootofRiches.Scheduler.Tasks
                     }
                     if (SlotArmoryINV != 0 && C.MaxArmory)
                     {
+                        PLogInfo($"Armory Slot is: {ArmoryType} and freespace is: {SlotArmoryINV}");
                         if (CanExchange < SlotArmoryINV)
                         {
                             Exchange(gearItem, pcallValue, CanExchange);
@@ -94,7 +98,7 @@ namespace RootofRiches.Scheduler.Tasks
                         }
                         continue;
                     }
-                    if (C.MaxItem)
+                    else if (C.MaxItem)
                     {
                         if (CanExchange < SlotINV)
                         {
@@ -158,7 +162,6 @@ namespace RootofRiches.Scheduler.Tasks
             }
             return false;
         }
-
         internal unsafe static bool? TargetInteract()
         {
             var target = Svc.Targets.Target;

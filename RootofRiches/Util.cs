@@ -212,6 +212,16 @@ public static unsafe class Util
         ECommons.Automation.Chat.Instance.ExecuteCommand($"/{command}");
     }
 
+    public static void PLogInfo(string message)
+    {
+        PluginLog.Information(message);
+    }
+
+    public static void PLogDebug(string message)
+    {
+        PluginLog.Debug(message);
+    }
+
     public static bool EnableNormalRaidFarm()
     {
         return PluginInstalled("BossMod")
