@@ -1,5 +1,6 @@
 using System;
 using ECommons.EzIpcManager;
+using GCInfo = (uint ShopDataID, uint ExchangeDataID, System.Numerics.Vector3 Position);
 
 namespace RootofRiches.IPC
 {
@@ -11,12 +12,35 @@ namespace RootofRiches.IPC
         public AutoRetainerIPC() => EzIPC.Init(this, Name);
         #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
 
-        [EzIPC("PluginState.%m")] public readonly Func<bool> IsBusy;
-        [EzIPC("PluginState.%m")] public readonly Func<int> GetInventoryFreeSlotCount;
-        [EzIPC("PluginState.%m")] public readonly Func<bool> AreAnyRetainersAvailableForCurrentChara;
         [EzIPC] public readonly Func<bool> GetMultiModeEnabled;
         [EzIPC] public readonly Action<bool> SetMultiModeEnabled;
-        [EzIPC] public readonly Func<bool> GetSuppressed;
-        [EzIPC] public readonly Action<bool> SetSuppressed;
+
+        [EzIPC("PluginState.%m")] public readonly Func<bool> IsBusy;
+        [EzIPC("PluginState.%m")] public readonly Func<int> GetInventoryFreeSlotCount;
+        [EzIPC("PluginState.%m")] public readonly Func<Dictionary<ulong, HashSet<string>>> GetEnabledRetainers;
+        [EzIPC("PluginState.%m")] public readonly Func<bool> AreAnyRetainersAvailableForCurrentChara;
+        [EzIPC("PluginState.%m")] public readonly Action AbortAllTasks;
+        [EzIPC("PluginState.%m")] public readonly Action DisableAllFunctions;
+        [EzIPC("PluginState.%m")] public readonly Action EnableMultiMode;
+        /// <summary>
+        /// Action onFailure
+        /// </summary>
+        [EzIPC("PluginState.%m")] public readonly Action<Action> EnqueueHET;
+        [EzIPC("PluginState.%m")] public readonly Func<bool> CanAutoLogin;
+        /// <summary>
+        /// string charaNameWithWorld
+        /// </summary>
+        [EzIPC("PluginState.%m")] public readonly Func<string, bool> Relog;
+        [EzIPC("PluginState.%m")] public readonly Func<bool> GetOptionRetainerSense;
+        [EzIPC("PluginState.%m")] public readonly Action<bool> SetOptionRetainerSense;
+        [EzIPC("PluginState.%m")] public readonly Func<int> GetOptionRetainerSenseThreshold;
+        [EzIPC("PluginState.%m")] public readonly Action<int> SetOptionRetainerSenseThreshold;
+        /// <summary>
+        /// ulong CID
+        /// </summary>
+        [EzIPC("PluginState.%m")] public readonly Func<ulong, long?> GetClosestRetainerVentureSecondsRemaining;
+
+        [EzIPC("GC.%m")] public readonly Action EnqueueInitiation;
+        [EzIPC("GC.%m")] public readonly Func<GCInfo?> GetGCInfo;
     }
 }
