@@ -593,7 +593,7 @@ internal class MainWindow : Window
 
     public bool ChangeArmory = C.ChangeArmory;
 
-    private void TempUi()
+    private void TurninTablesUi()
     {
         ImGui.BeginChild("Turnin Settings");
 
@@ -723,22 +723,14 @@ internal class MainWindow : Window
                 // ImGui.Text($"Current task is: {CurrentTask()}"); // Neotask task listing
                 ImGui.Text($"Number of task → {P.taskManager.NumQueuedTasks}");
                 DrawTurnin();
-                /*
-                ImGui.Text($"# of Exhangable Armor Pieces → {TotalExchangeItem}");
-                ImGui.Spacing();
-                ImGui.Text("Alexander Raid Series");
-                ImGui.Text($"Gordian (A1-4) Parts Count → {GordianTurnInCount}");
-                ImGui.Text($"Alexandrian (A9-12) Parts Count → {AlexandrianTurnInCount}");
-                ImGui.Spacing();
-                ImGui.Text("Omega Raid Series");
-                ImGui.Text($"Deltascape (O1-4) Parts Count → {DeltascapeTurnInCount}");
-                */
-                TempUi();
+                TurninTablesUi();
 
                 ImGui.EndTabItem();
             }
             if (ImGui.BeginTabItem("Normal Raid Farm"))
             {
+                string NRaidTask = SchedulerMain.A4NTask;
+                ImGui.Text($"Current Raid Task → {NRaidTask}");
                 TimeSpan currentTime = P.stopwatch.Elapsed;
                 string currentTimeF = currentTime.ToString(@"mm\:ss\.fff");
                 ImGui.Text($"Time Elapsed is: {currentTimeF}");
@@ -785,6 +777,10 @@ internal class MainWindow : Window
             {
                 DrawItemCalculator();
                 ImGui.EndTabItem();
+            }
+            if (ImGui.BeginTabItem("About"))
+            {
+                AboutUi.Draw();
             }
 
             ImGui.EndTabBar();

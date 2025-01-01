@@ -17,5 +17,6 @@ namespace RootofRiches.IPC
         [EzIPC] public readonly Action<bool> SetMultiModeEnabled;
         [EzIPC] public readonly Func<bool> GetSuppressed;
         [EzIPC] public readonly Action<bool> SetSuppressed;
+        [EzIPC] public readonly Action<bool> AreAnyRetainersAvailableForCurrentChara;
     }
 }

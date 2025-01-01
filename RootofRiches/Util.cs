@@ -29,6 +29,8 @@ namespace RootofRiches;
 
 public static unsafe class Util
 {
+    public static uint GetClassJobId() => Svc.ClientState.LocalPlayer!.ClassJob.RowId;
+
     public static string icurrentTask = "";
     public static void UpdateCurrentTask(string task)
     {
@@ -101,7 +103,7 @@ public static unsafe class Util
         if (TryGetAddonByName<AtkUnitBase>("ContentsFinder", out var addon) && IsAddonReady(addon))
         {
             //var mainAddon = ((AddonContentsFinder*)addon)->SelectedDutyTextNodeSpan[0].Value->NodeText.ToString();
-            var mainAddon = ((AddonContentsFinder*)addon) ->SelectedDutyTextNode[0].Value->NodeText.ToString();
+            var mainAddon = ((AddonContentsFinder*)addon)->SelectedDutyTextNode[0].Value->NodeText.ToString();
             var AlexText = "Alexander - The Burden of the Father";
             return mainAddon == AlexText;
         }
@@ -133,7 +135,7 @@ public static unsafe class Util
         return DalamudReflector.TryGetDalamudPlugin(name, out _, false, true);
     }
     public static GameObject* LPlayer() => GameObjectManager.Instance()->Objects.IndexSorted[0].Value;
-   
+
     public static Vector3 PlayerPosition()
     {
         var player = LPlayer();
@@ -145,12 +147,12 @@ public static unsafe class Util
         var d = dest - PlayerPosition();
         return d.X * d.X + d.Z * d.Z <= dist * dist;
     }
-    public static bool DidAmountChange(int arg,int argg)
+    public static bool DidAmountChange(int arg, int argg)
     {
         if (arg == argg)
             return false;
         else
-           return true;
+            return true;
     }
     public static int GetFreeSlotsInContainer(int container)
     {
@@ -315,5 +317,53 @@ public static unsafe class Util
         }
 
         return false;
+    }
+
+    public static string GetRoleByNumber()
+    {
+        uint number = GetClassJobId();
+        switch (number)
+        {
+            // Tanks
+            case 19: // PLD
+            case 21: // WAR
+            case 32: // DRK
+            case 37: // GNB
+            // Melees
+            case 20: // MNK
+            case 22: // DRG
+            case 30: // NIN
+            case 39: // RPR
+            case 41: // VPR
+            // Range
+            case 23: // BRD
+            case 31: // MCH
+            case 38: // DNC
+                return "Melee";
+            // Healer
+            case 24: // WHM
+            case 28: // SCH
+            case 33: // AST
+            case 40: // SGE
+            // Caster
+            case 25: // BLM
+            case 27: // SMN
+            case 35: // RDM
+            case 42: // PCT
+                return "Caster";
+
+            default:
+                return "Unknown";
+        }
+    }
+
+    public static void SetBMRange(float range)
+    {
+        if (GetRoleByNumber() == "Melee")
+            P.bossmod.SetRange(3);
+        else if (GetRoleByNumber() == "Caster")
+            P.bossmod.SetRange(range);
+        else
+            P.bossmod.SetRange(2.5f);
     }
 }

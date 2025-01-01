@@ -39,6 +39,7 @@ namespace RootofRiches.Scheduler
             P.stopwatch.Restart();
             P.stopwatch.Stop();
             FullRun = false;
+            A4NTask = "";
             return true;
         }
 
@@ -62,34 +63,54 @@ namespace RootofRiches.Scheduler
                             if (!Svc.Condition[ConditionFlag.InCombat])
                             {
                                 IGameObject? gameObject = null;
-                                if (TryGetObjectByDataId(LeftForeleg, out gameObject) || TryGetObjectByDataId(RightForeleg, out gameObject))
+                                if (TryGetObjectByDataId(A4NChest1, out gameObject))
                                 {
-                                    P.taskManager.Enqueue(() => A4NTask = "Targeted Left Foreleg");
-                                    // Left Leg is targetable... which means you aren't in combat/you haven't initiated it yet
-                                    P.taskManager.Enqueue(PlayerNotBusy);
-                                    TaskTarget.Enqueue(RightForeleg);
-                                    P.taskManager.Enqueue(() => MoveToCombat(RightForeLegPos), "Moving to Combat");
-                                    // If Left Leg is Targetable, enable the following
-                                    ToggleRotation(true);
-                                    // BM ai (to move to the target while in combat)
-                                    // if Wrath installed, enable wrath + BM ai Limited
-                                    // if RSR installed, 
-                                    P.taskManager.Enqueue(() => !Svc.Condition[ConditionFlag.InCombat], "Waiting for combat to end", DConfig);
-                                }
-                                else if (TryGetObjectByDataId(A4NChest1, out gameObject))
-                                {
+                                    if (GetRoleByNumber() == "Caster")
+                                    {
+
+                                    }
                                     ToggleRotation(false);
-                                    P.taskManager.Enqueue(() => A4NTask = "Chest Task");
+                                    P.taskManager.Enqueue(() => A4NTask = "Gathering your riches");
                                     TaskMoveTo.Enqueue(new Vector3(-0.08f, 10.6f, -6.46f), "Center Chest", 0.5f);
                                     TaskOpenChest.Enqueue(A4NChest1);
                                     TaskOpenChest.Enqueue(A4NChest2);
                                     TaskOpenChest.Enqueue(A4NChest3);
                                     P.taskManager.Enqueue(LeaveDuty);
                                     P.taskManager.Enqueue(UpdateStats);
-                                    P.taskManager.Enqueue(() => !IsInZone(A4NMapID), "Waiting for you to leave A4N");
+                                    P.taskManager.Enqueue(() => !IsInZone(A4NMapID), "Leaving A4N");
                                     hasEnqueuedDutyFinder = false;
                                     P.taskManager.Enqueue(() => NRaidRun = NRaidRun + 1);
                                     TaskTimer.Enqueue(false);
+                                    P.taskManager.Enqueue(() => A4NTask = "");
+                                }
+                                else if (TryGetObjectByDataId(LeftForeleg, out gameObject) || TryGetObjectByDataId(RightForeleg, out gameObject))
+                                {
+                                    P.taskManager.Enqueue(() => A4NTask = "Targeted Left Foreleg");
+                                    // Left Leg is targetable... which means you aren't in combat/you haven't initiated it yet
+                                    P.taskManager.Enqueue(PlayerNotBusy);
+                                    TaskTarget.Enqueue(RightForeleg);
+                                    ToggleRotation(true);
+                                    SetBMRange(24);
+                                    if (GetRoleByNumber() == "Tank")
+                                    {
+                                        P.taskManager.Enqueue(() => A4NTask = "Entering Combat");
+                                        P.taskManager.Enqueue(() => MoveToCombat(RightForeLegPos), "Moving to Combat");
+                                    }
+                                    else
+                                    {
+                                        P.taskManager.Enqueue(() => A4NTask = "Entering Combat");
+                                        P.taskManager.Enqueue(() => Svc.Condition[ConditionFlag.InCombat]);
+
+                                    }
+                                    // If Left Leg is Targetable, enable the following
+
+                                    // BM ai (to move to the target while in combat)
+                                    // if Wrath installed, enable wrath + BM ai Limited
+                                    // if RSR installed, 
+                                    P.taskManager.Enqueue(() => A4NTask = "Waiting for combat to finish");
+                                    P.taskManager.Enqueue(() => !Svc.Condition[ConditionFlag.InCombat], "Waiting for combat to end", DConfig);
+                                    P.taskManager.Enqueue(() => Svc.Condition[ConditionFlag.OccupiedInCutSceneEvent], "Waiting for Cutscene", DConfig);
+                                    P.taskManager.Enqueue(() => !Svc.Condition[ConditionFlag.OccupiedInCutSceneEvent], "Waiting for Cutscene", DConfig);
                                 }
                                 else
                                 {
@@ -100,55 +121,71 @@ namespace RootofRiches.Scheduler
                         }
                         else if (!IsInZone(A4NMapID) && (NRaidRun <= RunAmount || RunInfinite))
                         {
-                            A4NTask = "Loading into duty";
                             if (C.EnableReturnInn && Svc.ClientState.TerritoryType != C.InnDataID && !NeedsRepair(C.RepairSlider))
                             {
+                                P.taskManager.Enqueue(() => A4NTask = "Heading to the Inn");
                                 TaskTeleportInn.Enqueue();
                                 TaskUseAethernet.Enqueue();
                                 TaskMoveTo.Enqueue(InnDict[C.InnDataID].InnNPCPos, "Walking to Inn Npc");
                                 TaskGetIntoInn.Enqueue();
+                                P.taskManager.Enqueue(() => A4NTask = "");
                             }
                             else if (C.EnableRepair && NeedsRepair(C.RepairSlider))
                             {
                                 if (C.RepairMode == "Self Repair")
                                 {
+                                    P.taskManager.Enqueue(() => A4NTask = "Self Repairing");
                                     TaskSelfRepair.Enqueue();
+                                    P.taskManager.Enqueue(() => A4NTask = "");
                                 }
                                 else if (C.RepairMode == "Repair at NPC")
                                 {
                                     if (IsInZone(C.InnDataID))
                                     {
+                                        P.taskManager.Enqueue(() => A4NTask = "Leaving inn to repair");
                                         TaskGetOutInn.Enqueue();
+                                        P.taskManager.Enqueue(() => A4NTask = "Repairing at Inn NPC");
                                         TaskMoveTo.Enqueue(InnDict[C.InnDataID].RepairNPCPos, "Walking to Inn Npc");
                                         TaskRepairNpc.Enqueue();
+                                        P.taskManager.Enqueue(() => A4NTask = "Heading back Inn");
                                         TaskMoveTo.Enqueue(InnDict[C.InnDataID].InnNPCPos, "Walking to Inn Npc");
                                         TaskGetIntoInn.Enqueue();
+                                        P.taskManager.Enqueue(() => A4NTask = "");
                                     }
                                     else 
                                     {
+                                        P.taskManager.Enqueue(() => A4NTask = "Teleporting to Inn");
                                         TaskTeleportInn.Enqueue();
                                         TaskUseAethernet.Enqueue();
+                                        P.taskManager.Enqueue(() => A4NTask = "Walking to Inn NPC");
                                         TaskMoveTo.Enqueue(InnDict[C.InnDataID].RepairNPCPos, "Walking to Inn Npc");
+                                        P.taskManager.Enqueue(() => A4NTask = "Repairing at Inn NPC");
                                         TaskRepairNpc.Enqueue();
                                         TaskMoveTo.Enqueue(InnDict[C.InnDataID].InnNPCPos, "Walking to Inn Npc");
+                                        P.taskManager.Enqueue(() => A4NTask = "Heading back Inn");
                                         TaskGetIntoInn.Enqueue();
+                                        P.taskManager.Enqueue(() => A4NTask = "");
                                     }
                                 }
                             }
                             else if (!IsAddonActive("ContentsFinder") && !hasEnqueuedDutyFinder)
                             {
                                 TaskTimer.Enqueue(true);
+                                P.taskManager.Enqueue(() => A4NTask = "Opening Contents Finder");
                                 TaskDutyFinder.Enqueue();
                             }
                             else if (IsAddonActive("ContentsFinder"))
                             {
+                                P.taskManager.Enqueue(() => A4NTask = "Launching Correct Duty");
                                 TaskSelectCorrectDuty.Enqueue();
                                 TaskLaunchDuty.Enqueue();
                                 hasEnqueuedDutyFinder = true;
                             }
                             else if (IsAddonActive("ContentsFinderConfirm"))
                             {
+                                P.taskManager.Enqueue(() => A4NTask = "Confirming the duty");
                                 TaskContentWidnowConfirm.Enqueue();
+                                P.taskManager.Enqueue(() => A4NTask = "");
                             }
                         }
                         else
