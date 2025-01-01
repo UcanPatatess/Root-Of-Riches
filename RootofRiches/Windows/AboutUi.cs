@@ -29,7 +29,7 @@ public static class AboutUi
 
         ImGuiEx.LineCentered("RoRAbout1", () =>
         {
-            ImGuiEx.Text($"Published and developed by Ucan and Ice");
+            ImGuiEx.Text($"Published and developed by UcanPatatrs and Ice");
         });
 
         ImGuiHelpers.ScaledDummy(10f);
