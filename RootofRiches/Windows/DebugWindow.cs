@@ -213,6 +213,11 @@ internal class DebugWindow : Window
                     ImGui.Text("No target selected.");
                 }
 
+                if (ImGui.Button("Summoning Bell Interact"))
+                {
+                    TaskInteract.Enqueue(SummoningBell);
+                }
+
                 ImGui.EndTabItem();
             }
             if (ImGui.BeginTabItem("Time Test"))

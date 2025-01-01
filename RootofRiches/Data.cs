@@ -7,6 +7,7 @@ namespace RootofRiches;
 
 public static class Data
 {
+    #region NormalRaid
     public static int TotalExchangeItem = 0;
     public static int GordianTurnInCount = 0;
     public static int AlexandrianTurnInCount = 0;
@@ -442,7 +443,9 @@ public static class Data
         AlexandrianLensID , AlexandrianShaftID, AlexandrianCrankID , AlexandrianSpringID , AlexandrianPedalID , AlexandrianBoltID
     };
 
-    // Targets (ObjectID):
+    #endregion
+
+    #region TargetIDs
     // Alexander - The Burder of the Father (A4N) 
     public static ulong RightForeleg = 4107;
     public static ulong LeftForeleg = 4108;
@@ -451,7 +454,12 @@ public static class Data
     public static ulong A4NChest2 = 480;
     public static ulong A4NChest3 = 479;
 
-    // Zones
+    // Retainer
+    public static ulong SummoningBell = 2000403;
+
+    #endregion
+
+    #region Zone Info
 
     // Normal Raid Areas
     public static int A4NMapID = 445;
@@ -497,6 +505,8 @@ public static class Data
     public static readonly Vector3 A4NChest1Pos = new(-0.02f, 10.54f, -8.38f);
     public static readonly Vector3 A4NChest2Pos = new(2f, 10.54f, -6.36f);
     public static readonly Vector3 A4NChest3Pos = new(-2.03f, 10.54f, -6.36f);
+
+    #endregion
 
     public static int TotalA4NGear = 0;
     public static double TotalFCPoints = 0;

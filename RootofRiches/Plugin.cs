@@ -1,3 +1,4 @@
+using AutoRetainerAPI;
 using Dalamud.Interface.Windowing;
 using Dalamud.Plugin;
 using ECommons;
@@ -29,6 +30,7 @@ public class Plugin : IDalamudPlugin
     internal SettingMenu settingMenu;
 
     // IPC's/Internals
+    internal AutoRetainerApi autoRetainerApi;
     internal TaskManager taskManager;
     internal AutoRetainerIPC autoRetainer;
     internal DeliverooIPC deliveroo;

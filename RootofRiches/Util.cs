@@ -23,6 +23,7 @@ using ECommons.Automation.NeoTaskManager;
 using System.Globalization;
 using ECommons.Logging;
 using RootofRiches.Scheduler;
+using AutoRetainerAPI;
 
 
 namespace RootofRiches;
@@ -367,6 +368,25 @@ public static unsafe class Util
             P.bossmod.SetRange(2.5f);
     }
 
-    // Auto Retainer Stuff
+    #region AutoRetainer
+    public static int ToUnixTimestamp(this DateTime value) => (int)Math.Truncate(value.ToUniversalTime().Subtract(new DateTime(1970, 1, 1)).TotalSeconds);
+
     public static bool ARAvailableRetainersCurrentCharacter() => P.autoRetainer.AreAnyRetainersAvailableForCurrentChara();
+    private static unsafe ParallelQuery<ulong> GetAllEnabledCharacters() => P.autoRetainerApi.GetRegisteredCharacters().AsParallel().Where(c => P.autoRetainerApi.GetOfflineCharacterData(c).Enabled);
+
+    public static unsafe bool ARRetainersWaitingToBeProcessed(bool allCharacters = false)
+    {
+        return !allCharacters
+            ? P.autoRetainerApi.GetOfflineCharacterData(Svc.ClientState.LocalContentId).RetainerData.AsParallel().Any(x => x.HasVenture && x.VentureEndsAt <= DateTime.Now.ToUnixTimestamp())
+            : GetAllEnabledCharacters().Any(character => P.autoRetainerApi.GetOfflineCharacterData(character).RetainerData.Any(x => x.HasVenture && x.VentureEndsAt <= DateTime.Now.ToUnixTimestamp()));
+    }
+
+    public static unsafe bool ARSubsWaitingToBeProcessed(bool allCharacters = false)
+    {
+        return !allCharacters
+            ? P.autoRetainerApi.GetOfflineCharacterData(Svc.ClientState.LocalContentId).OfflineSubmarineData.AsParallel().Any(x => x.ReturnTime <= DateTime.Now.ToUnixTimestamp())
+            : GetAllEnabledCharacters().Any(c => P.autoRetainerApi.GetOfflineCharacterData(c).OfflineSubmarineData.Any(x => x.ReturnTime <= DateTime.Now.ToUnixTimestamp()));
+    }
+
+    #endregion
 }
