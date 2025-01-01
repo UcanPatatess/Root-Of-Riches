@@ -366,4 +366,7 @@ public static unsafe class Util
         else
             P.bossmod.SetRange(2.5f);
     }
+
+    // Auto Retainer Stuff
+    public static bool ARAvailableRetainersCurrentCharacter() => P.autoRetainer.AreAnyRetainersAvailableForCurrentChara();
 }

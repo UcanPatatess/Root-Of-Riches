@@ -170,6 +170,14 @@ internal class DebugWindow : Window
                         rSenabled = true;
                     }
                 }
+
+                if (ARAvailableRetainersCurrentCharacter())
+                    ImGui.Text("Available Retainers on this Character");
+                else if (!ARAvailableRetainersCurrentCharacter())
+                    ImGui.Text("No Retainers Available");
+                else
+                    ImGui.Text("Retainer Service not available");
+
                 ImGui.EndTabItem();
             }
             if (ImGui.BeginTabItem("Targeting Debug"))

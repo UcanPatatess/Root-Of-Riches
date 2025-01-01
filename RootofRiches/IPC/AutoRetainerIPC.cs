@@ -13,10 +13,10 @@ namespace RootofRiches.IPC
 
         [EzIPC("PluginState.%m")] public readonly Func<bool> IsBusy;
         [EzIPC("PluginState.%m")] public readonly Func<int> GetInventoryFreeSlotCount;
+        [EzIPC("PluginState.%m")] public readonly Func<bool> AreAnyRetainersAvailableForCurrentChara;
         [EzIPC] public readonly Func<bool> GetMultiModeEnabled;
         [EzIPC] public readonly Action<bool> SetMultiModeEnabled;
         [EzIPC] public readonly Func<bool> GetSuppressed;
         [EzIPC] public readonly Action<bool> SetSuppressed;
-        [EzIPC] public readonly Action<bool> AreAnyRetainersAvailableForCurrentChara;
     }
 }
