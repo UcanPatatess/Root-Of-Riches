@@ -12,6 +12,6 @@ namespace RootofRiches
             TotalA4nRuns = 0;
             TotalRunTime = TimeSpan.Zero;
             FastestRun = TimeSpan.MaxValue;
-    }
+        }
     }
 }

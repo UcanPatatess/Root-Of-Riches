@@ -1,5 +1,4 @@
 using Dalamud.Game.ClientState.Conditions;
-using FFXIVClientStructs.FFXIV.Client.Game.Event;
 using FFXIVClientStructs.FFXIV.Client.Game.Object;
 using FFXIVClientStructs.FFXIV.Client.Game.UI;
 using FFXIVClientStructs.FFXIV.Client.Game;
@@ -11,20 +10,13 @@ using ECommons.DalamudServices;
 using Dalamud.Game.ClientState.Objects.Types;
 using ECommons.GameHelpers;
 using ECommons.Reflection;
-using Serilog;
-using Dalamud.Utility;
 using ECommons.Throttlers;
-using Lumina.Excel.Sheets;
-using ECommons;
 using FFXIVClientStructs.FFXIV.Client.Game.Control;
 using ECommons.DalamudServices.Legacy;
 using System.Runtime.InteropServices;
 using ECommons.Automation.NeoTaskManager;
-using System.Globalization;
 using ECommons.Logging;
-using RootofRiches.Scheduler;
-using AutoRetainerAPI;
-using ECommons.GameFunctions;
+using Dalamud.Game;
 
 
 namespace RootofRiches;
@@ -105,8 +97,24 @@ public static unsafe class Util
         if (TryGetAddonByName<AtkUnitBase>("ContentsFinder", out var addon) && IsAddonReady(addon))
         {
             //var mainAddon = ((AddonContentsFinder*)addon)->SelectedDutyTextNodeSpan[0].Value->NodeText.ToString();
-            var mainAddon = ((AddonContentsFinder*)addon)->SelectedDutyTextNode[0].Value->NodeText.ToString();
             var AlexText = "Alexander - The Burden of the Father";
+            if (Svc.Data.Language == ClientLanguage.Japanese)
+            {
+                AlexText = "機工城アレキサンダー：起動編4";
+            }
+            else if (Svc.Data.Language == ClientLanguage.English)
+            {
+                AlexText = "Alexander - The Burden of the Father";
+            }
+            else if (Svc.Data.Language == ClientLanguage.German)
+            {
+                AlexText = "Alexander - Last des Vaters";
+            }
+            else if (Svc.Data.Language == ClientLanguage.French)
+            {
+                AlexText = "Alexander - Le Fardeau du Père";
+            }
+            var mainAddon = ((AddonContentsFinder*)addon)->SelectedDutyTextNode[0].Value->NodeText.ToString();
             return mainAddon == AlexText;
         }
         return false;

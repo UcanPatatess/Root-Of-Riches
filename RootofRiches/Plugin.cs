@@ -5,7 +5,6 @@ using ECommons;
 using ECommons.Automation.NeoTaskManager;
 using ECommons.Configuration;
 using ECommons.DalamudServices;
-using ECommons.SimpleGui;
 using RootofRiches.IPC;
 using RootofRiches.Scheduler;
 using RootofRiches.Scheduler.Handlers;
