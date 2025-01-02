@@ -218,6 +218,8 @@ internal class DebugWindow : Window
                     TaskInteract.Enqueue(SummoningBell);
                 }
 
+                ImGui.Text($"Is in Inn? {CurrentlyInnInn()}");
+
                 ImGui.EndTabItem();
             }
             if (ImGui.BeginTabItem("Time Test"))

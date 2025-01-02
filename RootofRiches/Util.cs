@@ -24,6 +24,7 @@ using System.Globalization;
 using ECommons.Logging;
 using RootofRiches.Scheduler;
 using AutoRetainerAPI;
+using ECommons.GameFunctions;
 
 
 namespace RootofRiches;
@@ -45,7 +46,7 @@ public static unsafe class Util
         {
             if (gameObject == null || !gameObject.IsTargetable)
                 return;
-            var gameObjectPointer = (FFXIVClientStructs.FFXIV.Client.Game.Object.GameObject*)gameObject.Address;
+            var gameObjectPointer = (GameObject*)gameObject.Address;
             TargetSystem.Instance()->InteractWithObject(gameObjectPointer, false);
         }
         catch (Exception ex)
@@ -187,8 +188,13 @@ public static unsafe class Util
                && Player.Object.IsTargetable;
     }
     internal static bool GenericThrottle => FrameThrottler.Throttle("RootofRichesGenericThrottle", 20);
-    public static uint CurrentTerritory() => Svc.ClientState.TerritoryType;
+    public static int CurrentZoneID() => Svc.ClientState.TerritoryType;
     public static bool IsInZone(int zoneID) => Svc.ClientState.TerritoryType == zoneID;
+    public static bool CurrentlyInnInn()
+    {
+        return innZones.Contains(CurrentZoneID());
+    }
+
     public static bool IsAddonActive(string AddonName) // bunu kullan
     {
         var addon = RaptureAtkUnitManager.Instance()->GetAddonByName(AddonName);

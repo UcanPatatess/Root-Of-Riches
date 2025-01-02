@@ -486,7 +486,6 @@ public static class Data
     public static ulong UlDahInnDoor = 2001011;
     public static Vector3 UlDahInnDoorPos = new(0.02f, 1.97f, 8.13f);
     
-
     public static int Gridania = 132;
     public static int GridaniaInn = 179;
     public static ulong GridaniaInnNPC = 1000102;
@@ -495,7 +494,23 @@ public static class Data
     public static Vector3 GridaniaRepairNPCPos = new(24.83f, -8f, 93.19f);
     public static ulong GridaniaInnDoor = 2000087;
     public static Vector3 GridaniaInnDoorPos = new(0.02f, 1.45f, 7.71f);
-    
+
+    public static int Ishguard = 418;
+    public static int IshguardInn = 429;
+
+    public static int Kugane = 628;
+    public static int KuganeInn = 629;
+
+    public static int Crystarium = 819;
+    public static int CrystariumInn = 843;
+
+    public static int OldShar = 962;
+    public static int OldSharInn = 990;
+
+    public static int Tuliyollai = 1185;
+    public static int TuliyollaiInn = 1205;
+
+    public static readonly HashSet<int> innZones = new HashSet<int>{LimsaInn, UlDahInn, GridaniaInn, IshguardInn, KuganeInn, CrystariumInn, OldSharInn, TuliyollaiInn};
 
     // Move Positions
     public static readonly Vector3 RightForeLegPos = new(-6.53f, 10.54f, -7.56f);

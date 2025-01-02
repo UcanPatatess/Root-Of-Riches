@@ -17,7 +17,7 @@ namespace RootofRiches.Scheduler.Tasks
         {
             if (Svc.Condition[ConditionFlag.Mounted] && PlayerNotBusy()) return true;
 
-            if (CurrentTerritory() == 478 || CurrentTerritory() == 635)
+            if (CurrentZoneID() == 478 || CurrentZoneID() == 635)
             {
                 if (!Svc.Condition[ConditionFlag.Casting] && !Svc.Condition[ConditionFlag.Unknown57] && PlayerNotBusy())
                 {
