@@ -1,16 +1,8 @@
 using Dalamud.Game.ClientState.Conditions;
 using Dalamud.Game.ClientState.Objects.Types;
-using ECommons.Automation.NeoTaskManager.Tasks;
-using ECommons.Configuration;
 using ECommons.DalamudServices;
-using ECommons.Logging;
-using FFXIVClientStructs.FFXIV.Component.GUI;
-using RootofRiches.Resources;
 using RootofRiches.Scheduler.Tasks;
-using ImGuiNET;
-using System.Diagnostics;
 using System.Numerics;
-using static RootofRiches.Data;
 
 namespace RootofRiches.Scheduler
 {

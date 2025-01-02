@@ -1,7 +1,4 @@
-
-using Lumina.Excel.Sheets;
 using System.Numerics;
-using static FFXIVClientStructs.FFXIV.Component.GUI.AtkComponentTreeList.Delegates;
 
 namespace RootofRiches;
 

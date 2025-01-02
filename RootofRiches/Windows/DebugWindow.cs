@@ -1,16 +1,10 @@
 using Dalamud.Game.ClientState.Objects.Types;
-using Dalamud.Interface.Utility.Raii;
-using Dalamud.Interface.Utility.Table;
 using Dalamud.Interface.Windowing;
 using ECommons.DalamudServices;
-using RootofRiches.Scheduler.Handlers;
 using RootofRiches.Scheduler.Tasks;
 using ImGuiNET;
 using System.Globalization;
-using System.IO;
 using System.Numerics;
-using System.Runtime.CompilerServices;
-using static FFXIVClientStructs.FFXIV.Client.UI.RaptureAtkHistory.Delegates;
 
 namespace RootofRiches.Windows;
 

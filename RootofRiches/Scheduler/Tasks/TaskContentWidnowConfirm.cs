@@ -1,4 +1,3 @@
-using ECommons.Logging;
 using ECommons.Throttlers;
 using FFXIVClientStructs.FFXIV.Component.GUI;
 using ECommons.Automation;

@@ -1,13 +1,7 @@
 using ECommons.DalamudServices;
-using ECommons.GameHelpers;
-using FFXIVClientStructs.FFXIV.Client.UI.Agent;
 using Dalamud.Game.ClientState.Conditions;
 using System.Numerics;
 using ECommons.Automation.NeoTaskManager;
-using System.Runtime.InteropServices;
-using FFXIVClientStructs.FFXIV.Component.GUI;
-using ValueType = FFXIVClientStructs.FFXIV.Component.GUI.ValueType;
-using System.Data;
 
 namespace RootofRiches.Scheduler.Tasks
 {

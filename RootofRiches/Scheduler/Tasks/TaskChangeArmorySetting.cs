@@ -1,6 +1,5 @@
 using RootofRiches.Scheduler.Handlers;
 
-
 namespace RootofRiches.Scheduler.Tasks
 {
     internal static class TaskChangeArmorySetting

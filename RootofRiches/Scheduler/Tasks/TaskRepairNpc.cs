@@ -1,10 +1,7 @@
 using ECommons.DalamudServices;
-using ECommons.ExcelServices;
-using FFXIVClientStructs.FFXIV.Client.Game;
 using FFXIVClientStructs.FFXIV.Component.GUI;
 using ECommons.Automation;
 using ECommons.Throttlers;
-using FFXIVClientStructs.FFXIV.Client.UI.Agent;
 
 namespace RootofRiches.Scheduler.Tasks
 {

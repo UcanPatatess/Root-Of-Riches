@@ -6,8 +6,6 @@ using FFXIVClientStructs.FFXIV.Client.Game.Event;
 using FFXIVClientStructs.FFXIV.Client.UI.Agent;
 using FFXIVClientStructs.FFXIV.Component.GUI;
 using RootofRiches.Scheduler.Handlers;
-using Lumina.Excel.Sheets;
-using Serilog;
 using ECommons.Automation;
 
 namespace RootofRiches.Scheduler.Tasks

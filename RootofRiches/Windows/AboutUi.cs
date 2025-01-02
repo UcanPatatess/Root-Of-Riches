@@ -1,13 +1,6 @@
-using Dalamud.Interface.Colors;
-using Dalamud.Interface;
 using ECommons.DalamudServices;
 using ECommons.ImGuiMethods;
 using ImGuiNET;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Dalamud.Interface.Utility;
 using System.Diagnostics;
 

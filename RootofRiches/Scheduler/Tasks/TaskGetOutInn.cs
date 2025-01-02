@@ -3,7 +3,6 @@ using ECommons.DalamudServices;
 using ECommons.Throttlers;
 using FFXIVClientStructs.FFXIV.Component.GUI;
 
-
 namespace RootofRiches.Scheduler.Tasks
 {
     internal static class TaskGetOutInn

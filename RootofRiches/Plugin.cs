@@ -26,7 +26,6 @@ public class Plugin : IDalamudPlugin
     internal WindowSystem windowSystem;
     internal MainWindow mainWindow;
     internal DebugWindow debugWindow;
-    internal SettingMenu settingMenu;
 
     // IPC's/Internals
     internal AutoRetainerApi autoRetainerApi;
@@ -68,16 +67,11 @@ public class Plugin : IDalamudPlugin
         windowSystem = new();
         mainWindow = new();
         debugWindow = new();
-        settingMenu = new();
 
         Svc.PluginInterface.UiBuilder.Draw += windowSystem.Draw;
         Svc.PluginInterface.UiBuilder.OpenMainUi += () =>
         {
             mainWindow.IsOpen = true;
-        };
-        Svc.PluginInterface.UiBuilder.OpenConfigUi += () =>
-        {
-            settingMenu.IsOpen = true;
         };
         EzCmd.Add("/rootofriches", OnCommand, """
                    Open plugin interface
@@ -115,10 +109,6 @@ public class Plugin : IDalamudPlugin
         if (args.EqualsIgnoreCaseAny("d", "debug"))
         {
             debugWindow.IsOpen = !debugWindow.IsOpen;
-        }
-        else if (args.EqualsIgnoreCaseAny("s", "settings"))
-        {
-            settingMenu.IsOpen = !settingMenu.IsOpen;
         }
         else
         {
