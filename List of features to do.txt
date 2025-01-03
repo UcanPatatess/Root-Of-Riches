@@ -2,7 +2,12 @@ Main Features to work on:
 → Auto Retainer features
   → Do retainers
   → Run Subs
+→ Teleport with different logic(rn language breaks it)
+→ Standalone vendor sell
+
 
 Smaller features to do:
 → With the run counter, add funny haha's (jokes... things at run #69, 500, 666... ect)
 → After every run, do a random dad joke 
+→ Add a setting to start raid farm when the turn in is done
+→ Auto open boost for gc turn in

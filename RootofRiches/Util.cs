@@ -25,7 +25,7 @@ public static unsafe class Util
 {
     public static uint GetClassJobId() => Svc.ClientState.LocalPlayer!.ClassJob.RowId;
 
-    public static string icurrentTask = "";
+    public static string icurrentTask = "idle";
     public static void UpdateCurrentTask(string task)
     {
         icurrentTask = task;

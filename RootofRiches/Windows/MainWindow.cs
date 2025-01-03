@@ -26,14 +26,6 @@ internal class MainWindow : Window
     public void Dispose() 
     {
     }
-    private string CurrentTask()
-    {
-        if (P.taskManager.NumQueuedTasks > 0 && P.taskManager.CurrentTask != null)
-        {
-            return P.taskManager.CurrentTask.Name?.ToString() ?? "None";
-        }
-        return "None";
-    }
     private void DrawStatsTab()
     {
         if (ImGui.BeginTabBar("Stats"))
@@ -713,9 +705,8 @@ internal class MainWindow : Window
         {
             if (ImGui.BeginTabItem("Turnin Items"))
             {
-                ImGui.Text($"Current task → {icurrentTask}");
+                ImGui.Text($"Current TurnIn Task → {icurrentTask}");
                 // ImGui.Text($"Current task is: {CurrentTask()}"); // Neotask task listing
-                ImGui.Text($"Number of task → {P.taskManager.NumQueuedTasks}");
                 DrawTurnin();
                 TurninTablesUi();
 

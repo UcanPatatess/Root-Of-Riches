@@ -13,7 +13,7 @@ namespace RootofRiches.Scheduler.Tasks
             P.taskManager.Enqueue(Deliveroo, configuration: DConfig);
             P.taskManager.Enqueue(() => UpdateCurrentTask("Turning in at GC"));
             P.taskManager.EnqueueDelay(1000);
-            P.taskManager.Enqueue(() => UpdateCurrentTask(""));
+            P.taskManager.Enqueue(() => UpdateCurrentTask("idle"));
         }
         private static TaskManagerConfiguration LSConfig => new(timeLimitMS: 2 * 60 * 1000);
         private static TaskManagerConfiguration DConfig => new(timeLimitMS: 10 * 60 * 1000, abortOnTimeout: false);

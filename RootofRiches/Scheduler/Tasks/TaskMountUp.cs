@@ -11,7 +11,7 @@ namespace RootofRiches.Scheduler.Tasks
         {
             P.taskManager.Enqueue(() => UpdateCurrentTask("Mounting Up"));
             P.taskManager.Enqueue(MountUp);
-            P.taskManager.Enqueue(() => UpdateCurrentTask(""));
+            P.taskManager.Enqueue(() => UpdateCurrentTask("idle"));
         }
         internal unsafe static bool? MountUp()
         {

@@ -31,14 +31,15 @@ namespace RootofRiches.Scheduler
             P.stopwatch.Restart();
             P.stopwatch.Stop();
             FullRun = false;
-            A4NTask = "";
+            A4NTask = "idle";
+            UpdateCurrentTask("idle");
             return true;
         }
 
         public static bool RunTurnin = false; // Used for Turnin Toggle
         public static bool RunA4N = false; // Used for N-Raid Toggle
         public static bool hasEnqueuedDutyFinder = false; // used for enque throtle flag
-        public static string A4NTask = "";
+        public static string A4NTask = "idle";
         public static int NRaidRun;
         public static bool FullRun = false;
 
@@ -73,7 +74,7 @@ namespace RootofRiches.Scheduler
                                     hasEnqueuedDutyFinder = false;
                                     P.taskManager.Enqueue(() => NRaidRun = NRaidRun + 1);
                                     TaskTimer.Enqueue(false);
-                                    P.taskManager.Enqueue(() => A4NTask = "");
+                                    P.taskManager.Enqueue(() => A4NTask = "idle");
                                 }
                                 else if (TryGetObjectByDataId(LeftForeleg, out gameObject) || TryGetObjectByDataId(RightForeleg, out gameObject))
                                 {
@@ -120,7 +121,7 @@ namespace RootofRiches.Scheduler
                                 TaskUseAethernet.Enqueue();
                                 TaskMoveTo.Enqueue(InnDict[C.InnDataID].InnNPCPos, "Walking to Inn Npc");
                                 TaskGetIntoInn.Enqueue();
-                                P.taskManager.Enqueue(() => A4NTask = "");
+                                P.taskManager.Enqueue(() => A4NTask = "idle");
                             }
                             else if (C.EnableRepair && NeedsRepair(C.RepairSlider))
                             {
@@ -128,7 +129,7 @@ namespace RootofRiches.Scheduler
                                 {
                                     P.taskManager.Enqueue(() => A4NTask = "Self Repairing");
                                     TaskSelfRepair.Enqueue();
-                                    P.taskManager.Enqueue(() => A4NTask = "");
+                                    P.taskManager.Enqueue(() => A4NTask = "idle");
                                 }
                                 else if (C.RepairMode == "Repair at NPC")
                                 {
@@ -142,7 +143,7 @@ namespace RootofRiches.Scheduler
                                         P.taskManager.Enqueue(() => A4NTask = "Heading back Inn");
                                         TaskMoveTo.Enqueue(InnDict[C.InnDataID].InnNPCPos, "Walking to Inn Npc");
                                         TaskGetIntoInn.Enqueue();
-                                        P.taskManager.Enqueue(() => A4NTask = "");
+                                        P.taskManager.Enqueue(() => A4NTask = "idle");
                                     }
                                     else 
                                     {
@@ -156,7 +157,7 @@ namespace RootofRiches.Scheduler
                                         TaskMoveTo.Enqueue(InnDict[C.InnDataID].InnNPCPos, "Walking to Inn Npc");
                                         P.taskManager.Enqueue(() => A4NTask = "Heading back Inn");
                                         TaskGetIntoInn.Enqueue();
-                                        P.taskManager.Enqueue(() => A4NTask = "");
+                                        P.taskManager.Enqueue(() => A4NTask = "idle");
                                     }
                                 }
                             }
@@ -177,7 +178,7 @@ namespace RootofRiches.Scheduler
                             {
                                 P.taskManager.Enqueue(() => A4NTask = "Confirming the duty");
                                 TaskContentWidnowConfirm.Enqueue();
-                                P.taskManager.Enqueue(() => A4NTask = "");
+                                P.taskManager.Enqueue(() => A4NTask = "idle");
                             }
                         }
                         else

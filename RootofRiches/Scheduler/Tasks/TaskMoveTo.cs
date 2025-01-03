@@ -19,7 +19,7 @@ namespace RootofRiches.Scheduler.Tasks
         {
             P.taskManager.Enqueue(() => UpdateCurrentTask("Moving to location"), "Task Update");
             P.taskManager.Enqueue(() => MoveTo(targetPosition, toleranceDistance),destination);
-            P.taskManager.Enqueue(() => UpdateCurrentTask(""), "Task Update");
+            P.taskManager.Enqueue(() => UpdateCurrentTask("idle"), "Task Update");
         }
         internal unsafe static bool? MoveTo(Vector3 targetPosition, float toleranceDistance = 3f)
         {

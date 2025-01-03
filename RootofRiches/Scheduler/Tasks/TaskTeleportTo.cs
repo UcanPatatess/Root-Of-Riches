@@ -32,7 +32,7 @@ namespace RootofRiches.Scheduler.Tasks
                 P.taskManager.Enqueue(() => UpdateCurrentTask("Teleporting"), "Teleporting");
                 P.taskManager.Enqueue(Teleport);
                 P.taskManager.EnqueueDelay(1000);
-                P.taskManager.Enqueue(() => UpdateCurrentTask(""), "Updating Task");
+                P.taskManager.Enqueue(() => UpdateCurrentTask("idle"), "Updating Task");
             } 
         }
         private static TaskManagerConfiguration LSConfig => new(timeLimitMS: 2 * 60 * 1000);

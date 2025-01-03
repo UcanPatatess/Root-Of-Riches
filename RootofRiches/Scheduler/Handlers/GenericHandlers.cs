@@ -31,10 +31,8 @@ namespace RootofRiches.Scheduler.Handlers
         }
         public unsafe static bool? FireCallback(string AddonName, bool kapkac, params int[] gibeme)
         {
-            UpdateCurrentTask($"FireCallback {AddonName} {kapkac} {gibeme}");
             if (TryGetAddonByName<AtkUnitBase>(AddonName, out var addon) && IsAddonReady(addon))
             {
-                UpdateCurrentTask("");
                 Callback.Fire(addon, kapkac, gibeme.Cast<object>().ToArray());
                 return true;
             }
