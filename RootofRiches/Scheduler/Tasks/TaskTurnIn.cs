@@ -142,24 +142,6 @@ namespace RootofRiches.Scheduler.Tasks
             agent->ReceiveEvent(&res, &arg, 1, 0);
             return false;
         }
-        internal static bool? TargetNpc()
-        {
-            string NpcName = string.Empty;
-            if (Svc.ClientState.TerritoryType == 478) //Idyllshire
-                NpcName = "Sabina";
-            if (Svc.ClientState.TerritoryType == 635)//Rhalgr
-                NpcName = "Gelfradus";
-            Svc.Log.Debug("TargetNpc" + NpcName);
-
-            var target = GetObjectByName(NpcName);
-            if (target != null)
-            {
-                if (EzThrottler.Throttle("TargetNpc", 100))
-                    Svc.Targets.Target = target;
-                return true;
-            }
-            return false;
-        }
         internal unsafe static bool? TargetInteract()
         {
             var target = Svc.Targets.Target;
@@ -179,7 +161,7 @@ namespace RootofRiches.Scheduler.Tasks
         {
             Svc.Log.Debug("OpenShopMenu" + " " + SelectIconString + " " + SelectString);
             P.taskManager.EnqueueDelay(100);
-            P.taskManager.Enqueue(TargetNpc);
+            TaskTarget.Enqueue(TurnInDict[Svc.ClientState.TerritoryType].TurnInNpc);
             P.taskManager.EnqueueDelay(100);
             P.taskManager.Enqueue(TargetInteract);
             if (armory)

@@ -454,6 +454,10 @@ public static class Data
     // Retainer
     public static ulong SummoningBell = 2000403;
 
+    // TurnIn Shop
+    public static ulong Sabina = 1012227;
+    public static ulong gelfradus = 1019452;
+
     #endregion
 
     #region Zone Info
@@ -494,6 +498,9 @@ public static class Data
 
     public static int Ishguard = 418;
     public static int IshguardInn = 429;
+
+    public static int Idyllshire = 478;
+    public static int Rhalgr = 635;
 
     public static int Kugane = 628;
     public static int KuganeInn = 629;
@@ -577,4 +584,18 @@ public static class Data
     // variables to be used across the place
     public static bool RunInfinite = true;
     public static int RunAmount = 1;
+
+    // Dictionary for TurnIn
+
+
+
+    public class TurnInData
+    {
+        public ulong TurnInNpc { get; set; }
+    }
+    public static Dictionary<int, TurnInData> TurnInDict = new Dictionary<int, TurnInData>
+    {
+        {Idyllshire, new TurnInData{TurnInNpc = Sabina} },
+        {Rhalgr, new TurnInData{TurnInNpc = gelfradus} },
+    };
 }
