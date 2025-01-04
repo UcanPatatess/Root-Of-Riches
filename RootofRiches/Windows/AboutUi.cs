@@ -52,7 +52,7 @@ public static class AboutUi
             ImGui.SameLine();
             if (ImGui.Button("Repository"))
             {
-                ImGui.SetClipboardText("PLEASE MAKE SURE TO PUT THIS AFTER UPLOAD");
+                ImGui.SetClipboardText("https://puni.sh/api/repository/ice");
                 Notify.Success("Link copied to clipboard");
             }
             ImGui.SameLine();
