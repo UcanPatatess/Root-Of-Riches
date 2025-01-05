@@ -2,12 +2,6 @@ using Dalamud.Interface.Components;
 using Dalamud.Interface.Utility.Raii;
 using ImGuiNET;
 using RootofRiches.Scheduler;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static System.Windows.Forms.Design.AxImporter;
 
 namespace RootofRiches.Ui.MainWindow;
 

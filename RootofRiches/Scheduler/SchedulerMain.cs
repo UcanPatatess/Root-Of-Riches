@@ -162,6 +162,13 @@ namespace RootofRiches.Scheduler
                                     }
                                 }
                             }
+                            else if (C.EnableAutoRetainer && Svc.ClientState.TerritoryType == C.InnDataID && !NeedsRepair(C.RepairSlider) && P.autoRetainer.AreAnyRetainersAvailableForCurrentChara())
+                            {
+                                P.taskManager.Enqueue(() => A4NTask = "Resending Retainers");
+                                TaskUseAutoRetainer.Enqueue();
+                                //TaskGetOut.Enqueue();
+                                P.taskManager.Enqueue(() => A4NTask = "idle");
+                            }
                             else if (!IsAddonActive("ContentsFinder") && !hasEnqueuedDutyFinder)
                             {
                                 TaskTimer.Enqueue(true);

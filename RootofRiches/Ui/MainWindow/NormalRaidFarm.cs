@@ -1,12 +1,7 @@
 using Dalamud.Interface.Utility.Raii;
+using ECommons.DalamudServices;
 using ImGuiNET;
 using RootofRiches.Scheduler;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.NetworkInformation;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RootofRiches.Ui.MainWindow;
 
@@ -16,6 +11,7 @@ internal class NormalRaidFarm
     private static int AmountToRun = RunAmount;
     private static bool EnableReturnInn = C.EnableReturnInn;
     private static bool EnableRepairMode = C.EnableRepair;
+    private static bool EnableAutoRetainer = C.EnableAutoRetainer;
     private static string NRaidString = C.RaidOption;
     private static string[] NRaidOptions = { "Infinite", "Run x times" };
     private static string NInnString = C.InnOption;
@@ -208,6 +204,23 @@ internal class NormalRaidFarm
                 {
                     C.RepairSlider = RepairThreshold;
                 }
+            }
+            ImGui.PopItemWidth();
+
+            // Row 5: Use Auto Retainer
+            ImGui.Text("Use Auto Retainer");
+            ImGui.SameLine(labelWidth); // Align the next item to the right
+            ImGui.PushItemWidth(inputWidth);
+            using (ImRaii.Disabled(!EnableReturnInn))
+            {
+                if (ImGui.Checkbox("", ref EnableAutoRetainer))
+                    C.EnableAutoRetainer = EnableAutoRetainer;
+                if (!C.EnableReturnInn)
+                {
+                    EnableAutoRetainer = false;
+                    C.EnableAutoRetainer = false;
+                }
+                    
             }
             ImGui.PopItemWidth();
 

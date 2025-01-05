@@ -117,8 +117,10 @@ internal class DebugWindow : Window
                 if (ImGui.Button("TaskGetIntoInn"))
                     TaskGetIntoInn.Enqueue();
                 if (ImGui.Button("Task Escape"))
-                {
                     TaskGetOut.Enqueue();
+                if (ImGui.Button("EnableMulti"))
+                {
+                    TaskUseAutoRetainer.Enqueue();
                 }
                 
                 ImGui.EndTabItem();

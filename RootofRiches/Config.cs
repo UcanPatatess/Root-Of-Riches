@@ -17,6 +17,7 @@ public class Config : IEzConfig
     public bool VendorTurnIn { get; set; } = false;
     public bool SellOilCloth { get; set; } = false;
     public bool ChangeArmory { get; set; } = false;
+    public bool EnableAutoRetainer { get; set; } = false;
     public int DutyFinderCallValue { get; set; } = 0;
     public float RepairSlider { get; set; } = 30f;
     public bool EnableReturnInn { get; set; } = true;
