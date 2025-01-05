@@ -77,7 +77,15 @@ internal class AboutUi
                         UseShellExecute = true
                     });
                 }
-
+                ImGui.SameLine();
+                if (ImGui.Button("UcanPatates's Patreon"))
+                {
+                    Process.Start(new ProcessStartInfo()
+                    {
+                        FileName = "https://www.patreon.com/ucanpatates/membership",
+                        UseShellExecute = true
+                    });
+                }
             });
         });
     }
