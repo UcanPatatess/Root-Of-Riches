@@ -106,5 +106,117 @@ internal class CalculatorUi
 
             ImGui.EndTable();
         }
+
+        if (ImGui.BeginTable("Vendor Sell Gear Table", 2, ImGuiTableFlags.Borders | ImGuiTableFlags.RowBg))
+        {
+            // Render table rows
+            for (int i = 0; i < sellGearVendorTableData.GetLength(0); i++)
+            {
+                ImGui.TableNextRow();
+
+                for (int col = 0; col < 2; col++)
+                {
+                    ImGui.TableSetColumnIndex(col);
+
+                    // Calculate the available space and text size
+                    var text = sellGearVendorTableData[i, col];
+                    var textSize = ImGui.CalcTextSize(text);
+                    var columnWidth = ImGui.GetColumnWidth();
+                    var cursorPosX = ImGui.GetCursorPosX();
+
+                    // Set the cursor position to center the text
+                    ImGui.SetCursorPosX(cursorPosX + (columnWidth - textSize.X) / 2.0f);
+                    ImGui.Text(text);
+                }
+            }
+
+            ImGui.EndTable();
+        }
+
+        if (ImGui.BeginTable("Fc Points Table", 2, ImGuiTableFlags.Borders | ImGuiTableFlags.RowBg))
+        {
+            // Render table rows
+            for (int i = 0; i < fcPointTableData.GetLength(0); i++)
+            {
+                ImGui.TableNextRow();
+
+                for (int col = 0; col < 2; col++)
+                {
+                    ImGui.TableSetColumnIndex(col);
+
+                    // Calculate the available space and text size
+                    var text = fcPointTableData[i, col];
+                    var textSize = ImGui.CalcTextSize(text);
+                    var columnWidth = ImGui.GetColumnWidth();
+                    var cursorPosX = ImGui.GetCursorPosX();
+
+                    // Set the cursor position to center the text
+                    ImGui.SetCursorPosX(cursorPosX + (columnWidth - textSize.X) / 2.0f);
+                    ImGui.Text(text);
+
+                    if (col == 0 && text == "Total FC Points" && ImGui.IsItemHovered())
+                    {
+                        ImGui.BeginTooltip();
+                        ImGui.Text("You only gain fc points if you turn in directly to the Grand Company!");
+                        ImGui.EndTooltip();
+                    }
+                }
+            }
+
+            ImGui.EndTable();
+        }
+
+        ImGui.Spacing();
+
+        if (ImGui.BeginTable("Oilcloth Tables", 3, ImGuiTableFlags.Borders | ImGuiTableFlags.RowBg))
+        {
+            // Set up columns without automatic headers
+            ImGui.TableSetupColumn("Seal Buff");
+            ImGui.TableSetupColumn("Total Seals");
+            ImGui.TableSetupColumn("Total Gil");
+
+            // Custom header row
+            ImGui.TableNextRow(ImGuiTableRowFlags.Headers);
+
+            string[] headers = { "Seal Buff", "Total Seals", "Total Gil" };
+            for (int col = 0; col < headers.Length; col++)
+            {
+                ImGui.TableSetColumnIndex(col);
+
+                // Calculate the available space and text size
+                var header = headers[col];
+                var textSize = ImGui.CalcTextSize(header);
+                var columnWidth = ImGui.GetColumnWidth();
+                var cursorPosX = ImGui.GetCursorPosX();
+
+                // Set the cursor position to center the text
+                ImGui.SetCursorPosX(cursorPosX + (columnWidth - textSize.X) / 2.0f);
+                ImGui.Text(header);
+            }
+
+            // Render table rows
+            for (int i = 0; i < calculationTableData.GetLength(0); i++)
+            {
+                ImGui.TableNextRow();
+
+                for (int col = 0; col < 3; col++)
+                {
+                    ImGui.TableSetColumnIndex(col);
+
+                    // Calculate the available space and text size
+                    var text = calculationTableData[i, col];
+                    var textSize = ImGui.CalcTextSize(text);
+                    var columnWidth = ImGui.GetColumnWidth();
+                    var cursorPosX = ImGui.GetCursorPosX();
+
+                    // Set the cursor position to center the text
+                    ImGui.SetCursorPosX(cursorPosX + (columnWidth - textSize.X) / 2.0f);
+                    ImGui.Text(text);
+                }
+            }
+
+            ImGui.EndTable();
+        }
+
     }
 }
