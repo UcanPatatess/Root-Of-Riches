@@ -537,29 +537,38 @@ public static class Data
     public static int OilclothBase = 0;
     public static int Oilcloth10 = 0;
     public static int Oilcloth15 = 0;
+    public static int VendorGil = 0;
+    public static int A4NSealBase = 1093;
+    public static int A4NSeal10 = 1203;
+    public static int A4NSeal15 = 1257;
+    public static int OilclothBuy = 600;
+    public static int OilclothSell = 360;
+    public static double FCPointCalc = 1.5;
+
     public static int A4NJewelry = 0;
     public static int A4NHand = 0;
     public static int A4NShoes = 0;
     public static int A4NBody = 0;
     public static int A4NLeg = 0;
-    public static int VendorGil = 0;
-    public static int A4NiLvl = 190;
-    public static int SealBase = 1093;
-    public static int Seal10 = 1203;
-    public static int Seal15 = 1257;
-    public static int OilclothBuy = 600;
-    public static int OilclothSell = 360;
-    public static double FCPointCalc = 1.5;
     public static int A4NBodySell = 978;
     public static int A4NLegSell = 978;
     public static int A4NShoeSell = 587;
     public static int A4NHandSell = 587;
     public static int A4NJewelrySell = 445;
-    public static int A4NBoltpR = 2;
-    public static int A4NShaftpR = 2;
-    public static int A4NSpringpR = 2;
-    public static int A4NPedalpR = 1;
-    public static int A4NCrankpR = 1;
+    public static int A4NiLvl = 190;
+
+    public static int A12NJewelry = 0;
+    public static int A12NHand = 0;
+    public static int A12NShoes = 0;
+    public static int A12NBody = 0;
+    public static int A12NLeg = 0;
+
+    public static int O3NJewelry = 0;
+    public static int O3NHand = 0;
+    public static int O3NShoes = 0;
+    public static int O3NBody = 0;
+    public static int O3NLeg = 0;
+
 
     // Dictionary for Inn
 

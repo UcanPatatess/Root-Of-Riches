@@ -48,9 +48,9 @@ internal class CalculatorUi
             A4NLeg = GetItemCount(GordianSpringID) / 4;
             TotalA4NGear = A4NJewelry + A4NHand + A4NShoes + A4NBody + A4NLeg;
             TotalFCPoints = TotalA4NGear * A4NiLvl * FCPointCalc;
-            TotalGCBase = TotalA4NGear * SealBase;
-            TotalGC10 = TotalA4NGear * Seal10;
-            TotalGC15 = TotalA4NGear * Seal15;
+            TotalGCBase = TotalA4NGear * A4NSealBase;
+            TotalGC10 = TotalA4NGear * A4NSeal10;
+            TotalGC15 = TotalA4NGear * A4NSeal15;
             OilclothBase = (TotalGCBase / OilclothBuy) * OilclothSell;
             Oilcloth10 = (TotalGC10 / OilclothBuy) * OilclothSell;
             Oilcloth15 = (TotalGC15 / OilclothBuy) * OilclothSell;
