@@ -11,6 +11,7 @@ internal class CalculatorUi
 {
     public static void Draw()
     {
+
         // All references have been moved for this to the Data.cs file
         string[,] testTableData = new string[,]
         {

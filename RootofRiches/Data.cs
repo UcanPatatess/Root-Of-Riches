@@ -529,7 +529,6 @@ public static class Data
 
     #endregion
 
-    public static int TotalA4NGear = 0;
     public static double TotalFCPoints = 0;
     public static int TotalGCBase = 0;
     public static int TotalGC10 = 0;
@@ -538,13 +537,11 @@ public static class Data
     public static int Oilcloth10 = 0;
     public static int Oilcloth15 = 0;
     public static int VendorGil = 0;
-    public static int A4NSealBase = 1093;
-    public static int A4NSeal10 = 1203;
-    public static int A4NSeal15 = 1257;
     public static int OilclothBuy = 600;
     public static int OilclothSell = 360;
     public static double FCPointCalc = 1.5;
 
+    public static int TotalA4NGear = 0;
     public static int A4NJewelry = 0;
     public static int A4NHand = 0;
     public static int A4NShoes = 0;
@@ -556,18 +553,51 @@ public static class Data
     public static int A4NHandSell = 587;
     public static int A4NJewelrySell = 445;
     public static int A4NiLvl = 190;
+    public static int A4NSealBase = 1093;
+    public static int A4NSeal10 = 1203;
+    public static int A4NSeal15 = 1257;
 
+    /*
+    public static int TotalA12NGear = 0;
     public static int A12NJewelry = 0;
     public static int A12NHand = 0;
     public static int A12NShoes = 0;
     public static int A12NBody = 0;
     public static int A12NLeg = 0;
+    public static int A12NBodySell = 978;
+    public static int A12NLegSell = 978;
+    public static int A12NShoeSell = 587;
+    public static int A12NHandSell = 587;
+    public static int A12NJewelrySell = 445;
+    public static int A12NiLvl = 190;
+    public static int A12NSealBase = 1093;
+    public static int A12NSeal10 = 1203;
+    public static int A12NSeal15 = 1257;
+    */
 
+    public static int TotalO3NGear = 0;
     public static int O3NJewelry = 0;
     public static int O3NHand = 0;
     public static int O3NShoes = 0;
     public static int O3NBody = 0;
     public static int O3NLeg = 0;
+    public static int O3NHead = 0;
+    public static int O3NBodySell = 1493;
+    public static int O3NLegSell = 1493;
+    public static int O3NHeadSell = 896;
+    public static int O3NShoeSell = 896;
+    public static int O3NHandSell = 896;
+    public static int O3NJewelrySell = 679;
+    public static int O3NiLvl = 320;
+    public static int O3NSealBase = 1390;
+    public static int O3NSeal10 = 1529;
+    public static int O3NSeal15 = 1598;
+
+    public static int TotalHead = 0;
+    public static int TotalBody = 0;
+    public static int TotalHand = 0;
+    public static int TotalLeg = 0;
+    public static int TotalShoes = 0;
 
 
     // Dictionary for Inn
