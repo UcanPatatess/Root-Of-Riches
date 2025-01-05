@@ -13,7 +13,6 @@ internal class MainWindow : Window
     public MainWindow() :
     base($"Root of Riches {P.GetType().Assembly.GetName().Version}")
     {
-        Flags = ImGuiWindowFlags.NoCollapse;
         SizeConstraints = new WindowSizeConstraints
         {
             MinimumSize = new Vector2(100, 100),

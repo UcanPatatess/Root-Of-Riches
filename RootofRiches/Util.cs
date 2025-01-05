@@ -54,9 +54,13 @@ public static unsafe class Util
             var x = gameObject;
             if (x != null)
             {
-                Svc.Targets.SetTarget(x);
-                ECommons.Logging.PluginLog.Information($"Setting the target to {x.DataId}");
-                return true;
+                if (EzThrottler.Throttle($"Throttle Targeting {x.DataId}"))
+                {
+                    Svc.Targets.SetTarget(x);
+                    ECommons.Logging.PluginLog.Information($"Setting the target to {x.DataId}");
+                }
+                if (Svc.Targets.Target != null && Svc.Targets.Target.DataId == x.DataId)
+                    return true;
             }
         }
         return false;

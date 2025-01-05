@@ -15,12 +15,13 @@ internal class CalculatorUi
         // All references have been moved for this to the Data.cs file
         string[,] testTableData = new string[,]
         {
-            { "Jewelry", $"{A4NJewelry:N0}"},
-            { "Hands", $"{A4NHand:N0}"},
-            { "Shoes", $"{A4NShoes:N0}"},
-            { "Body", $"{A4NBody:N0}"},
-            { "Legs", $"{A4NLeg:N0}"},
-            { "Total Gear Pieces", $"{TotalA4NGear:N0}"}
+            { "Jewelry", $"{TotalJewelry:N0}"},
+            { "Head", $"{TotalHead:N0}"},
+            { "Hands", $"{TotalHand:N0}"},
+            { "Shoes", $"{TotalShoes:N0}"},
+            { "Body", $"{TotalBody:N0}"},
+            { "Legs", $"{TotalLeg:N0}"},
+            { "Total Gear Pieces", $"{TotalGear:N0}"}
         };
 
         string[,] fcPointTableData = new string[,]
@@ -48,14 +49,34 @@ internal class CalculatorUi
             A4NBody = GetItemCount(GordianShaftID) / 4;
             A4NLeg = GetItemCount(GordianSpringID) / 4;
             TotalA4NGear = A4NJewelry + A4NHand + A4NShoes + A4NBody + A4NLeg;
-            TotalFCPoints = TotalA4NGear * A4NiLvl * FCPointCalc;
-            TotalGCBase = TotalA4NGear * A4NSealBase;
-            TotalGC10 = TotalA4NGear * A4NSeal10;
-            TotalGC15 = TotalA4NGear * A4NSeal15;
+
+            O3NJewelry = GetItemCount(DeltascapeBoltID);
+            O3NHead = GetItemCount(DeltascapeLensID) / 2;
+            O3NHand = GetItemCount(DeltascapeCrankID) / 2;
+            O3NShoes = GetItemCount(DeltascapePedalID) / 2;
+            O3NBody = GetItemCount(DeltascapeShaftID) / 4;
+            O3NLeg = GetItemCount(DeltascapeSpringID) / 4;
+            TotalO3NGear = O3NJewelry + O3NHead + O3NHand + O3NShoes + O3NBody + O3NLeg;
+
+            TotalJewelry = A4NJewelry + O3NJewelry;
+            TotalHead = A4NHead + O3NHead;
+            TotalHand = A4NHand + O3NHand;
+            TotalShoes = A4NShoes + O3NShoes;
+            TotalBody = A4NBody + O3NBody;
+            TotalLeg = A4NLeg + O3NLeg;
+            TotalGear = TotalA4NGear + TotalO3NGear;
+
+            TotalFCPoints = (TotalA4NGear * A4NiLvl * FCPointCalc) + (TotalO3NGear * O3NiLvl * FCPointCalc);
+            TotalGCBase = (TotalA4NGear * A4NSealBase) + (TotalO3NGear * O3NSealBase);
+            TotalGC10 = (TotalA4NGear * A4NSeal10) + (TotalO3NGear * O3NSeal10);
+            TotalGC15 = (TotalA4NGear * A4NSeal15) + (TotalO3NGear * O3NSeal15);
             OilclothBase = (TotalGCBase / OilclothBuy) * OilclothSell;
             Oilcloth10 = (TotalGC10 / OilclothBuy) * OilclothSell;
             Oilcloth15 = (TotalGC15 / OilclothBuy) * OilclothSell;
-            VendorGil = (A4NJewelry * A4NJewelrySell) + (A4NHand * A4NHandSell) + (A4NShoes * A4NShoeSell) + (A4NBody * A4NBodySell) + (A4NLeg * A4NLegSell);
+            VendorGil = (A4NJewelry * A4NJewelrySell) + (A4NHand * A4NHandSell)
+                        + (A4NShoes * A4NShoeSell) + (A4NBody * A4NBodySell) + (A4NLeg * A4NLegSell)
+                        + (O3NJewelry * O3NJewelrySell) + (O3NHead + O3NHeadSell) + (O3NHand + O3NHandSell)
+                        + (O3NShoes * O3NShoeSell) + (O3NBody * O3NBodySell) + (O3NLeg * O3NLegSell);
         }
         ImGui.NewLine();
 

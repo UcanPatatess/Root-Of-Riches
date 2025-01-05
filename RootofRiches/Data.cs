@@ -12,12 +12,12 @@ public static class Data
     public static int DeltascapeTurnInCount = 0;
 
     // Deltascape Item IDs
-    private static int DeltascapeLensID = 19111;
-    private static int DeltascapeShaftID = 19112;
-    private static int DeltascapeCrankID = 19113;
-    private static int DeltascapeSpringID = 19114;
-    private static int DeltascapePedalID = 19115;
-    private static int DeltascapeBoltID = 19117;
+    public static int DeltascapeLensID = 19111;
+    public static int DeltascapeShaftID = 19112;
+    public static int DeltascapeCrankID = 19113;
+    public static int DeltascapeSpringID = 19114;
+    public static int DeltascapePedalID = 19115;
+    public static int DeltascapeBoltID = 19117;
 
     // Tarnished Gordian Item IDs
     public static int GordianLensID = 12674;
@@ -457,7 +457,7 @@ public static class Data
 
     // TurnIn Shop
     public static ulong Sabina = 1012227;
-    public static ulong gelfradus = 1019452;
+    public static ulong Gelfradus = 1019452;
 
     #endregion
 
@@ -543,6 +543,7 @@ public static class Data
 
     public static int TotalA4NGear = 0;
     public static int A4NJewelry = 0;
+    public static int A4NHead = 0;
     public static int A4NHand = 0;
     public static int A4NShoes = 0;
     public static int A4NBody = 0;
@@ -593,11 +594,13 @@ public static class Data
     public static int O3NSeal10 = 1529;
     public static int O3NSeal15 = 1598;
 
+    public static int TotalJewelry = 0;
     public static int TotalHead = 0;
     public static int TotalBody = 0;
     public static int TotalHand = 0;
     public static int TotalLeg = 0;
     public static int TotalShoes = 0;
+    public static int TotalGear = 0;
 
 
     // Dictionary for Inn
@@ -637,6 +640,6 @@ public static class Data
     public static Dictionary<int, TurnInData> TurnInDict = new Dictionary<int, TurnInData>
     {
         {Idyllshire, new TurnInData{TurnInNpc = Sabina} },
-        {Rhalgr, new TurnInData{TurnInNpc = gelfradus} },
+        {Rhalgr, new TurnInData{TurnInNpc = Gelfradus} },
     };
 }
