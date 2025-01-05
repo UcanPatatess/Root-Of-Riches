@@ -4,38 +4,28 @@ namespace RootofRiches.Scheduler.Tasks
 {
     internal static class TaskTeleportTo
     {
-        internal static int WhereToTeleportInt()
+        internal static string WhereToTeleportString(int ZoneID)
         {
-            var where = 478;// idyllshire
-            if (DeltascapeTurnInCount > 0)
-            {
-                where = 635;// Rhalgr
-                return where;
-            }
-            return where;
-        }
-        internal static string WhereToTeleportString()
-        {
-            var where = "idyllshire";
-            if (DeltascapeTurnInCount > 0)
-            {
+            string where = string.Empty;
+            if (ZoneID == Idyllshire)
+                where = "idyllshire";
+            if (ZoneID == Rhalgr)
                 where = "Rhalgr";
-                return where;
-            }
             return where;
         }
-        internal static void Enqueue()
+        internal static void Enqueue(int ZoneID)
         {
-            if (IsInZone(WhereToTeleportInt())) { return; }
+            if (IsInZone(ZoneID)) { return; }
             else
             {
                 P.taskManager.Enqueue(() => UpdateCurrentTask("Teleporting"), "Teleporting");
-                P.taskManager.Enqueue(Teleport);
+                P.taskManager.Enqueue(() => P.lifestream.ExecuteCommand("tp " + WhereToTeleportString(ZoneID)));
+                P.taskManager.Enqueue(() => !IsInZone(ZoneID));
+                P.taskManager.Enqueue(() => IsInZone(ZoneID), LSConfig);
                 P.taskManager.EnqueueDelay(1000);
                 P.taskManager.Enqueue(() => UpdateCurrentTask("idle"), "Updating Task");
             } 
         }
         private static TaskManagerConfiguration LSConfig => new(timeLimitMS: 2 * 60 * 1000);
-        private static void Teleport() => P.taskManager.InsertMulti([new(() => P.lifestream.ExecuteCommand("tp " + WhereToTeleportString())), new(() => !IsInZone(WhereToTeleportInt())), new(() => IsInZone(WhereToTeleportInt()), LSConfig)]);
     }
 }

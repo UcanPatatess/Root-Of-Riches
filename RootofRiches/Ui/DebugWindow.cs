@@ -294,27 +294,6 @@ internal class DebugWindow : Window
 
     private void TimeTestUi()
     {
-        /*
-        bool timeReset;
-        TimeSpan currentTime = P.stopwatch.Elapsed;
-        string currentTimeF = currentTime.ToString(@"mm\:ss\.fff");
-        TimeSpan totalTime = C.TotalRunTime;
-        string totalTimeF = totalTime.ToString(@"hh\:mm\:ss");
-        TimeSpan fastestTime = C.fastestRun;
-        string fastestTimeF = fastestTime.ToString(@"mm\:ss\.fff");
-
-        ImGui.Text($"Time Elapsed is: {currentTimeF}");
-        ImGui.Text($"Current total loop time is: {totalTimeF}");
-        ImGui.Text($"Fastest time is: {fastestTimeF}");
-        bool isCtrlHeld = ImGui.GetIO().KeyCtrl;
-        using (var _ = ImRaii.PushStyle(ImGuiStyleVar.Alpha, 0.5f, !ImGui.GetIO().KeyCtrl))
-            timeReset = ImGui.Button("RESET STATS", new Vector2(ImGui.GetContentRegionAvail().X, ImGui.GetContentRegionAvail().Y)) && ImGui.GetIO().KeyCtrl;
-
-        if (timeReset)
-        {
-            C.TotalRunTime = TimeSpan.Zero;
-            C.fastestRun = TimeSpan.MaxValue;
-        }
-        */
+        ImGui.Text($"Task is: {P.taskManager.CurrentTask}");
     }
 }
