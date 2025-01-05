@@ -42,6 +42,7 @@ namespace RootofRiches.Scheduler
         public static string A4NTask = "idle";
         public static int NRaidRun;
         public static bool FullRun = false;
+        private static int PreviousArea = 0;
 
         internal static void Tick()
         {
@@ -199,12 +200,22 @@ namespace RootofRiches.Scheduler
                                 TaskFcSell.Enqueue();
                                 TaskSellVendor.Enqueue();
                             }
-                            else
+                            else if (TotalExchangeItem != 0 || (C.SellOilCloth && GetItemCount(10120) > 0))
                             {
-                                TaskTeleportTo.Enqueue();
-                                TaskMountUp.Enqueue();
-                                TaskMoveTo.Enqueue(new Vector3(34, 208, -51), "Summoning Bell");
-                                TaskSellVendor.Enqueue();
+                                if (IsInZone(Rhalgr) || DeltascapeTurnInCount > 0)
+                                {
+                                    TaskTeleportTo.Enqueue(Rhalgr);
+                                    TaskMountUp.Enqueue();
+                                    TaskMoveTo.Enqueue(new Vector3(-57.27f, 0f, 48.57f), "Summoning Bell");
+                                    TaskSellVendor.Enqueue();
+                                }
+                                else if (IsInZone(Idyllshire) || (GordianTurnInCount > 0 || AlexandrianTurnInCount > 0))
+                                {
+                                    TaskTeleportTo.Enqueue(Idyllshire);
+                                    TaskMountUp.Enqueue();
+                                    TaskMoveTo.Enqueue(new Vector3(34, 208, -51), "Summoning Bell");
+                                    TaskSellVendor.Enqueue();
+                                }
                             }
                         }
                         else if (IsThereTradeItem())
@@ -214,22 +225,24 @@ namespace RootofRiches.Scheduler
                                 TaskChangeArmorySetting.Enqueue();
                                 C.ChangeArmory = true;
                             }
-                            if (GordianTurnInCount > 0 || AlexandrianTurnInCount > 0)
-                            {
-                                TaskTeleportTo.Enqueue();
-                                TaskMountUp.Enqueue();
-                                TaskMoveTo.Enqueue(new Vector3(-19, 211, -36), "Shop NPC");
-                                TaskMergeInv.Enqueue();
-                                TaskTurnIn.Enqueue();
-                            }
-                            else
+                            if (DeltascapeTurnInCount > 0)
                             {
                                 //logic is added but it needs to be tested
-                                TaskTeleportTo.Enqueue();
+                                TaskTeleportTo.Enqueue(Rhalgr);
                                 TaskMountUp.Enqueue();
-                                TaskMoveTo.Enqueue(new Vector3(-55.6f, 0.0f, 51.4f), "Shop NPC");
+                                TaskMoveTo.Enqueue(new Vector3(125.88f, 0.68f, 40.67f), "Omega Shop NPC", 1);
                                 TaskMergeInv.Enqueue();
                                 TaskTurnIn.Enqueue();
+                                P.taskManager.Enqueue(() => PreviousArea = CurrentZoneID());
+                            }
+                            else if (GordianTurnInCount > 0 || AlexandrianTurnInCount > 0)
+                            {
+                                TaskTeleportTo.Enqueue(Idyllshire);
+                                TaskMountUp.Enqueue();
+                                TaskMoveTo.Enqueue(new Vector3(-19, 211, -36), "Alexander Shop NPC", 1);
+                                TaskMergeInv.Enqueue();
+                                TaskTurnIn.Enqueue();
+                                P.taskManager.Enqueue(() => PreviousArea = CurrentZoneID());
                             }
                         }
                         else { DisablePlugin(); }

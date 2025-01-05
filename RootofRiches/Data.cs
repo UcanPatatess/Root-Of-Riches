@@ -1,4 +1,5 @@
 using System.Numerics;
+using System.Runtime.InteropServices;
 
 namespace RootofRiches;
 
@@ -214,22 +215,22 @@ public static class Data
     // Omega Raid Series
     public static int[,] GelfradusTable = new int[,]
     {
-        {0, DeltascapeLensID, LensBuyAmount, 19437, 0, 0},
-        {0, DeltascapeLensID, LensBuyAmount, 19443, 1, 0},
-        {0, DeltascapeLensID, LensBuyAmount, 19449, 2, 0},
-        {0, DeltascapeShaftID, ShaftBuyAmount, 19438, 3, 0},
+        {0, DeltascapeShaftID, ShaftBuyAmount, 19438, 3, 0}, // x4
         {0, DeltascapeShaftID, ShaftBuyAmount, 19444, 4, 0},
         {0, DeltascapeShaftID, ShaftBuyAmount, 19450, 5, 0},
-        {0, DeltascapeCrankID, CrankBuyAmount, 19439, 6, 0},
-        {0, DeltascapeCrankID, CrankBuyAmount, 19445, 7, 0},
-        {0, DeltascapeCrankID, CrankBuyAmount, 19451, 8, 0},
-        {0, DeltascapeSpringID, SpringBuyAmount, 19440, 9, 0},
+        {0, DeltascapeSpringID, SpringBuyAmount, 19440, 9, 0}, // x4
         {0, DeltascapeSpringID, SpringBuyAmount, 19446, 10, 0},
         {0, DeltascapeSpringID, SpringBuyAmount, 19452, 11, 0},
-        {0, DeltascapePedalID, PedalBuyAmount, 19441, 12, 0},
+        {0, DeltascapeCrankID, CrankBuyAmount, 19439, 6, 0}, // x2
+        {0, DeltascapeCrankID, CrankBuyAmount, 19445, 7, 0},
+        {0, DeltascapeCrankID, CrankBuyAmount, 19451, 8, 0},
+        {0, DeltascapePedalID, PedalBuyAmount, 19441, 12, 0}, // x2
         {0, DeltascapePedalID, PedalBuyAmount, 19447, 13, 0},
         {0, DeltascapePedalID, PedalBuyAmount, 19453, 14, 0},
-        {0, DeltascapeBoltID, BoltBuyAmount, 19479, 15, 0},
+        {0, DeltascapeLensID, LensBuyAmount, 19437, 0, 0}, // x2
+        {0, DeltascapeLensID, LensBuyAmount, 19443, 1, 0},
+        {0, DeltascapeLensID, LensBuyAmount, 19449, 2, 0},
+        {0, DeltascapeBoltID, BoltBuyAmount, 19479, 15, 0}, // x1
         {0, DeltascapeBoltID, BoltBuyAmount, 19480, 16, 0},
         {0, DeltascapeBoltID, BoltBuyAmount, 19484, 17, 0},
         {0, DeltascapeBoltID, BoltBuyAmount, 19485, 18, 0},
@@ -238,31 +239,31 @@ public static class Data
         {0, DeltascapeBoltID, BoltBuyAmount, 19494, 21, 0},
         {0, DeltascapeBoltID, BoltBuyAmount, 19495, 22, 0},
 
-        {1, DeltascapeLensID, LensBuyAmount, 19461, 0, 1},
-        {1, DeltascapeLensID, LensBuyAmount, 19455, 1, 1},
         {1, DeltascapeShaftID, ShaftBuyAmount, 19462, 2, 1},
         {1, DeltascapeShaftID, ShaftBuyAmount, 19456, 3, 1},
-        {1, DeltascapeCrankID, CrankBuyAmount, 19463, 4, 1},
-        {1, DeltascapeCrankID, CrankBuyAmount, 19457, 5, 1},
         {1, DeltascapeSpringID, SpringBuyAmount, 19464, 6, 1},
         {1, DeltascapeSpringID, SpringBuyAmount, 19458, 7, 1},
+        {1, DeltascapeCrankID, CrankBuyAmount, 19463, 4, 1},
+        {1, DeltascapeCrankID, CrankBuyAmount, 19457, 5, 1},
         {1, DeltascapePedalID, PedalBuyAmount, 19465, 8, 1},
         {1, DeltascapePedalID, PedalBuyAmount, 19459, 9, 1},
+        {1, DeltascapeLensID, LensBuyAmount, 19461, 0, 1},
+        {1, DeltascapeLensID, LensBuyAmount, 19455, 1, 1},
         {1, DeltascapeBoltID, BoltBuyAmount, 19481, 10, 1},
         {1, DeltascapeBoltID, BoltBuyAmount, 19486, 11, 1},
         {1, DeltascapeBoltID, BoltBuyAmount, 19491, 12, 1},
         {1, DeltascapeBoltID, BoltBuyAmount, 19496, 13, 1},
 
-        {2, DeltascapeLensID, LensBuyAmount, 19473, 0, 2},
-        {2, DeltascapeLensID, LensBuyAmount, 19467, 1, 2},
         {2, DeltascapeShaftID, ShaftBuyAmount, 19474, 2, 2},
         {2, DeltascapeShaftID, ShaftBuyAmount, 19468, 3, 2},
-        {2, DeltascapeCrankID, CrankBuyAmount, 19475, 4, 2},
-        {2, DeltascapeCrankID, CrankBuyAmount, 19469, 5, 2},
         {2, DeltascapeSpringID, SpringBuyAmount, 19476, 6, 2},
         {2, DeltascapeSpringID, SpringBuyAmount, 19470, 7, 2},
+        {2, DeltascapeCrankID, CrankBuyAmount, 19475, 4, 2},
+        {2, DeltascapeCrankID, CrankBuyAmount, 19469, 5, 2},
         {2, DeltascapePedalID, PedalBuyAmount, 19477, 8, 2},
         {2, DeltascapePedalID, PedalBuyAmount, 19471, 9, 2},
+        {2, DeltascapeLensID, LensBuyAmount, 19473, 0, 2},
+        {2, DeltascapeLensID, LensBuyAmount, 19467, 1, 2},
         {2, DeltascapeBoltID, BoltBuyAmount, 19483, 10, 2},
         {2, DeltascapeBoltID, BoltBuyAmount, 19482, 11, 2},
         {2, DeltascapeBoltID, BoltBuyAmount, 19488, 12, 2},
@@ -276,21 +277,21 @@ public static class Data
     // Alexander Raid Series
     public static int[,] SabinaTable = new int[,]
     {
-        {0, GordianLensID, LensBuyAmount, 11448, 0, 0},
-        {0, GordianLensID, LensBuyAmount, 11449, 1, 0},
-        {0, GordianLensID, LensBuyAmount, 11450, 2, 0},
         {0, GordianShaftID, ShaftBuyAmount, 11455, 3, 0},
         {0, GordianShaftID, ShaftBuyAmount, 11456, 4, 0},
         {0, GordianShaftID, ShaftBuyAmount, 11457, 5, 0},
-        {0, GordianCrankID, CrankBuyAmount, 11462, 6, 0},
-        {0, GordianCrankID, CrankBuyAmount, 11463, 7, 0},
-        {0, GordianCrankID, CrankBuyAmount, 11464, 8, 0},
         {0, GordianSpringID, SpringBuyAmount, 11476, 9, 0},
         {0, GordianSpringID, SpringBuyAmount, 11477, 10, 0},
         {0, GordianSpringID, SpringBuyAmount, 11478, 11, 0},
+        {0, GordianCrankID, CrankBuyAmount, 11462, 6, 0},
+        {0, GordianCrankID, CrankBuyAmount, 11463, 7, 0},
+        {0, GordianCrankID, CrankBuyAmount, 11464, 8, 0},
         {0, GordianPedalID, PedalBuyAmount, 11483, 12, 0},
         {0, GordianPedalID, PedalBuyAmount, 11484, 13, 0},
         {0, GordianPedalID, PedalBuyAmount, 11485, 14, 0},
+        {0, GordianLensID, LensBuyAmount, 11448, 0, 0},
+        {0, GordianLensID, LensBuyAmount, 11449, 1, 0},
+        {0, GordianLensID, LensBuyAmount, 11450, 2, 0},
         {0, GordianBoltID, BoltBuyAmount, 11490, 15, 0},
         {0, GordianBoltID, BoltBuyAmount, 11491, 16, 0},
         {0, GordianBoltID, BoltBuyAmount, 11495, 17, 0},
@@ -300,31 +301,31 @@ public static class Data
         {0, GordianBoltID, BoltBuyAmount, 11505, 21, 0},
         {0, GordianBoltID, BoltBuyAmount, 11506, 22, 0},
 
-        {1, GordianLensID, LensBuyAmount, 11452, 0, 0},
-        {1, GordianLensID, LensBuyAmount, 11451, 1, 0},
         {1, GordianShaftID, ShaftBuyAmount, 11459, 2, 0},
         {1, GordianShaftID, ShaftBuyAmount, 11458, 3, 0},
-        {1, GordianCrankID, CrankBuyAmount, 11466, 4, 0},
-        {1, GordianCrankID, CrankBuyAmount, 11465, 5, 0},
         {1, GordianSpringID, SpringBuyAmount, 11480, 6, 0},
         {1, GordianSpringID, SpringBuyAmount, 11479, 7, 0},
+        {1, GordianCrankID, CrankBuyAmount, 11466, 4, 0},
+        {1, GordianCrankID, CrankBuyAmount, 11465, 5, 0},
         {1, GordianPedalID, PedalBuyAmount, 11487, 8, 0},
         {1, GordianPedalID, PedalBuyAmount, 11486, 9, 0},
+        {1, GordianLensID, LensBuyAmount, 11452, 0, 0},
+        {1, GordianLensID, LensBuyAmount, 11451, 1, 0},
         {1, GordianBoltID, BoltBuyAmount, 11492, 10, 0},
         {1, GordianBoltID, BoltBuyAmount, 11497, 11, 0},
         {1, GordianBoltID, BoltBuyAmount, 11502, 12, 0},
         {1, GordianBoltID, BoltBuyAmount, 11507, 13, 0},
 
-        {2, GordianLensID, LensBuyAmount, 11454, 0, 0},
-        {2, GordianLensID, LensBuyAmount, 11453, 1, 0},
         {2, GordianShaftID, ShaftBuyAmount, 11461, 2, 0},
         {2, GordianShaftID, ShaftBuyAmount, 11460, 3, 0},
-        {2, GordianCrankID, CrankBuyAmount, 11468, 4, 0},
-        {2, GordianCrankID, CrankBuyAmount, 11467, 5, 0},
         {2, GordianSpringID, SpringBuyAmount, 11482, 6, 0},
         {2, GordianSpringID, SpringBuyAmount, 11481, 7, 0},
+        {2, GordianCrankID, CrankBuyAmount, 11468, 4, 0},
+        {2, GordianCrankID, CrankBuyAmount, 11467, 5, 0},
         {2, GordianPedalID, PedalBuyAmount, 11489, 8, 0},
         {2, GordianPedalID, PedalBuyAmount, 11488, 9, 0},
+        {2, GordianLensID, LensBuyAmount, 11454, 0, 0},
+        {2, GordianLensID, LensBuyAmount, 11453, 1, 0},
         {2, GordianBoltID, BoltBuyAmount, 11494, 10, 0},
         {2, GordianBoltID, BoltBuyAmount, 11493, 11, 0},
         {2, GordianBoltID, BoltBuyAmount, 11499, 12, 0},
@@ -334,21 +335,21 @@ public static class Data
         {2, GordianBoltID, BoltBuyAmount, 11509, 16, 0},
         {2, GordianBoltID, BoltBuyAmount, 11508, 17, 0},
 
-        {0, AlexandrianLensID, LensBuyAmount, 16403, 0, 2},
-        {0, AlexandrianLensID, LensBuyAmount, 16409, 1, 2},
-        {0, AlexandrianLensID, LensBuyAmount, 16415, 2, 2},
         {0, AlexandrianShaftID, ShaftBuyAmount, 16404, 3, 2},
         {0, AlexandrianShaftID, ShaftBuyAmount, 16410, 4, 2},
         {0, AlexandrianShaftID, ShaftBuyAmount, 16416, 5, 2},
-        {0, AlexandrianCrankID, CrankBuyAmount, 16405, 6, 2},
-        {0, AlexandrianCrankID, CrankBuyAmount, 16411, 7, 2},
-        {0, AlexandrianCrankID, CrankBuyAmount, 16417, 8, 2},
         {0, AlexandrianSpringID, SpringBuyAmount, 16406, 9, 2},
         {0, AlexandrianSpringID, SpringBuyAmount, 16412, 10, 2},
         {0, AlexandrianSpringID, SpringBuyAmount, 16418, 11, 2},
+        {0, AlexandrianCrankID, CrankBuyAmount, 16405, 6, 2},
+        {0, AlexandrianCrankID, CrankBuyAmount, 16411, 7, 2},
+        {0, AlexandrianCrankID, CrankBuyAmount, 16417, 8, 2},
         {0, AlexandrianPedalID, PedalBuyAmount, 16407, 12, 2},
         {0, AlexandrianPedalID, PedalBuyAmount, 16413, 13, 2},
         {0, AlexandrianPedalID, PedalBuyAmount, 16419, 14, 2},
+        {0, AlexandrianLensID, LensBuyAmount, 16403, 0, 2},
+        {0, AlexandrianLensID, LensBuyAmount, 16409, 1, 2},
+        {0, AlexandrianLensID, LensBuyAmount, 16415, 2, 2},
         {0, AlexandrianBoltID, BoltBuyAmount, 16445, 15, 2},
         {0, AlexandrianBoltID, BoltBuyAmount, 16446, 16, 2},
         {0, AlexandrianBoltID, BoltBuyAmount, 16450, 17, 2},
@@ -358,31 +359,31 @@ public static class Data
         {0, AlexandrianBoltID, BoltBuyAmount, 16460, 21, 2},
         {0, AlexandrianBoltID, BoltBuyAmount, 16461, 22, 2},
 
-        {1, AlexandrianLensID, LensBuyAmount, 16427, 0, 2},
-        {1, AlexandrianLensID, LensBuyAmount, 16421, 1, 2},
         {1, AlexandrianShaftID, ShaftBuyAmount, 16428, 2, 2},
         {1, AlexandrianShaftID, ShaftBuyAmount, 16422, 3, 2},
-        {1, AlexandrianCrankID, CrankBuyAmount, 16429, 4, 2},
-        {1, AlexandrianCrankID, CrankBuyAmount, 16423, 5, 2},
         {1, AlexandrianSpringID, SpringBuyAmount, 16430, 6, 2},
         {1, AlexandrianSpringID, SpringBuyAmount, 16424, 7, 2},
+        {1, AlexandrianCrankID, CrankBuyAmount, 16429, 4, 2},
+        {1, AlexandrianCrankID, CrankBuyAmount, 16423, 5, 2},
         {1, AlexandrianPedalID, PedalBuyAmount, 16431, 8, 2},
         {1, AlexandrianPedalID, PedalBuyAmount, 16425, 9, 2},
+        {1, AlexandrianLensID, LensBuyAmount, 16427, 0, 2},
+        {1, AlexandrianLensID, LensBuyAmount, 16421, 1, 2},
         {1, AlexandrianBoltID, BoltBuyAmount, 16447, 10, 2},
         {1, AlexandrianBoltID, BoltBuyAmount, 16452, 11, 2},
         {1, AlexandrianBoltID, BoltBuyAmount, 16457, 12, 2},
         {1, AlexandrianBoltID, BoltBuyAmount, 16462, 13, 2},
 
-        {2, AlexandrianLensID, LensBuyAmount, 16439, 0, 2},
-        {2, AlexandrianLensID, LensBuyAmount, 16433, 1, 2},
         {2, AlexandrianShaftID, ShaftBuyAmount, 16440, 2, 2},
         {2, AlexandrianShaftID, ShaftBuyAmount, 16434, 3, 2},
-        {2, AlexandrianCrankID, CrankBuyAmount, 16441, 4, 2},
-        {2, AlexandrianCrankID, CrankBuyAmount, 16435, 5, 2},
         {2, AlexandrianSpringID, SpringBuyAmount, 16442, 6, 2},
         {2, AlexandrianSpringID, SpringBuyAmount, 16436, 7, 2},
+        {2, AlexandrianCrankID, CrankBuyAmount, 16441, 4, 2},
+        {2, AlexandrianCrankID, CrankBuyAmount, 16435, 5, 2},
         {2, AlexandrianPedalID, PedalBuyAmount, 16443, 8, 2},
         {2, AlexandrianPedalID, PedalBuyAmount, 16437, 9, 2},
+        {2, AlexandrianLensID, LensBuyAmount, 16439, 0, 2},
+        {2, AlexandrianLensID, LensBuyAmount, 16433, 1, 2},
         {2, AlexandrianBoltID, BoltBuyAmount, 16449, 10, 2},
         {2, AlexandrianBoltID, BoltBuyAmount, 16448, 11, 2},
         {2, AlexandrianBoltID, BoltBuyAmount, 16454, 12, 2},
@@ -499,9 +500,6 @@ public static class Data
     public static int Ishguard = 418;
     public static int IshguardInn = 429;
 
-    public static int Idyllshire = 478;
-    public static int Rhalgr = 635;
-
     public static int Kugane = 628;
     public static int KuganeInn = 629;
 
@@ -513,6 +511,10 @@ public static class Data
 
     public static int Tuliyollai = 1185;
     public static int TuliyollaiInn = 1205;
+
+    // Turnin Locations
+    public static int Idyllshire = 478;
+    public static int Rhalgr = 635;
 
     public static readonly HashSet<int> innZones = new HashSet<int>{LimsaInn, UlDahInn, GridaniaInn, IshguardInn, KuganeInn, CrystariumInn, OldSharInn, TuliyollaiInn};
 
@@ -527,7 +529,6 @@ public static class Data
 
     #endregion
 
-    public static int TotalA4NGear = 0;
     public static double TotalFCPoints = 0;
     public static int TotalGCBase = 0;
     public static int TotalGC10 = 0;
@@ -535,29 +536,69 @@ public static class Data
     public static int OilclothBase = 0;
     public static int Oilcloth10 = 0;
     public static int Oilcloth15 = 0;
+    public static int VendorGil = 0;
+    public static int OilclothBuy = 600;
+    public static int OilclothSell = 360;
+    public static double FCPointCalc = 1.5;
+
+    public static int TotalA4NGear = 0;
     public static int A4NJewelry = 0;
     public static int A4NHand = 0;
     public static int A4NShoes = 0;
     public static int A4NBody = 0;
     public static int A4NLeg = 0;
-    public static int VendorGil = 0;
-    public static int A4NiLvl = 190;
-    public static int SealBase = 1093;
-    public static int Seal10 = 1203;
-    public static int Seal15 = 1257;
-    public static int OilclothBuy = 600;
-    public static int OilclothSell = 360;
-    public static double FCPointCalc = 1.5;
     public static int A4NBodySell = 978;
     public static int A4NLegSell = 978;
     public static int A4NShoeSell = 587;
     public static int A4NHandSell = 587;
     public static int A4NJewelrySell = 445;
-    public static int A4NBoltpR = 2;
-    public static int A4NShaftpR = 2;
-    public static int A4NSpringpR = 2;
-    public static int A4NPedalpR = 1;
-    public static int A4NCrankpR = 1;
+    public static int A4NiLvl = 190;
+    public static int A4NSealBase = 1093;
+    public static int A4NSeal10 = 1203;
+    public static int A4NSeal15 = 1257;
+
+    /*
+    public static int TotalA12NGear = 0;
+    public static int A12NJewelry = 0;
+    public static int A12NHand = 0;
+    public static int A12NShoes = 0;
+    public static int A12NBody = 0;
+    public static int A12NLeg = 0;
+    public static int A12NBodySell = 978;
+    public static int A12NLegSell = 978;
+    public static int A12NShoeSell = 587;
+    public static int A12NHandSell = 587;
+    public static int A12NJewelrySell = 445;
+    public static int A12NiLvl = 190;
+    public static int A12NSealBase = 1093;
+    public static int A12NSeal10 = 1203;
+    public static int A12NSeal15 = 1257;
+    */
+
+    public static int TotalO3NGear = 0;
+    public static int O3NJewelry = 0;
+    public static int O3NHand = 0;
+    public static int O3NShoes = 0;
+    public static int O3NBody = 0;
+    public static int O3NLeg = 0;
+    public static int O3NHead = 0;
+    public static int O3NBodySell = 1493;
+    public static int O3NLegSell = 1493;
+    public static int O3NHeadSell = 896;
+    public static int O3NShoeSell = 896;
+    public static int O3NHandSell = 896;
+    public static int O3NJewelrySell = 679;
+    public static int O3NiLvl = 320;
+    public static int O3NSealBase = 1390;
+    public static int O3NSeal10 = 1529;
+    public static int O3NSeal15 = 1598;
+
+    public static int TotalHead = 0;
+    public static int TotalBody = 0;
+    public static int TotalHand = 0;
+    public static int TotalLeg = 0;
+    public static int TotalShoes = 0;
+
 
     // Dictionary for Inn
 

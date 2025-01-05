@@ -1,12 +1,12 @@
+using Dalamud.Interface.Utility;
 using ECommons.DalamudServices;
 using ECommons.ImGuiMethods;
 using ImGuiNET;
-using Dalamud.Interface.Utility;
 using System.Diagnostics;
 
-namespace RootofRiches.Windows;
+namespace RootofRiches.Ui.MainWindow;
 
-public static class AboutUi
+internal class AboutUi
 {
     private static string GetImageURL()
     {

@@ -8,6 +8,7 @@ using ECommons.DalamudServices;
 using RootofRiches.IPC;
 using RootofRiches.Scheduler;
 using RootofRiches.Scheduler.Handlers;
+using RootofRiches.Ui.MainWindow;
 using RootofRiches.Windows;
 using System.Diagnostics;
 
@@ -43,6 +44,7 @@ public class Plugin : IDalamudPlugin
 
 
 
+    #pragma warning disable CS8618 
     public Plugin(IDalamudPluginInterface pluginInterface)
     {
         P = this;
