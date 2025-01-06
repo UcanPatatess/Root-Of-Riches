@@ -357,6 +357,7 @@ public static unsafe class Util
         try
         {
             WrathIPC.ReleaseControl((Guid)WrathIPC.CurrentLease!);
+            WrathIPC.RoRLease = null;
         }
         catch (Exception e)
         {

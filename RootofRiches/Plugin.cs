@@ -37,7 +37,7 @@ public class Plugin : IDalamudPlugin
     internal NavmeshIPC navmesh;
     internal BossModIPC bossmod;
     internal WrathIPC wrath;
-    internal RoRIPC roRIPC;
+    internal RoRIPC rorIPC;
 
     // Timers
     internal Stopwatch stopwatch;
@@ -66,6 +66,8 @@ public class Plugin : IDalamudPlugin
         lifestream = new();
         navmesh = new();
         bossmod = new();
+        wrath = new();
+        rorIPC = new();
 
         // Windows
         windowSystem = new();
