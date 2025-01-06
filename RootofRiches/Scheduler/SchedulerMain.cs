@@ -33,6 +33,7 @@ namespace RootofRiches.Scheduler
             FullRun = false;
             A4NTask = "idle";
             UpdateCurrentTask("idle");
+            ToggleRotation(false);
             return true;
         }
 
@@ -162,7 +163,7 @@ namespace RootofRiches.Scheduler
                                     }
                                 }
                             }
-                            else if (C.EnableAutoRetainer && Svc.ClientState.TerritoryType == C.InnDataID && !NeedsRepair(C.RepairSlider) && P.autoRetainer.AreAnyRetainersAvailableForCurrentChara())
+                            else if (C.EnableAutoRetainer && Svc.ClientState.TerritoryType == C.InnDataID && !NeedsRepair(C.RepairSlider) && ARAvailableRetainersCurrentCharacter())
                             {
                                 P.taskManager.Enqueue(() => A4NTask = "Resending Retainers");
                                 TaskUseAutoRetainer.Enqueue(); // still in testing

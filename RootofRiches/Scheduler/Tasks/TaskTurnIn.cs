@@ -7,6 +7,7 @@ using FFXIVClientStructs.FFXIV.Client.UI.Agent;
 using FFXIVClientStructs.FFXIV.Component.GUI;
 using RootofRiches.Scheduler.Handlers;
 using ECommons.Automation;
+using Dalamud.Game.ClientState.Objects.Types;
 
 namespace RootofRiches.Scheduler.Tasks
 {
@@ -159,15 +160,16 @@ namespace RootofRiches.Scheduler.Tasks
         }
         internal static void OpenShopMenu(int SelectIconString, int SelectString,bool armory = true)
         {
-            Svc.Log.Debug("OpenShopMenu" + " " + SelectIconString + " " + SelectString);
             P.taskManager.EnqueueDelay(100);
             TaskTarget.Enqueue(TurnInDict[Svc.ClientState.TerritoryType].TurnInNpc);
             P.taskManager.EnqueueDelay(100);
             P.taskManager.Enqueue(TargetInteract);
             if (armory)
             {
+                Svc.Log.Debug($"First shop menu {SelectIconString}");
                 P.taskManager.Enqueue(() => GenericHandlers.FireCallback("SelectIconString", true, SelectIconString), "Fire Callback 1");
             }
+            Svc.Log.Debug($"Second shop menu {SelectIconString}");
             P.taskManager.Enqueue(() => GenericHandlers.FireCallback("SelectString", true, SelectString), "Fire Callback 2");
             P.taskManager.Enqueue(() => IsAddonActive("ShopExchangeItem"), "Addon Active");
         }

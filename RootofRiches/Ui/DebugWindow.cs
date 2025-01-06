@@ -39,6 +39,14 @@ internal class DebugWindow : Window
     private string commandInput = "";
     private bool rSenabled = false;
     private static ulong InnDataID = InnDict[C.InnDataID].RepairNPC;
+    private string CurrentTask()
+    {
+        if (P.taskManager.NumQueuedTasks > 0 && P.taskManager.CurrentTask != null)
+        {
+            return P.taskManager.CurrentTask.Name?.ToString() ?? "None";
+        }
+        return "None";
+    }
     public override void Draw()
     {
         if (ImGui.BeginTabBar("##Debug Tabs"))
@@ -46,6 +54,7 @@ internal class DebugWindow : Window
             if (ImGui.BeginTabItem("Global Turnin debug"))
             {
                 ImGui.Text($"General Information");
+                ImGui.Text($"Current Task: {CurrentTask()}");
                 ImGui.Text($"TerritoryID: " + Svc.ClientState.TerritoryType);
                 ImGui.Text($"Target: " + Svc.Targets.Target);
                 ImGui.InputText("##Addon Visible", ref addonName, 100);
