@@ -1,6 +1,7 @@
 using Dalamud.Interface.Utility.Raii;
 using ECommons.DalamudServices;
 using ImGuiNET;
+using RootofRiches.IPC;
 using RootofRiches.Scheduler;
 
 namespace RootofRiches.Ui.MainWindow;
@@ -239,6 +240,7 @@ internal class NormalRaidFarm
                 }
             }
         }
+        ImGui.Columns(3, null, false);
         ImGui.Text("Necessary Plugins");
         FancyCheckmark(P.bossmod.Installed);
         ImGui.SameLine();
@@ -246,5 +248,13 @@ internal class NormalRaidFarm
         FancyCheckmark(P.navmesh.Installed);
         ImGui.SameLine();
         ImGui.Text("Navmesh");
+        ImGui.NextColumn();
+        ImGui.Text("Supported Combo Plugins");
+        FancyCheckmark(true);
+        ImGui.SameLine();
+        ImGui.Text("BossMod (VBM)");
+        FancyCheckmark(true);
+        ImGui.SameLine();
+        ImGui.Text("Wrath");
     }
 }

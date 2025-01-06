@@ -291,6 +291,7 @@ public static unsafe class Util
             {
                 //RunCommand("wrath auto off");
                 P.bossmod.DisablePresets();
+                ReleaseWrathControl();
                 RunCommand("vbm ai off");
                 if (PluginInstalled(AltBossMod))
                 {
