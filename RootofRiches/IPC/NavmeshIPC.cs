@@ -9,6 +9,7 @@ public class NavmeshIPC
     public const string Name = "vnavmesh";
     public const string Repo = "https://puni.sh/api/repository/veyn";
     public NavmeshIPC() => EzIPC.Init(this, Name);
+    public bool Installed => PluginInstalled(Name);
 
     [EzIPC("Nav.%m")] public readonly Func<bool> IsReady;
     [EzIPC("Nav.%m")] public readonly Func<float> BuildProgress;

@@ -9,6 +9,7 @@ namespace RootofRiches.IPC
         public const string Name = "Lifestream";
         public const string Repo = "https://github.com/NightmareXIV/MyDalamudPlugins/raw/main/pluginmaster.json";
         public LifestreamIPC() => EzIPC.Init(this, Name, SafeWrapper.AnyException);
+        public bool Installed => PluginInstalled(Name);
 
         [EzIPC] public Func<string, bool> AethernetTeleport;
         [EzIPC] public Func<uint, byte, bool> Teleport;

@@ -17,6 +17,9 @@ using System.Runtime.InteropServices;
 using ECommons.Automation.NeoTaskManager;
 using ECommons.Logging;
 using Dalamud.Game;
+using Dalamud.Interface.Colors;
+using ECommons.ImGuiMethods;
+using RootofRiches.IPC;
 
 
 namespace RootofRiches;
@@ -245,8 +248,8 @@ public static unsafe class Util
 
     public static bool EnableNormalRaidFarm()
     {
-        return PluginInstalled("BossMod")
-               || (PluginInstalled(AltBossMod) && PluginInstalled("WrathCombo"));
+        return P.navmesh.Installed
+               && (P.bossmod.Installed || (PluginInstalled(AltBossMod) && WrathIPC.IsEnabled));
     }
 
     public static void ToggleRotation(bool enable)
@@ -255,12 +258,13 @@ public static unsafe class Util
         {
             if (PluginInstalled("WrathCombo"))
             {
-                RunCommand("wrath auto on");
+                //RunCommand("wrath auto on");
                 if (PluginInstalled("BossMod"))
                 {
                     P.bossmod.AddPreset("ROR Passive", Resources.BMRotations.rootPassive);
                     P.bossmod.SetPreset("ROR Passive");
                     P.bossmod.SetRange(2.5f);
+                    EnableWrathAuto();
                     RunCommand("vbm ai on");
                 }
                 if (PluginInstalled(AltBossMod))
@@ -285,7 +289,7 @@ public static unsafe class Util
         {
             if (PluginInstalled("WrathCombo"))
             {
-                RunCommand("wrath auto off");
+                //RunCommand("wrath auto off");
                 P.bossmod.DisablePresets();
                 RunCommand("vbm ai off");
                 if (PluginInstalled(AltBossMod))
@@ -300,6 +304,68 @@ public static unsafe class Util
             }
         }
     }
+
+    #region Wrath
+    public static void EnableWrathAuto()
+    {
+        if (!WrathIPC.IsEnabled) return;
+        try
+        {
+            var lease = (Guid)WrathIPC.CurrentLease!;
+            // enable Wrath Combo Auto-Rotation
+            WrathIPC.SetAutoRotationState(lease, true);
+            // make sure the job is ready for Auto-Rotation
+            WrathIPC.SetCurrentJobAutoRotationReady(lease);
+            // if the job is ready, all the user's settings are locked
+            // if the job is not ready, it turns on the job's simple modes, or if those don't
+            // exist, it turns on the job's advanced modes with all options enabled
+        }
+        catch (Exception e)
+        {
+            PluginLog.Error("Unknown Wrath IPC error," +
+                            "probably inability to register a lease." +
+                            "\n" + e.Message);
+        }
+    }
+
+    public static void EnableWrathAutoAndConfigureIt()
+    {
+        if (!WrathIPC.IsEnabled) return;
+        try
+        {
+            var lease = (Guid)WrathIPC.CurrentLease!;
+            WrathIPC.SetAutoRotationState(lease, true);
+            WrathIPC.SetCurrentJobAutoRotationReady(lease);
+            WrathIPC.SetAutoRotationConfigState(lease,
+                WrathIPC.AutoRotationConfigOption.InCombatOnly, false);
+            WrathIPC.SetAutoRotationConfigState(lease,
+                WrathIPC.AutoRotationConfigOption.AutoRez, true);
+            WrathIPC.SetAutoRotationConfigState(lease,
+                WrathIPC.AutoRotationConfigOption.SingleTargetHPP, 60);
+        }
+        catch (Exception e)
+        {
+            PluginLog.Error("Unknown Wrath IPC error," +
+                            "probably inability to register a lease." +
+                            "\n" + e.Message);
+        }
+    }
+
+    public static void ReleaseWrathControl()
+    {
+        if (!WrathIPC.IsEnabled) return;
+        try
+        {
+            WrathIPC.ReleaseControl((Guid)WrathIPC.CurrentLease!);
+        }
+        catch (Exception e)
+        {
+            PluginLog.Error("Unknown Wrath IPC error," +
+                            "probably inability to register a lease." +
+                            "\n" + e.Message);
+        }
+    }
+    #endregion
 
     public static unsafe bool NeedsRepair(float below = 0)
     {
@@ -384,6 +450,18 @@ public static unsafe class Util
             P.bossmod.SetRange(range);
         else
             P.bossmod.SetRange(2.5f);
+    }
+
+    public static void FancyCheckmark(bool enabled)
+    {
+        if (!enabled)
+        {
+            FontAwesome.Print(ImGuiColors.DalamudRed, FontAwesome.Cross);
+        }
+        else if (enabled)
+        {
+            FontAwesome.Print(ImGuiColors.HealerGreen, FontAwesome.Check);
+        }
     }
 
     #region AutoRetainer

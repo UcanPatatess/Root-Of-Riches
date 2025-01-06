@@ -36,6 +36,8 @@ public class Plugin : IDalamudPlugin
     internal LifestreamIPC lifestream;
     internal NavmeshIPC navmesh;
     internal BossModIPC bossmod;
+    internal WrathIPC wrath;
+    internal RoRIPC roRIPC;
 
     // Timers
     internal Stopwatch stopwatch;

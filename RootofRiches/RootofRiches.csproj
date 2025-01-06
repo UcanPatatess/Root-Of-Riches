@@ -3,7 +3,7 @@
   <Import Project="Dalamud.Plugin.Bootstrap.targets" />
 
   <PropertyGroup>
-    <Version>0.0.0.16</Version>
+    <Version>0.0.0.17</Version>
     <Description>Time to make some gill..</Description>
     <PackageProjectUrl>https://github.com/goatcorp/SamplePlugin</PackageProjectUrl>
     <PackageLicenseExpression>AGPL-3.0-or-later</PackageLicenseExpression>
@@ -14,8 +14,5 @@
     <ItemGroup>
         <ProjectReference Include="..\ECommons\ECommons\ECommons.csproj" />
         <ProjectReference Include="..\AutoRetainerAPI\AutoRetainerAPI\AutoRetainerAPI.csproj" />
-    </ItemGroup>  
-  <ItemGroup>
-    <Folder Include="IPC\" />
-  </ItemGroup>
+    </ItemGroup>
 </Project>

@@ -5,6 +5,7 @@ using RootofRiches.Scheduler.Tasks;
 using ImGuiNET;
 using System.Globalization;
 using System.Numerics;
+using RootofRiches.IPC;
 
 namespace RootofRiches.Windows;
 
@@ -173,6 +174,18 @@ internal class DebugWindow : Window
                     ImGui.Text("No Retainers Available");
                 else
                     ImGui.Text("Retainer Service not available");
+                if (ImGui.Button("Simple Enable Wrath"))
+                {
+                    P.taskManager.Enqueue(() => EnableWrathAuto());
+                }
+                if (ImGui.Button("Enable Advanced Wrath Rotation"))
+                {
+                    P.taskManager.Enqueue(() => EnableWrathAutoAndConfigureIt());
+                }
+                if (ImGui.Button("Release Wrath Control"))
+                {
+                    P.taskManager.Enqueue(() => ReleaseWrathControl());
+                }
 
                 ImGui.EndTabItem();
             }

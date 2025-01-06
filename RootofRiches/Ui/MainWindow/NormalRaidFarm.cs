@@ -19,6 +19,7 @@ internal class NormalRaidFarm
     private static string NRepairMode = C.RepairMode;
     private static string[] NrepairOptions = { "Self Repair", "Repair at NPC" };
     private static float RepairThreshold = C.RepairSlider;
+    private static bool CopyButton = false;
 
     public static void Draw()
     {
@@ -238,5 +239,12 @@ internal class NormalRaidFarm
                 }
             }
         }
+        ImGui.Text("Necessary Plugins");
+        FancyCheckmark(P.bossmod.Installed);
+        ImGui.SameLine();
+        ImGui.Text("BossMod (VBM)");
+        FancyCheckmark(P.navmesh.Installed);
+        ImGui.SameLine();
+        ImGui.Text("Navmesh");
     }
 }

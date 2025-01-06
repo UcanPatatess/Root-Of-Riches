@@ -10,6 +10,7 @@ namespace RootofRiches.IPC
         public const string Repo = "https://github.com/awgil/ffxiv_bossmod";
         #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
         public BossModIPC() => EzIPC.Init(this, Name, SafeWrapper.AnyException);
+        public bool Installed => PluginInstalled(Name);
 
         [EzIPC] public readonly Func<uint, bool> HasModuleByDataId;
         [EzIPC] public readonly Func<IReadOnlyList<string>, bool, List<string>> Configuration;
