@@ -52,9 +52,12 @@ public static unsafe class Util
 
     internal static bool? TargetByID(IGameObject? gameObject)
     {
+        var x = gameObject;
+        if (Svc.Targets.Target != null && Svc.Targets.Target.DataId == x.DataId)
+            return true;
+
         if (!IsOccupied())
         {
-            var x = gameObject;
             if (x != null)
             {
                 if (EzThrottler.Throttle($"Throttle Targeting {x.DataId}"))
@@ -62,8 +65,6 @@ public static unsafe class Util
                     Svc.Targets.SetTarget(x);
                     ECommons.Logging.PluginLog.Information($"Setting the target to {x.DataId}");
                 }
-                if (Svc.Targets.Target != null && Svc.Targets.Target.DataId == x.DataId)
-                    return true;
             }
         }
         return false;
