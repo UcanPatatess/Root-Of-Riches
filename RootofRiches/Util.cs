@@ -17,6 +17,7 @@ using FFXIVClientStructs.FFXIV.Client.Game.UI;
 using FFXIVClientStructs.FFXIV.Client.UI;
 using FFXIVClientStructs.FFXIV.Client.UI.Agent;
 using FFXIVClientStructs.FFXIV.Component.GUI;
+using ImGuiNET;
 using RootofRiches.IPC;
 using System.Numerics;
 using System.Runtime.InteropServices;
@@ -252,7 +253,13 @@ public static unsafe class Util
         return P.navmesh.Installed
                && (P.bossmod.Installed || (PluginInstalled(AltBossMod) && WrathIPC.IsEnabled));
     }
-
+    public static bool EnableTurnIn()
+    {
+        return P.navmesh.Installed 
+            && P.lifestream.Installed 
+            && P.autoRetainer.Installed 
+            && P.deliveroo.Installed;
+    }
     public static void ToggleRotation(bool enable)
     {
         if (enable)
@@ -466,7 +473,22 @@ public static unsafe class Util
             FontAwesome.Print(ImGuiColors.HealerGreen, FontAwesome.Check);
         }
     }
-
+    public static void FancyPluginUiString(bool PluginInstalled,string Text,string Url)
+    {
+        FancyCheckmark(PluginInstalled);
+        ImGui.SameLine();
+        if (ImGui.Selectable(Text))
+        {
+            // Copy the repo URL to the clipboard
+            ImGui.SetClipboardText(Url);
+        }
+        if (ImGui.IsItemHovered())
+        {
+            ImGui.BeginTooltip();
+            ImGui.Text("Click to copy repo URL");
+            ImGui.EndTooltip();
+        }
+    }
     #region AutoRetainer
     public static int ToUnixTimestamp(this DateTime value) => (int)Math.Truncate(value.ToUniversalTime().Subtract(new DateTime(1970, 1, 1)).TotalSeconds);
 

@@ -6,7 +6,6 @@ namespace RootofRiches.Ui.MainWindow;
 
 internal class NormalRaidFarm
 {
-
     public static void Draw()
     {
         string NRaidTask = SchedulerMain.A4NTask;
@@ -54,24 +53,11 @@ internal class NormalRaidFarm
 
             ImGui.Columns(2, null, false);
             ImGui.Text("Necessary Plugins");
-            FancyCheckmark(P.bossmod.Installed);
-            ImGui.SameLine();
-            if (ImGui.Selectable("BossMod (VBM)"))
-            {
-                // Copy the repo URL to the clipboard
-                ImGui.SetClipboardText("https://puni.sh/api/repository/veyn");
-            }
-            if (ImGui.IsItemHovered())
-            {
-                ImGui.BeginTooltip();
-                ImGui.Text("Click to copy repo URL");
-                ImGui.EndTooltip();
-            }
-            //ImGui.Text("BossMod (VBM)");
-            FancyCheckmark(P.navmesh.Installed);
-            ImGui.SameLine();
-            ImGui.Text("Navmesh");
+            FancyPluginUiString(P.bossmod.Installed, "BossMod (VBM)", "https://puni.sh/api/repository/veyn");
+            FancyPluginUiString(P.navmesh.Installed, "Navmesh", "https://puni.sh/api/repository/veyn");
             ImGui.NextColumn();
+
+
             ImGui.Text("Supported Combo Plugins");
             FancyCheckmark(true);
             ImGui.SameLine();
