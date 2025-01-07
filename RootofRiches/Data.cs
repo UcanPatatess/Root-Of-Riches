@@ -486,7 +486,7 @@ public static class Data
     public static Vector3 UlDahRepairNPCPos = new(32.85f, 7f, -81.32f);
     public static ulong UlDahInnDoor = 2001011;
     public static Vector3 UlDahInnDoorPos = new(0.02f, 1.97f, 8.13f);
-    
+
     public static int Gridania = 132;
     public static int GridaniaInn = 179;
     public static ulong GridaniaInnNPC = 1000102;
@@ -513,9 +513,13 @@ public static class Data
 
     // Turnin Locations
     public static int Idyllshire = 478;
+    public static Vector3 IdyllshireNPCPos = new(-20.98f, 211.00f, -37.74f);
+    public static Vector3 IdyllshireBellPos = new(34.78f, 208.15f, -50.86f);
     public static int Rhalgr = 635;
+    public static Vector3 RhalgrNPCPos = new Vector3(128.40f, 0.68f, 41.70f);
+    public static Vector3 RhalgrBellPos = new Vector3(-57.27f, 0f, 48.57f);
 
-    public static readonly HashSet<int> innZones = new HashSet<int>{LimsaInn, UlDahInn, GridaniaInn, IshguardInn, KuganeInn, CrystariumInn, OldSharInn, TuliyollaiInn};
+    public static readonly HashSet<int> innZones = new HashSet<int> { LimsaInn, UlDahInn, GridaniaInn, IshguardInn, KuganeInn, CrystariumInn, OldSharInn, TuliyollaiInn };
 
     // Move Positions
     public static readonly Vector3 RightForeLegPos = new(-6.53f, 10.54f, -7.56f);
@@ -606,7 +610,7 @@ public static class Data
 
     public class InnData
     {
-        public required int MainCity {  get; set; } 
+        public required int MainCity { get; set; }
         public ulong RepairNPC { get; set; }
         public Vector3 RepairNPCPos { get; set; }
         public required ulong InnNPC { get; set; }
@@ -635,10 +639,12 @@ public static class Data
     public class TurnInData
     {
         public ulong TurnInNpc { get; set; }
+        public Vector3 NpcPos { get; set; }
+        public Vector3 BellPos { get; set; }
     }
     public static Dictionary<int, TurnInData> TurnInDict = new Dictionary<int, TurnInData>
     {
-        {Idyllshire, new TurnInData{TurnInNpc = Sabina} },
-        {Rhalgr, new TurnInData{TurnInNpc = Gelfradus} },
+        {Idyllshire, new TurnInData{TurnInNpc = Sabina,NpcPos = IdyllshireNPCPos,BellPos = IdyllshireBellPos} },
+        {Rhalgr, new TurnInData{TurnInNpc = Gelfradus,NpcPos = RhalgrNPCPos,BellPos = RhalgrBellPos} },
     };
 }
