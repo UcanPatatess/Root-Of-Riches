@@ -123,6 +123,10 @@ public class Plugin : IDalamudPlugin
         {
             debugWindow.IsOpen = !debugWindow.IsOpen;
         }
+        else if (args.EqualsIgnoreCaseAny("s", "settings", "setting"))
+        {
+            settingsWindow.IsOpen = !settingsWindow.IsOpen;
+        }
         else
         {
             mainWindow.IsOpen = !mainWindow.IsOpen;

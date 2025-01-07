@@ -1,8 +1,6 @@
-using Dalamud.Interface.Components;
 using Dalamud.Interface.Utility.Raii;
 using ImGuiNET;
 using RootofRiches.Scheduler;
-using RootofRiches.Windows;
 
 namespace RootofRiches.Ui.MainWindow;
 
@@ -98,6 +96,10 @@ internal class TurninUi
 
             ImGui.EndTable();
         }
+        using (ImRaii.Disabled(true))
+        {
+
+        }
         if (ImGui.Button(SchedulerMain.DoWeTick ? "Stop" : "Start Turnin"))
         {
             if (SchedulerMain.DoWeTick)
@@ -109,11 +111,6 @@ internal class TurninUi
                 SchedulerMain.EnablePlugin(); // Call EnablePlugin if not running
                 SchedulerMain.RunTurnin = true;
             }
-        }
-        ImGui.SameLine();
-        if (ImGui.Button("Options"))
-        {
-            P.settingsWindow.IsOpen = !P.settingsWindow.IsOpen;
         }
     }
 }

@@ -5,6 +5,7 @@ using Dalamud.Interface.Windowing;
 using ECommons.ImGuiMethods;
 using ImGuiNET;
 using System.Numerics;
+using Dalamud.Interface;
 
 namespace RootofRiches.Ui.MainWindow;
 
@@ -13,11 +14,18 @@ internal class MainWindow : Window
     public MainWindow() :
     base($"Root of Riches {P.GetType().Assembly.GetName().Version}")
     {
-        SizeConstraints = new WindowSizeConstraints
+        SizeConstraints = new()
         {
-            MinimumSize = new Vector2(100, 100),
-            MaximumSize = new Vector2(800, 600)
+            MinimumSize = new(250, 100),
+            MaximumSize = new(9999, 9999)
         };
+        TitleBarButtons.Add(new()
+        {
+            Click = (m) => { if (m == ImGuiMouseButton.Left) P.settingsWindow.IsOpen = !P.settingsWindow.IsOpen; },
+            Icon = FontAwesomeIcon.Cog,
+            IconOffset = new(2, 2),
+            ShowTooltip = () => ImGui.SetTooltip("Open settings window"),
+        });
         P.windowSystem.AddWindow(this);
     }
 

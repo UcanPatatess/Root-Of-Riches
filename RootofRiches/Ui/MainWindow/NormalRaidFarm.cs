@@ -1,26 +1,11 @@
 using Dalamud.Interface.Utility.Raii;
-using ECommons.DalamudServices;
 using ImGuiNET;
-using RootofRiches.IPC;
 using RootofRiches.Scheduler;
 
 namespace RootofRiches.Ui.MainWindow;
 
 internal class NormalRaidFarm
 {
-    // Counter/Inputs
-    private static int AmountToRun = RunAmount;
-    private static bool EnableReturnInn = C.EnableReturnInn;
-    private static bool EnableRepairMode = C.EnableRepair;
-    private static bool EnableAutoRetainer = C.EnableAutoRetainer;
-    private static string NRaidString = C.RaidOption;
-    private static string[] NRaidOptions = { "Infinite", "Run x times" };
-    private static string NInnString = C.InnOption;
-    private static string[] NInnOptions = { "Limsa", "Ul'Dah", "Gridania" };
-    private static string NRepairMode = C.RepairMode;
-    private static string[] NrepairOptions = { "Self Repair", "Repair at NPC" };
-    private static float RepairThreshold = C.RepairSlider;
-    private static bool CopyButton = false;
 
     public static void Draw()
     {
@@ -45,33 +30,55 @@ internal class NormalRaidFarm
             ImGui.Text("Raid mode is idle");
         }
 
-        if (ImGui.Button(SchedulerMain.DoWeTick ? "Stop" : "Start A4N"))
+        using (ImRaii.Disabled(!EnableNormalRaidFarm()))
         {
-            if (SchedulerMain.DoWeTick)
+            if (ImGui.Button(SchedulerMain.DoWeTick ? "Stop" : "Start A4N"))
             {
-                SchedulerMain.DisablePlugin(); // Call DisablePlugin if running
-            }
-            else
-            {
-                SchedulerMain.EnablePlugin(); // Call EnablePlugin if not running
-                SchedulerMain.RunA4N = true;
+                if (SchedulerMain.DoWeTick)
+                {
+                    SchedulerMain.DisablePlugin(); // Call DisablePlugin if running
+                }
+                else
+                {
+                    SchedulerMain.EnablePlugin(); // Call EnablePlugin if not running
+                    SchedulerMain.RunA4N = true;
+                }
             }
         }
-        ImGui.Columns(3, null, false);
-        ImGui.Text("Necessary Plugins");
-        FancyCheckmark(P.bossmod.Installed);
-        ImGui.SameLine();
-        ImGui.Text("BossMod (VBM)");
-        FancyCheckmark(P.navmesh.Installed);
-        ImGui.SameLine();
-        ImGui.Text("Navmesh");
-        ImGui.NextColumn();
-        ImGui.Text("Supported Combo Plugins");
-        FancyCheckmark(true);
-        ImGui.SameLine();
-        ImGui.Text("BossMod (VBM)");
-        FancyCheckmark(true);
-        ImGui.SameLine();
-        ImGui.Text("Wrath");
+        if (!EnableNormalRaidFarm())
+        {
+            ImGui.SameLine();
+            ImGui.PushStyleColor(ImGuiCol.Text, new System.Numerics.Vector4(1.0f, 0.0f, 0.0f, 1.0f)); // Red color (RGBA)
+            ImGui.Text("You Are Missing Some Plugins");
+            ImGui.PopStyleColor();
+
+            ImGui.Columns(2, null, false);
+            ImGui.Text("Necessary Plugins");
+            FancyCheckmark(P.bossmod.Installed);
+            ImGui.SameLine();
+            if (ImGui.Selectable("BossMod (VBM)"))
+            {
+                // Copy the repo URL to the clipboard
+                ImGui.SetClipboardText("https://puni.sh/api/repository/veyn");
+            }
+            if (ImGui.IsItemHovered())
+            {
+                ImGui.BeginTooltip();
+                ImGui.Text("Click to copy repo URL");
+                ImGui.EndTooltip();
+            }
+            //ImGui.Text("BossMod (VBM)");
+            FancyCheckmark(P.navmesh.Installed);
+            ImGui.SameLine();
+            ImGui.Text("Navmesh");
+            ImGui.NextColumn();
+            ImGui.Text("Supported Combo Plugins");
+            FancyCheckmark(true);
+            ImGui.SameLine();
+            ImGui.Text("BossMod (VBM)");
+            FancyCheckmark(true);
+            ImGui.SameLine();
+            ImGui.Text("Wrath");
+        }
     }
 }
