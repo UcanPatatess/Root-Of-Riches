@@ -202,7 +202,8 @@ public static unsafe class Util
                && Player.Object.CastActionId == 0
                && !IsOccupied()
                && !Svc.Condition[ConditionFlag.Jumping]
-               && Player.Object.IsTargetable;
+               && Player.Object.IsTargetable
+               && !Player.IsAnimationLocked;
     }
     internal static bool GenericThrottle => FrameThrottler.Throttle("RootofRichesGenericThrottle", 20);
     public static int CurrentZoneID() => Svc.ClientState.TerritoryType;

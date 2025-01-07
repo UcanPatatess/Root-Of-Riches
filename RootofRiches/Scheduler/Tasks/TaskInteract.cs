@@ -7,7 +7,7 @@ namespace RootofRiches.Scheduler.Tasks
         public static void Enqueue(ulong dataID)
         {
             IGameObject? gameObject = null;
-            P.taskManager.EnqueueDelay(1000);
+            P.taskManager.Enqueue(PlayerNotBusy);
             P.taskManager.Enqueue(() => TryGetObjectByDataId(dataID, out gameObject));
             P.taskManager.Enqueue(() => InteractWithObject(gameObject));
         }
