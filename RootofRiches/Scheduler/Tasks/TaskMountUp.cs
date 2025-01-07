@@ -15,7 +15,7 @@ namespace RootofRiches.Scheduler.Tasks
         }
         internal unsafe static bool? MountUp()
         {
-            if (Svc.Condition[ConditionFlag.Mounted] && PlayerNotBusy()) return true;
+            if (Svc.Condition[ConditionFlag.Mounted] && PlayerNotBusy() || !C.EnableMountUp) return true;
 
             if (CurrentZoneID() == 478 || CurrentZoneID() == 635)
             {

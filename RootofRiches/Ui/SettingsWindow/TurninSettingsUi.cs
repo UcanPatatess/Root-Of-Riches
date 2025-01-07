@@ -13,6 +13,7 @@ internal class TurninSettingsUi
     private static int MaxArmoryFreeSlot = C.MaxArmoryFreeSlot;
     private static bool SellOilCloth = C.SellOilCloth;
     private static bool TeleportToFC = C.TeleportToFC;
+    private static bool MountUp = C.EnableMountUp;
     private static string[] Options = { "Vendor Turn-in", "Gc Turn-in" };
     private static int SelectedOption = C.VendorTurnIn ? 0 : 1; // Map boolean state to dropdown index
 
@@ -99,6 +100,14 @@ internal class TurninSettingsUi
         {
             C.SellOilCloth = SellOilCloth;
         }
+        // mounting setting
+        if (ImGui.Checkbox("Mount Up",ref MountUp))
+        {
+            C.EnableMountUp = MountUp;
+        }
+        ImGui.SameLine();
+        ImGuiComponents.HelpMarker("Mount Up while turning in.");
+
         ImGui.Columns(1);
         ImGui.EndChild();
     }
