@@ -55,7 +55,7 @@ namespace RootofRiches.Scheduler.Tasks
         {
             P.taskManager.Enqueue(PlayerNotBusy);
             P.taskManager.Enqueue(MergeStacks);
-            P.taskManager.EnqueueDelay(200);
+            P.taskManager.Enqueue(PlayerNotBusy);
         }
     }
 }
