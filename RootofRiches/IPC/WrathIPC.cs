@@ -88,8 +88,7 @@ internal class WrathIPC
     [EzIPC] internal static readonly Action<Guid, bool> SetAutoRotationState;
     [EzIPC] internal static readonly Action<Guid> SetCurrentJobAutoRotationReady;
     [EzIPC]
-    internal static readonly Action<Guid, AutoRotationConfigOption, object>
-        SetAutoRotationConfigState;
+    internal static readonly Action<Guid, AutoRotationConfigOption, object> SetAutoRotationConfigState;
     [EzIPC] internal static readonly Action<Guid> ReleaseControl;
 
     public enum AutoRotationConfigOption
