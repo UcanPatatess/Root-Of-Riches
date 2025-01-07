@@ -53,6 +53,7 @@ namespace RootofRiches.Scheduler.Tasks
         }
         internal static void Enqueue()
         {
+            P.taskManager.Enqueue(() => !IsOccupied());
             P.taskManager.Enqueue(MergeStacks);
             P.taskManager.EnqueueDelay(200);
         }

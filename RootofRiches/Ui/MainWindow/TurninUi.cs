@@ -1,8 +1,6 @@
-using Dalamud.Interface.Components;
 using Dalamud.Interface.Utility.Raii;
 using ImGuiNET;
 using RootofRiches.Scheduler;
-using RootofRiches.Windows;
 
 namespace RootofRiches.Ui.MainWindow;
 
@@ -98,22 +96,37 @@ internal class TurninUi
 
             ImGui.EndTable();
         }
-        if (ImGui.Button(SchedulerMain.DoWeTick ? "Stop" : "Start Turnin"))
+        using (ImRaii.Disabled(!EnableTurnIn()))
         {
-            if (SchedulerMain.DoWeTick)
+            if (ImGui.Button(SchedulerMain.DoWeTick ? "Stop" : "Start Turnin"))
             {
-                SchedulerMain.DisablePlugin(); // Call DisablePlugin if running
-            }
-            else
-            {
-                SchedulerMain.EnablePlugin(); // Call EnablePlugin if not running
-                SchedulerMain.RunTurnin = true;
+                if (SchedulerMain.DoWeTick)
+                {
+                    SchedulerMain.DisablePlugin(); // Call DisablePlugin if running
+                }
+                else
+                {
+                    SchedulerMain.EnablePlugin(); // Call EnablePlugin if not running
+                    SchedulerMain.RunTurnin = true;
+                }
             }
         }
-        ImGui.SameLine();
-        if (ImGui.Button("Options"))
+        if (!EnableTurnIn())
         {
-            P.settingsWindow.IsOpen = !P.settingsWindow.IsOpen;
+            ImGui.SameLine();
+            ImGui.PushStyleColor(ImGuiCol.Text, new System.Numerics.Vector4(1.0f, 0.0f, 0.0f, 1.0f)); // Red color (RGBA)
+            ImGui.Text("You Are Missing Some Plugins");
+            ImGui.PopStyleColor();
+
+            ImGui.Columns(2, null, false);
+            ImGui.Text("Necessary Plugins");
+            FancyPluginUiString(P.navmesh.Installed, "Navmesh", "https://puni.sh/api/repository/veyn");
+            FancyPluginUiString(P.lifestream.Installed, "Lifestream", "https://github.com/NightmareXIV/MyDalamudPlugins/raw/main/pluginmaster.json");
+            ImGui.NextColumn();
+            ImGui.Dummy(new(0, 20));
+            FancyPluginUiString(P.autoRetainer.Installed, "AutoRetainer", "https://love.puni.sh/ment.json");
+            FancyPluginUiString(P.deliveroo.Installed, "Deliveroo", "https://plugins.carvel.li");
+            ImGui.Columns(1);
         }
     }
 }
