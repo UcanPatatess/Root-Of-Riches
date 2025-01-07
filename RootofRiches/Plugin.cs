@@ -9,6 +9,7 @@ using RootofRiches.IPC;
 using RootofRiches.Scheduler;
 using RootofRiches.Scheduler.Handlers;
 using RootofRiches.Ui.MainWindow;
+using RootofRiches.Ui.SettingsWindow;
 using RootofRiches.Windows;
 using System.Diagnostics;
 
@@ -26,6 +27,7 @@ public class Plugin : IDalamudPlugin
     // internal window names
     internal WindowSystem windowSystem;
     internal MainWindow mainWindow;
+    internal SettingsWindow settingsWindow;
     internal DebugWindow debugWindow;
 
     // IPC's/Internals
@@ -73,11 +75,16 @@ public class Plugin : IDalamudPlugin
         windowSystem = new();
         mainWindow = new();
         debugWindow = new();
+        settingsWindow = new();
 
         Svc.PluginInterface.UiBuilder.Draw += windowSystem.Draw;
         Svc.PluginInterface.UiBuilder.OpenMainUi += () =>
         {
             mainWindow.IsOpen = true;
+        };
+        Svc.PluginInterface.UiBuilder.OpenConfigUi += () =>
+        {
+            settingsWindow.IsOpen = !settingsWindow.IsOpen;
         };
         EzCmd.Add("/rootofriches", OnCommand, """
                    Open plugin interface
