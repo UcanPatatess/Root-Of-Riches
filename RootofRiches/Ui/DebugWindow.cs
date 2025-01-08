@@ -245,6 +245,13 @@ internal class DebugWindow : Window
                 TimeTestUi();
                 ImGui.EndTabItem();
             }
+            if (ImGui.BeginTabItem("Misc Testing"))
+            {
+                if (ImGui.Button("Teleport to Gridania"))
+                {
+                    TaskTeleport.Enqueue(GridaniaAether, Gridania);
+                }
+            }
             ImGui.EndTabBar();
         }
     }

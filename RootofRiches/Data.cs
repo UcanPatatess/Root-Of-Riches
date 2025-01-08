@@ -488,6 +488,7 @@ public static class Data
     public static Vector3 UlDahInnDoorPos = new(0.02f, 1.97f, 8.13f);
 
     public static int Gridania = 132;
+    public static uint GridaniaAether = 2;
     public static int GridaniaInn = 179;
     public static ulong GridaniaInnNPC = 1000102;
     public static Vector3 GridaniaInnNPCPos = new(23.7f, -8.1f, 100.05f);
