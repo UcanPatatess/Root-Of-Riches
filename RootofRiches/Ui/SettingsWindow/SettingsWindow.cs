@@ -24,7 +24,8 @@ internal class SettingsWindow : Window
     {
         ImGuiEx.EzTabBar("RoR Settings Tabs",
                         ("TurnIn Settings",TurninSettingsUi.Draw,null,true),
-                        ("RaidFarm Settings",NormalRaidFarmSettingsUi.Draw,null,true)
+                        ("RaidFarm Settings",NRaidFarmSettings.Draw,null,true)
+
         );
     }
 }
