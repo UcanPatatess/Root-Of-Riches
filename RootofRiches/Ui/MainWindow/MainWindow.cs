@@ -16,7 +16,7 @@ internal class MainWindow : Window
     {
         SizeConstraints = new()
         {
-            MinimumSize = new(250, 100),
+            MinimumSize = new(430, 300),
             MaximumSize = new(9999, 9999)
         };
         TitleBarButtons.Add(new()

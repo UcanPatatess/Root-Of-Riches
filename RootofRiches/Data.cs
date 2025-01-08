@@ -463,13 +463,15 @@ public static class Data
     #region Zone Info
 
     // Normal Raid Areas
-    public static int A4NMapID = 445;
+    public static uint A4NMapID = 445;
 
+    #region Main Cities
     // City -> Inn -> ReapirNPC -> 
-    public static int LimsaUpper = 128; // we need limsa id too which is 129 for the teleport task :d
-    public static int LimsaLower = 129;
+    public static uint LimsaUpper = 128; // we need limsa id too which is 129 for the teleport task :d
+    public static uint LimsaLower = 129;
+    public static uint LimsaAether = 8;
     public static string LimsaAethernet = "The Aft";
-    public static int LimsaInn = 177;
+    public static uint LimsaInn = 177;
     public static ulong LimsaInnNPC = 1000974;
     public static Vector3 LimsaInnNPCPos = new(15.43f, 40f, 12.47f);
     public static ulong LimsaRepairNPC = 1003251;
@@ -477,9 +479,10 @@ public static class Data
     public static ulong LimsaInnDoor = 2001010;
     public static Vector3 LimsaInnDoorPos = new(-0.02f, 1.45f, 7.52f);
 
-    public static int UlDah = 130;
+    public static uint UlDah = 130;
+    public static uint UlDahAether = 9;
     public static string UlDahAethernet = "Adven";
-    public static int UlDahInn = 178;
+    public static uint UlDahInn = 178;
     public static ulong UlDahInnNPC = 1001976;
     public static Vector3 UlDahInnNPCPos = new(29.5f, 7.45f, -78.32f);
     public static ulong UlDahRepairNPC = 1004416;
@@ -487,9 +490,9 @@ public static class Data
     public static ulong UlDahInnDoor = 2001011;
     public static Vector3 UlDahInnDoorPos = new(0.02f, 1.97f, 8.13f);
 
-    public static int Gridania = 132;
+    public static uint Gridania = 132;
     public static uint GridaniaAether = 2;
-    public static int GridaniaInn = 179;
+    public static uint GridaniaInn = 179;
     public static ulong GridaniaInnNPC = 1000102;
     public static Vector3 GridaniaInnNPCPos = new(23.7f, -8.1f, 100.05f);
     public static ulong GridaniaRepairNPC = 1000394;
@@ -497,30 +500,39 @@ public static class Data
     public static ulong GridaniaInnDoor = 2000087;
     public static Vector3 GridaniaInnDoorPos = new(0.02f, 1.45f, 7.71f);
 
-    public static int Ishguard = 418;
-    public static int IshguardInn = 429;
+    public static uint Ishguard = 418;
+    public static uint IshguardAether = 70;
+    public static uint IshguardInn = 429;
 
-    public static int Kugane = 628;
-    public static int KuganeInn = 629;
+    public static uint Kugane = 628;
+    public static uint KuganeAether = 111;
+    public static uint KuganeInn = 629;
 
-    public static int Crystarium = 819;
-    public static int CrystariumInn = 843;
+    public static uint Crystarium = 819;
+    public static uint CrystariumAether = 133;
+    public static uint CrystariumInn = 843;
 
-    public static int OldShar = 962;
-    public static int OldSharInn = 990;
+    public static uint OldShar = 962;
+    public static uint OldSharAether = 182;
+    public static uint OldSharInn = 990;
 
-    public static int Tuliyollai = 1185;
-    public static int TuliyollaiInn = 1205;
+    public static uint Tuliyollai = 1185;
+    public static uint TuliyollaAether = 216;
+    public static uint TuliyollaiInn = 1205;
+    #endregion
 
     // Turnin Locations
-    public static int Idyllshire = 478;
+    public static uint Idyllshire = 478;
+    public static uint IdyllshireAether = 75;
     public static Vector3 IdyllshireNPCPos = new(-20.98f, 211.00f, -37.74f);
     public static Vector3 IdyllshireBellPos = new(34.78f, 208.15f, -50.86f);
-    public static int Rhalgr = 635;
+
+    public static uint Rhalgr = 635;
+    public static uint RhalgrAether = 104;
     public static Vector3 RhalgrNPCPos = new Vector3(128.40f, 0.68f, 41.70f);
     public static Vector3 RhalgrBellPos = new Vector3(-57.27f, 0f, 48.57f);
 
-    public static readonly HashSet<int> innZones = new HashSet<int> { LimsaInn, UlDahInn, GridaniaInn, IshguardInn, KuganeInn, CrystariumInn, OldSharInn, TuliyollaiInn };
+    public static readonly HashSet<uint> innZones = new HashSet<uint> { LimsaInn, UlDahInn, GridaniaInn, IshguardInn, KuganeInn, CrystariumInn, OldSharInn, TuliyollaiInn };
 
     // Move Positions
     public static readonly Vector3 RightForeLegPos = new(-6.53f, 10.54f, -7.56f);
@@ -532,6 +544,8 @@ public static class Data
     public static readonly Vector3 A4NChest3Pos = new(-2.03f, 10.54f, -6.36f);
 
     #endregion
+
+    #region Armor/Gil Calculator
 
     public static double TotalFCPoints = 0;
     public static int TotalGCBase = 0;
@@ -605,28 +619,29 @@ public static class Data
     public static int TotalLeg = 0;
     public static int TotalShoes = 0;
     public static int TotalGear = 0;
-
+    #endregion
 
     // Dictionary for Inn
 
     public class InnData
     {
-        public required int MainCity { get; set; }
+        public required uint MainCity { get; set; }
         public ulong RepairNPC { get; set; }
         public Vector3 RepairNPCPos { get; set; }
         public required ulong InnNPC { get; set; }
         public required Vector3 InnNPCPos { get; set; }
         public required ulong InnDoor { get; set; }
         public required Vector3 InnDoorPos { get; set; }
-        public int MainCity2 { get; set; }
+        public uint MainCity2 { get; set; }
         public string? AethernetCrystal { get; set; }
+        public uint MainAether { get; set; }
     }
 
-    public static Dictionary<int, InnData> InnDict = new Dictionary<int, InnData>
+    public static Dictionary<uint, InnData> InnDict = new Dictionary<uint, InnData>
     {
-        { LimsaInn, new InnData { MainCity = LimsaLower, RepairNPC = LimsaRepairNPC, RepairNPCPos = LimsaRepairNPCPos, InnNPC = LimsaInnNPC, InnNPCPos = LimsaInnNPCPos,InnDoor = LimsaInnDoor, MainCity2 = LimsaUpper, AethernetCrystal = LimsaAethernet,InnDoorPos=LimsaInnDoorPos } },
-        { UlDahInn, new InnData { MainCity = UlDah, RepairNPC = UlDahRepairNPC, RepairNPCPos = UlDahRepairNPCPos, InnNPC = UlDahInnNPC, InnNPCPos = UlDahInnNPCPos,InnDoor = UlDahInnDoor, AethernetCrystal = UlDahAethernet,InnDoorPos=UlDahInnDoorPos } },
-        { GridaniaInn, new InnData {MainCity = Gridania, RepairNPC = GridaniaRepairNPC, RepairNPCPos = GridaniaRepairNPCPos, InnNPC = GridaniaInnNPC, InnNPCPos = GridaniaInnNPCPos,InnDoor = GridaniaInnDoor,InnDoorPos=GridaniaInnDoorPos} },
+        { LimsaInn, new InnData { MainCity = LimsaLower, MainAether = LimsaAether,RepairNPC = LimsaRepairNPC, RepairNPCPos = LimsaRepairNPCPos, InnNPC = LimsaInnNPC, InnNPCPos = LimsaInnNPCPos,InnDoor = LimsaInnDoor, MainCity2 = LimsaUpper, AethernetCrystal = LimsaAethernet,InnDoorPos=LimsaInnDoorPos } },
+        { UlDahInn, new InnData { MainCity = UlDah, MainAether = UlDahAether ,RepairNPC = UlDahRepairNPC, RepairNPCPos = UlDahRepairNPCPos, InnNPC = UlDahInnNPC, InnNPCPos = UlDahInnNPCPos,InnDoor = UlDahInnDoor, AethernetCrystal = UlDahAethernet,InnDoorPos=UlDahInnDoorPos } },
+        { GridaniaInn, new InnData {MainCity = Gridania, MainAether = GridaniaAether, RepairNPC = GridaniaRepairNPC, RepairNPCPos = GridaniaRepairNPCPos, InnNPC = GridaniaInnNPC, InnNPCPos = GridaniaInnNPCPos,InnDoor = GridaniaInnDoor,InnDoorPos=GridaniaInnDoorPos} },
     };
 
     // variables to be used across the place
@@ -643,7 +658,7 @@ public static class Data
         public Vector3 NpcPos { get; set; }
         public Vector3 BellPos { get; set; }
     }
-    public static Dictionary<int, TurnInData> TurnInDict = new Dictionary<int, TurnInData>
+    public static Dictionary<uint, TurnInData> TurnInDict = new Dictionary<uint, TurnInData>
     {
         {Idyllshire, new TurnInData{TurnInNpc = Sabina,NpcPos = IdyllshireNPCPos,BellPos = IdyllshireBellPos} },
         {Rhalgr, new TurnInData{TurnInNpc = Gelfradus,NpcPos = RhalgrNPCPos,BellPos = RhalgrBellPos} },

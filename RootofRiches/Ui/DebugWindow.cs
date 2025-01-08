@@ -238,6 +238,11 @@ internal class DebugWindow : Window
 
                 ImGui.Text($"Is in Inn? {CurrentlyInnInn()}");
 
+                if (ImGui.Button("Target Leg in A4N"))
+                {
+                    TaskTarget.Enqueue(RightForeleg);
+                }
+
                 ImGui.EndTabItem();
             }
             if (ImGui.BeginTabItem("Time Test"))

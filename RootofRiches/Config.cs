@@ -23,7 +23,7 @@ public class Config : IEzConfig
     public float RepairSlider { get; set; } = 30f;
     public bool EnableReturnInn { get; set; } = true;
     public string RaidOption { get; set; } = "Infinite";
-    public int InnDataID { get; set; } = 177;
+    public uint InnDataID { get; set; } = 177;
     public string InnOption { get; set; } = "Limsa";
 
     public string RepairMode { get; set; } = "Self Repair";

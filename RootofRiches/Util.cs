@@ -208,8 +208,8 @@ public static unsafe class Util
                && !Player.IsAnimationLocked;
     }
     internal static bool GenericThrottle => FrameThrottler.Throttle("RootofRichesGenericThrottle", 20);
-    public static int CurrentZoneID() => Svc.ClientState.TerritoryType;
-    public static bool IsInZone(int zoneID) => Svc.ClientState.TerritoryType == zoneID;
+    public static uint CurrentZoneID() => Svc.ClientState.TerritoryType;
+    public static bool IsInZone(uint zoneID) => Svc.ClientState.TerritoryType == zoneID;
     public static bool CurrentlyInnInn()
     {
         return innZones.Contains(CurrentZoneID());

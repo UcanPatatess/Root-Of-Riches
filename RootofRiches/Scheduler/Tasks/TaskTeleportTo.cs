@@ -4,7 +4,7 @@ namespace RootofRiches.Scheduler.Tasks
 {
     internal static class TaskTeleportTo
     {
-        internal static string WhereToTeleportString(int ZoneID)
+        internal static string WhereToTeleportString(uint ZoneID)
         {
             string where = string.Empty;
             if (ZoneID == Idyllshire)
@@ -13,7 +13,7 @@ namespace RootofRiches.Scheduler.Tasks
                 where = "Rhalgr";
             return where;
         }
-        internal static void Enqueue(int ZoneID)
+        internal static void Enqueue(uint ZoneID)
         {
             if (IsInZone(ZoneID)) { return; }
             else
