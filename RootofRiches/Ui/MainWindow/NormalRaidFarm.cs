@@ -1,6 +1,7 @@
 using Dalamud.Interface.Utility.Raii;
 using ImGuiNET;
 using RootofRiches.Scheduler;
+using System.Numerics;
 
 namespace RootofRiches.Ui.MainWindow;
 
@@ -60,8 +61,26 @@ internal class NormalRaidFarm
 
 
             ImGui.Text("Supported Combo Plugins");
+<<<<<<< Updated upstream
             FancyPluginUiString(P.bossmod.Installed, "BossMod (VBM)", "https://puni.sh/api/repository/veyn");
             FancyPluginUiString(P.wrath.Installed, "Wrath", "https://love.puni.sh/ment.json");
+=======
+            FancyCheckmark(true);
+            ImGui.SameLine();
+            ImGui.Text("BossMod (VBM)");
+            FancyCheckmark(true);
+            ImGui.SameLine();
+            ImGui.Text("Wrath");
+            ImGui.Columns(1);
+        }
+        if (C.ShowSettingsInWindow)
+        {
+            if (ImGui.BeginChild("##NRaidSettings", new Vector2(510, 200), true))
+            {
+                SettingsWindow.NRaidFarmSettings.Draw();
+            }
+            ImGui.EndChild();
+>>>>>>> Stashed changes
         }
     }
 }

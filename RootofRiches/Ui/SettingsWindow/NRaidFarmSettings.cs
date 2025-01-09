@@ -24,6 +24,7 @@ internal class NRaidFarmSettings
     private static string NRepairMode = C.RepairMode;
     private static string[] NrepairOptions = { "Self Repair", "Repair at NPC" };
     private static float RepairThreshold = C.RepairSlider;
+    private static bool ShowInWindow = C.ShowSettingsInWindow;
 
     public static void Draw()
     {
@@ -224,6 +225,15 @@ internal class NRaidFarmSettings
                     C.EnableAutoRetainer = false;
                 }
 
+            }
+
+            ImGui.TableNextRow();
+            ImGui.TableSetColumnIndex(0);
+            if (ImGui.Checkbox("Show Settings In Main Window", ref ShowInWindow))
+            {
+                if (ShowInWindow)
+                    C.ShowSettingsInWindow = ShowInWindow;
+                else C.ShowSettingsInWindow = false;
             }
         }
         ImGui.EndTable();

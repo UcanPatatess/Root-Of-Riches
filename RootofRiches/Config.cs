@@ -25,6 +25,7 @@ public class Config : IEzConfig
     public string RaidOption { get; set; } = "Infinite";
     public uint InnDataID { get; set; } = 177;
     public string InnOption { get; set; } = "Limsa";
+    public bool ShowSettingsInWindow { get; set; } = false;
 
     public string RepairMode { get; set; } = "Self Repair";
     public string RepairOption { get; set; } = "Self Repair";

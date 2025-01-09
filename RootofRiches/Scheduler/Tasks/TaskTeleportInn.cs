@@ -48,43 +48,5 @@ namespace RootofRiches.Scheduler.Tasks
             }
             return false;
         }
-
-        internal static void TeleporttoInn()
-        {
-            if (C.InnOption == "Limsa")
-            {
-                uint Aether = InnDict[LimsaInn].MainAether;
-                uint MainCity = InnDict[LimsaInn].MainCity;
-                uint MainCity2 = InnDict[LimsaInn].MainCity2;
-                TaskTeleport.Enqueue(Aether, MainCity, MainCity2, true);
-            }
-            else
-            {
-                uint Aether = InnDict[C.InnDataID].MainAether;
-                uint MainCity = InnDict[C.InnDataID].MainCity;
-                TaskTeleport.Enqueue(Aether, MainCity);
-            }
-        }
-
-        private static bool TeleportToMainCity() 
-        {
-            uint MainCity = InnDict[C.InnDataID].MainCity;
-            uint MainCity2 = InnDict[C.InnDataID].MainCity2;
-            uint MainAetheryte = InnDict[C.InnDataID].MainAether;
-
-            if (Svc.ClientState.TerritoryType == MainCity)
-                return true;
-            else if (C.InnOption == "Limsa")
-                if (Svc.ClientState.TerritoryType == MainCity2)
-                    return true;
-
-            if (!P.lifestream.IsBusy() && PlayerNotBusy())
-            {
-                if (FrameThrottler.Throttle("SelectYesnoThrottle", 300))
-                    P.lifestream.ExecuteCommand($"tp {C.InnOption}");
-            }
-            return false;
-        }
-
     }
 }
