@@ -61,16 +61,8 @@ internal class NormalRaidFarm
 
 
             ImGui.Text("Supported Combo Plugins");
-<<<<<<< Updated upstream
             FancyPluginUiString(P.bossmod.Installed, "BossMod (VBM)", "https://puni.sh/api/repository/veyn");
             FancyPluginUiString(P.wrath.Installed, "Wrath", "https://love.puni.sh/ment.json");
-=======
-            FancyCheckmark(true);
-            ImGui.SameLine();
-            ImGui.Text("BossMod (VBM)");
-            FancyCheckmark(true);
-            ImGui.SameLine();
-            ImGui.Text("Wrath");
             ImGui.Columns(1);
         }
         if (C.ShowSettingsInWindow)
@@ -80,7 +72,6 @@ internal class NormalRaidFarm
                 SettingsWindow.NRaidFarmSettings.Draw();
             }
             ImGui.EndChild();
->>>>>>> Stashed changes
         }
     }
 }
