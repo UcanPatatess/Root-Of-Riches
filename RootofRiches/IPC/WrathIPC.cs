@@ -1,14 +1,9 @@
 using ECommons.DalamudServices;
 using ECommons.EzIpcManager;
-using ECommons.GameFunctions;
 using ECommons.Logging;
 using ECommons.Reflection;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace RootofRiches.IPC;
 
@@ -17,10 +12,10 @@ internal class WrathIPC
     #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
     private static EzIPCDisposalToken[] _disposalTokens =
         EzIPC.Init(typeof(WrathIPC), "WrathCombo", SafeWrapper.IPCException);
-
+    public const string Name = "WrathCombo";
     internal static bool IsEnabled =>
         DalamudReflector.TryGetDalamudPlugin("WrathCombo", out _, false, true);
-
+    public bool Installed => PluginInstalled(Name);
     internal static Guid? RoRLease;
 
     internal static Guid? CurrentLease
