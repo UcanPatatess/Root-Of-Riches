@@ -104,8 +104,7 @@ namespace RootofRiches.Scheduler
                                     // if RSR installed, 
                                     P.taskManager.Enqueue(() => A4NTask = "Waiting for combat to finish");
                                     P.taskManager.Enqueue(() => !Svc.Condition[ConditionFlag.InCombat], "Waiting for combat to end", DConfig);
-                                    P.taskManager.Enqueue(() => Svc.Condition[ConditionFlag.OccupiedInCutSceneEvent], "Waiting for Cutscene", DConfig);
-                                    P.taskManager.Enqueue(() => !Svc.Condition[ConditionFlag.OccupiedInCutSceneEvent], "Waiting for Cutscene", DConfig);
+                                    P.taskManager.Enqueue(PlayerNotBusy, "Waiting for Cutscene", DConfig);
                                 }
                                 else
                                 {
