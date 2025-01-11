@@ -96,6 +96,7 @@ internal class TurninSettingsUi
             ImGui.SameLine();
             ImGuiComponents.HelpMarker("Teleport to your Fc to sell gears.");
             ImGui.SameLine();
+            ImGui.AlignTextToFramePadding();
             ImGuiEx.PluginAvailabilityIndicator([new("Lifestream")]);
         }
         if (ImGui.Checkbox("Sell OilCloth Turn-in##SellOilCloth", ref SellOilCloth))

@@ -9,7 +9,17 @@ internal class NormalRaidFarm
 {
     public static void Draw()
     {
-        string NRaidTask = SchedulerMain.A4NTask;
+        if (ImGui.RadioButton("[A4N] Alexander - Burden of the Father", C.RaidSelected == 0))
+        {
+            C.RaidSelected = 0;
+        }
+
+        // #2 O3N
+        if (ImGui.RadioButton("[O3N] Deltascape V3.0", C.RaidSelected == 1))
+        {
+            C.RaidSelected = 1;
+        }
+        string NRaidTask = SchedulerMain.NRaidTask;
         ImGui.Text($"Current Raid Task → {NRaidTask}");
         TimeSpan currentTime = P.stopwatch.Elapsed;
         string currentTimeF = currentTime.ToString(@"mm\:ss\.fff");

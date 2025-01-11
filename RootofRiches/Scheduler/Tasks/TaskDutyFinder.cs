@@ -7,18 +7,18 @@ namespace RootofRiches.Scheduler.Tasks
 {
     internal static class TaskDutyFinder
     {
-        internal static void Enqueue()
+        internal static void Enqueue(uint DutyID)
         {
             P.taskManager.Enqueue(PlayerNotBusy);
-            P.taskManager.Enqueue(OpenDutyFinder);
+            P.taskManager.Enqueue(() => OpenDutyFinder(DutyID));
         }
 
         public static bool DutyFinderOpen;
-        internal unsafe static bool? OpenDutyFinder()
+        internal unsafe static bool? OpenDutyFinder(uint DutyID)
         {
             if (TryGetAddonByName<AtkUnitBase>("ContentsFinder", out var addon) && IsAddonReady(addon))
             {
-                AgentContentsFinder.Instance()->OpenRegularDuty(115);//relocated
+                AgentContentsFinder.Instance()->OpenRegularDuty(DutyID);//relocated
                 DutyFinderOpen = true;
                 return true;
             }

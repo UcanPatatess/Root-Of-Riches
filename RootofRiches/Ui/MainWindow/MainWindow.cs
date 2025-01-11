@@ -78,29 +78,78 @@ internal class MainWindow : Window
     }
     private void DrawStats(Stats stat)
     {
+        if (C.HasUpdatedStats == false)
+        {
+            stat.FastestA4NRun = stat.FastestRun;
+            stat.TotalTimeA4N = stat.TotalRunTime;
+            C.HasUpdatedStats = true;
+        }
+
         ImGui.Columns(3, null, false);
+
+        // Top Middle Section
         ImGui.NextColumn();
+
         ImGuiEx.CenterColumnText(ImGuiColors.DalamudRed, "Root Of Riches", true);
         ImGuiHelpers.ScaledDummy(10f);
+
+        // Setting up Next Columns for Stats
         ImGui.Columns(2, null, false);
+
+        // Gil Earned / Total Time [Overall]
+        ImGuiEx.CenterColumnText("Gil Earned", true);
         ImGui.NextColumn();
+        ImGuiEx.CenterColumnText("Total Time [Overall]", true);
         ImGui.NextColumn();
-        ImGuiEx.CenterColumnText("GillEarned", true);
+        ImGuiEx.CenterColumnText($"{stat.GillEarned:N0}");
         ImGui.NextColumn();
-        ImGuiEx.CenterColumnText("TotalA4nRuns", true);
-        ImGui.NextColumn();
-        ImGuiEx.CenterColumnText($"{stat.GillEarned.ToString("N0")}");
-        ImGui.NextColumn();
-        ImGuiEx.CenterColumnText($"{stat.TotalA4nRuns.ToString("N0")}");
+        ImGuiEx.CenterColumnText(stat.TotalRunTime.ToString(@"hh\:mm\:ss"));
         ImGuiHelpers.ScaledDummy(10f);
+
+
         ImGui.NextColumn();
-        ImGuiEx.CenterColumnText("Current Run Time", true);
+        ImGuiEx.CenterColumnText("Total A4N Runs", true);
         ImGui.NextColumn();
-        ImGuiEx.CenterColumnText("Fastest Run Time", true);
+        ImGuiEx.CenterColumnText("Total O3N Runs", true);
         ImGui.NextColumn();
-        ImGuiEx.CenterColumnText($"{stat.TotalRunTime.ToString(@"hh\:mm\:ss")}");
+        ImGuiEx.CenterColumnText($"{stat.TotalA4nRuns:N0}");
         ImGui.NextColumn();
-        ImGuiEx.CenterColumnText($"{stat.FastestRun.ToString(@"mm\:ss\.fff")}");
+        ImGuiEx.CenterColumnText($"{stat.TotalO3nRuns:N0}");
+        ImGuiHelpers.ScaledDummy(10f);
+
+        ImGui.NextColumn();
+        ImGuiEx.CenterColumnText("Total Time (A4N)", true);
+        ImGui.NextColumn();
+        ImGuiEx.CenterColumnText("Total Time (O3N)", true);
+        ImGui.NextColumn();
+        ImGuiEx.CenterColumnText(stat.TotalTimeA4N.ToString(@"hh\:mm\:ss"));
+        ImGui.NextColumn();
+        ImGuiEx.CenterColumnText(stat.TotalTimeO3N.ToString(@"hh\:mm\:ss"));
+        ImGuiHelpers.ScaledDummy(10f);
+
+        ImGui.NextColumn();
+        ImGuiEx.CenterColumnText("Fastest A4N Run", true);
+        ImGui.NextColumn();
+        ImGuiEx.CenterColumnText("Fastest O3N Run", true);
+        ImGui.NextColumn();
+        if (stat.FastestA4NRun == TimeSpan.MaxValue)
+        {
+            ImGuiEx.CenterColumnText("No Recorded Time!");
+        }
+        else
+        {
+            ImGuiEx.CenterColumnText(stat.FastestA4NRun.ToString(@"hh\:mm\:ss"));
+        }
+        ImGui.NextColumn();
+        if (stat.FastestO3NRun == TimeSpan.MaxValue)
+        {
+            ImGuiEx.CenterColumnText("No Recorded Time!");
+        }
+        else
+        {
+            ImGuiEx.CenterColumnText(stat.FastestO3NRun.ToString(@"hh\:mm\:ss"));
+        }
+
         ImGui.Columns(1, null, false);
         ImGui.Separator();
         ImGui.Dummy(new Vector2(0, 20));

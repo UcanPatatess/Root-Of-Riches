@@ -7,6 +7,8 @@ using System.Globalization;
 using System.Numerics;
 using RootofRiches.IPC;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
+using FFXIVClientStructs.FFXIV.Client.UI.Agent;
+using FFXIVClientStructs.FFXIV.Component.GUI;
 
 namespace RootofRiches.Windows;
 
@@ -50,6 +52,9 @@ internal class DebugWindow : Window
         }
         return "None";
     }
+    private int inputBox = 0;
+    private uint testDutyID = 0;
+
     public override void Draw()
     {
         if (ImGui.BeginTabBar("##Debug Tabs"))
@@ -198,8 +203,23 @@ internal class DebugWindow : Window
                 {
                     P.taskManager.Enqueue(() => ReleaseWrathControl());
                 }
-
-                ImGui.EndTabItem();
+                if (ImGui.InputInt("##Test Duty Selected", ref inputBox))
+                {
+                    if (inputBox >= 0)
+                    {
+                        testDutyID = (uint)inputBox;
+                    }
+                }
+                ImGui.Text($"TestDutyID = {testDutyID}");
+                if (ImGui.Button("Duty Finder"))
+                {
+                    OpenDuty(testDutyID);
+                }
+                ImGui.Text($"{JournalDutyText()}");
+                if(ImGui.Button("Copy Journal Text"))
+                {
+                    ImGui.SetClipboardText($"{JournalDutyText()}");
+                }
             }
             if (ImGui.BeginTabItem("Targeting Debug"))
             {

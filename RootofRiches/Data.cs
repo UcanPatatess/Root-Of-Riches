@@ -5,7 +5,7 @@ namespace RootofRiches;
 
 public static class Data
 {
-    #region NormalRaid
+    #region Normal Raid Items
     public static int TotalExchangeItem = 0;
     public static int GordianTurnInCount = 0;
     public static int AlexandrianTurnInCount = 0;
@@ -212,7 +212,10 @@ public static class Data
     }
     */
 
-    // Omega Raid Series
+    #endregion
+
+    #region Omega Raid Tables
+
     public static int[,] GelfradusTable = new int[,]
     {
         {0, DeltascapeShaftID, ShaftBuyAmount, 19438, 3, 0}, // x4
@@ -274,7 +277,10 @@ public static class Data
         {2, DeltascapeBoltID, BoltBuyAmount, 19497, 17, 2},
     };
 
-    // Alexander Raid Series
+    #endregion
+
+    #region Alexander Raid Tables
+
     public static int[,] SabinaTable = new int[,]
     {
         {0, GordianShaftID, ShaftBuyAmount, 11455, 3, 0},
@@ -394,6 +400,10 @@ public static class Data
         {2, AlexandrianBoltID, BoltBuyAmount, 16463, 17, 2},
     };
 
+    #endregion
+
+    #region Vendor Sell Dictionary
+
     public class VendorSellData
     {
         public int CurrentItemCount { get; set; }
@@ -443,14 +453,25 @@ public static class Data
 
     #endregion
 
-    #region TargetIDs
+    #region Normal Raid Data Points
+
     // Alexander - The Burder of the Father (A4N) 
+    public static uint A4NMapID = 445;
     public static ulong RightForeleg = 4107;
     public static ulong LeftForeleg = 4108;
     public static ulong Manipulator = 3902;
     public static ulong A4NChest1 = 438;
     public static ulong A4NChest2 = 480;
     public static ulong A4NChest3 = 479;
+    public static Vector3 RightForeLegPos = new(-6.53f, 10.54f, -7.56f);
+    public static Vector3 A4NChestCenter = new Vector3(-0.08f, 10.6f, -6.46f);
+
+    // Deltascape V3.0 (O3N)
+    public static uint O3NMapID = 693;
+    public static ulong Halicarnassus = 7700;
+    public static ulong O3NChest1 = 930;
+    public static ulong O3NChest2 = 929;
+    public static Vector3 O3NChestCenter = new Vector3(-0.01f, 0.00f, -5.42f);
 
     // Retainer
     public static ulong SummoningBell = 2000403;
@@ -462,9 +483,6 @@ public static class Data
     #endregion
 
     #region Zone Info
-
-    // Normal Raid Areas
-    public static uint A4NMapID = 445;
 
     #region Main Cities
     // City -> Inn -> ReapirNPC -> 
@@ -544,15 +562,6 @@ public static class Data
     public static Vector3 RhalgrBellPos3 = new Vector3(-57.03f, 0f, 47.42f);
 
     public static readonly HashSet<uint> innZones = new HashSet<uint> { LimsaInn, UlDahInn, GridaniaInn, IshguardInn, KuganeInn, CrystariumInn, OldSharInn, TuliyollaiInn };
-
-    // Move Positions
-    public static readonly Vector3 RightForeLegPos = new(-6.53f, 10.54f, -7.56f);
-    public static readonly Vector3 A4NChestCenter = new(-0.08f, 10.6f, -6.46f);
-
-    // Chest Positions
-    public static readonly Vector3 A4NChest1Pos = new(-0.02f, 10.54f, -8.38f);
-    public static readonly Vector3 A4NChest2Pos = new(2f, 10.54f, -6.36f);
-    public static readonly Vector3 A4NChest3Pos = new(-2.03f, 10.54f, -6.36f);
 
     #endregion
 
@@ -653,7 +662,7 @@ public static class Data
     public static int TotalGear = 0;
     #endregion
 
-    // Dictionary for Inn
+    #region Inn Dictionaries
 
     public class InnData
     {
@@ -670,18 +679,52 @@ public static class Data
 
     public static Dictionary<uint, InnData> InnDict = new Dictionary<uint, InnData>
     {
-        { LimsaInn, new InnData { MainCity = LimsaLower, MainAether = LimsaAether,RepairNPC = LimsaRepairNPC, RepairNPCPos = LimsaRepairNPCPos, InnNPC = LimsaInnNPC, InnNPCPos = LimsaInnNPCPos,InnDoor = LimsaInnDoor, MainCity2 = LimsaUpper,InnDoorPos=LimsaInnDoorPos } },
-        { UlDahInn, new InnData { MainCity = UlDah, MainAether = UlDahAether ,RepairNPC = UlDahRepairNPC, RepairNPCPos = UlDahRepairNPCPos, InnNPC = UlDahInnNPC, InnNPCPos = UlDahInnNPCPos,InnDoor = UlDahInnDoor,InnDoorPos=UlDahInnDoorPos } },
-        { GridaniaInn, new InnData {MainCity = Gridania, MainAether = GridaniaAether, RepairNPC = GridaniaRepairNPC, RepairNPCPos = GridaniaRepairNPCPos, InnNPC = GridaniaInnNPC, InnNPCPos = GridaniaInnNPCPos,InnDoor = GridaniaInnDoor,InnDoorPos=GridaniaInnDoorPos} },
+        {LimsaInn, 
+            new InnData{ 
+                MainCity = LimsaLower, 
+                MainAether = LimsaAether,
+                RepairNPC = LimsaRepairNPC, 
+                RepairNPCPos = LimsaRepairNPCPos, 
+                InnNPC = LimsaInnNPC, 
+                InnNPCPos = LimsaInnNPCPos,
+                InnDoor = LimsaInnDoor, 
+                MainCity2 = LimsaUpper,
+                InnDoorPos=LimsaInnDoorPos 
+            } 
+        },
+        {UlDahInn, 
+            new InnData{ 
+                MainCity = UlDah, 
+                MainAether = UlDahAether,
+                RepairNPC = UlDahRepairNPC, 
+                RepairNPCPos = UlDahRepairNPCPos, 
+                InnNPC = UlDahInnNPC, 
+                InnNPCPos = UlDahInnNPCPos,
+                InnDoor = UlDahInnDoor,
+                InnDoorPos=UlDahInnDoorPos 
+            }
+        },
+        {GridaniaInn, 
+            new InnData{
+                MainCity = Gridania, 
+                MainAether = GridaniaAether, 
+                RepairNPC = GridaniaRepairNPC, 
+                RepairNPCPos = GridaniaRepairNPCPos, 
+                InnNPC = GridaniaInnNPC, 
+                InnNPCPos = GridaniaInnNPCPos,
+                InnDoor = GridaniaInnDoor,
+                InnDoorPos=GridaniaInnDoorPos
+            } 
+        },
     };
+
+    #endregion
 
     // variables to be used across the place
     public static bool RunInfinite = true;
     public static int RunAmount = 1;
 
-    // Dictionary for TurnIn
-
-
+    #region Turnin Dictionaries
 
     public class TurnInData
     {
@@ -724,4 +767,49 @@ public static class Data
             } 
         },
     };
+
+    #endregion
+
+    #region Normal Raid Dictionaries
+
+    public class NRaidData
+    {
+        public required Vector3 CenterofChest {get; set; }
+        public required ulong Chest1 { get; set; }
+        public required ulong[] ListofChest { get; set; }
+        public required ulong BossID { get; set; }
+        public required string BossName { get; set; }
+        public required uint DutyID { get; set; }
+        public required int PcallID { get; set; }
+    }
+
+    public static Dictionary<uint, NRaidData> NRaidDict = new Dictionary<uint, NRaidData>
+    {
+        { A4NMapID, // A4N Selected
+            new NRaidData
+            {
+                CenterofChest = A4NChestCenter,
+                Chest1 = A4NChest1,
+                ListofChest = [A4NChest1, A4NChest2, A4NChest3],
+                BossID = RightForeleg,
+                BossName = "Right Foreleg",
+                DutyID = 115,
+                PcallID = C.A4NPcallValue
+            }
+        },
+        { O3NMapID, // O3N
+            new NRaidData
+            {
+                CenterofChest = O3NChestCenter,
+                Chest1 = O3NChest1,
+                ListofChest = [O3NChest1, O3NChest2],
+                BossID = Halicarnassus,
+                BossName = "Halicarnassus",
+                DutyID = 0,
+                PcallID = C.O3NPcallValue
+            }
+        }
+    };
+
+    #endregion
 }

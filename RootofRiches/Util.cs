@@ -95,36 +95,70 @@ public static unsafe class Util
         return false;
     }
 
-    public static void UpdateStats()
+    public static void UpdateStats(uint zoneID)
     {
-        C.SessionStats.TotalA4nRuns = C.SessionStats.TotalA4nRuns + 1;
-        C.Stats.TotalA4nRuns = C.Stats.TotalA4nRuns + 1;
+        if (zoneID == A4NMapID)
+        {
+            C.SessionStats.TotalA4nRuns = C.SessionStats.TotalA4nRuns + 1;
+            C.Stats.TotalA4nRuns = C.Stats.TotalA4nRuns + 1;
+        }
+        else if (zoneID == O3NMapID)
+        {
+            C.SessionStats.TotalO3nRuns = C.SessionStats.TotalO3nRuns + 1;
+            C.Stats.TotalO3nRuns = C.Stats.TotalO3nRuns + 1;
+        }
     }
 
-    public static unsafe bool CorrectDuty() // first actual function I made that returns a true/false statement in C#... man this was a pain to learn about xD(ice)
+    public static unsafe bool CorrectDuty(uint ZoneID) // first actual function I made that returns a true/false statement in C#... man this was a pain to learn about xD(ice)
     {
         if (TryGetAddonByName<AtkUnitBase>("ContentsFinder", out var addon) && IsAddonReady(addon))
         {
-            //var mainAddon = ((AddonContentsFinder*)addon)->SelectedDutyTextNodeSpan[0].Value->NodeText.ToString();
-            var AlexText = "Alexander - The Burden of the Father";
-            if (Svc.Data.Language == ClientLanguage.Japanese)
+            if (ZoneID == A4NMapID)
             {
-                AlexText = "機工城アレキサンダー：起動編4";
+                //var mainAddon = ((AddonContentsFinder*)addon)->SelectedDutyTextNodeSpan[0].Value->NodeText.ToString();
+                var AlexText = "Alexander - The Burden of the Father";
+                if (Svc.Data.Language == ClientLanguage.Japanese)
+                {
+                    AlexText = "機工城アレキサンダー：起動編4";
+                }
+                else if (Svc.Data.Language == ClientLanguage.English)
+                {
+                    AlexText = "Alexander - The Burden of the Father";
+                }
+                else if (Svc.Data.Language == ClientLanguage.German)
+                {
+                    AlexText = "Alexander - Last des Vaters";
+                }
+                else if (Svc.Data.Language == ClientLanguage.French)
+                {
+                    AlexText = "Alexander - Le Fardeau du Père";
+                }
+                var mainAddon = ((AddonContentsFinder*)addon)->SelectedDutyTextNode[0].Value->NodeText.ToString();
+                return mainAddon == AlexText;
             }
-            else if (Svc.Data.Language == ClientLanguage.English)
+            else if (ZoneID == O3NMapID)
             {
-                AlexText = "Alexander - The Burden of the Father";
+                //var mainAddon = ((AddonContentsFinder*)addon)->SelectedDutyTextNodeSpan[0].Value->NodeText.ToString();
+                var OmegaText = "Deltascape V3.0";
+                if (Svc.Data.Language == ClientLanguage.Japanese)
+                {
+                    OmegaText = "次元の狭間オメガ：デルタ編3";
+                }
+                else if (Svc.Data.Language == ClientLanguage.English)
+                {
+                    OmegaText = "Deltascape V3.0";
+                }
+                else if (Svc.Data.Language == ClientLanguage.German)
+                {
+                    OmegaText = "Deltametrie 3.0";
+                }
+                else if (Svc.Data.Language == ClientLanguage.French)
+                {
+                    OmegaText = "Deltastice v3.0";
+                }
+                var mainAddon = ((AddonContentsFinder*)addon)->SelectedDutyTextNode[0].Value->NodeText.ToString();
+                return mainAddon == OmegaText;
             }
-            else if (Svc.Data.Language == ClientLanguage.German)
-            {
-                AlexText = "Alexander - Last des Vaters";
-            }
-            else if (Svc.Data.Language == ClientLanguage.French)
-            {
-                AlexText = "Alexander - Le Fardeau du Père";
-            }
-            var mainAddon = ((AddonContentsFinder*)addon)->SelectedDutyTextNode[0].Value->NodeText.ToString();
-            return mainAddon == AlexText;
         }
         return false;
     }
@@ -521,6 +555,28 @@ public static unsafe class Util
         // Calculate the random point
         return (1 - r1 - r2) * p1 + r1 * p2 + r2 * p3;
     }
+
+    public static unsafe void OpenDuty(uint DutyID)
+    {
+        AgentContentsFinder.Instance()->OpenRegularDuty(DutyID);//relocated
+    }
+
+    public static unsafe string JournalDutyText() // first actual function I made that returns a true/false statement in C#... man this was a pain to learn about xD(ice)
+    {
+        string mainAddon = "";
+
+        if (TryGetAddonByName<AtkUnitBase>("ContentsFinder", out var addon) && IsAddonReady(addon))
+        {
+            mainAddon = ((AddonContentsFinder*)addon)->SelectedDutyTextNode[0].Value->NodeText.ToString();
+        }
+        else
+        {
+            mainAddon = "Addon isn't ready";
+        }
+
+        return mainAddon;
+    }
+
     #region AutoRetainer
     public static int ToUnixTimestamp(this DateTime value) => (int)Math.Truncate(value.ToUniversalTime().Subtract(new DateTime(1970, 1, 1)).TotalSeconds);
 

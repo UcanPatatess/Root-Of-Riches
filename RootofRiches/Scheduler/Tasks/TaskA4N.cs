@@ -34,7 +34,6 @@ namespace RootofRiches.Scheduler.Tasks
             TaskOpenChest.Enqueue(A4NChest2);
             TaskOpenChest.Enqueue(A4NChest3);
             P.taskManager.Enqueue(LeaveDuty);
-            P.taskManager.Enqueue(UpdateStats);
             P.taskManager.Enqueue(() => !IsInZone(A4NMapID));
         }
 
