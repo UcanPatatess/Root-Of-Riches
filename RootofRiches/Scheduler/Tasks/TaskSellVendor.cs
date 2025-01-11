@@ -10,7 +10,6 @@ namespace RootofRiches.Scheduler.Tasks
             P.taskManager.Enqueue(() => UpdateCurrentTask("Selling to vendor"));
             P.taskManager.Enqueue(SellVendor);
             TaskGetOut.Enqueue();
-            P.taskManager.EnqueueDelay(1000);
             P.taskManager.Enqueue(() => UpdateCurrentTask("idle"));
         }
         private static TaskManagerConfiguration DConfig => new(timeLimitMS: 10 * 60 * 1000, abortOnTimeout: false);
