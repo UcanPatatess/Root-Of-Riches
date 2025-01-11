@@ -19,6 +19,7 @@ using FFXIVClientStructs.FFXIV.Client.UI.Agent;
 using FFXIVClientStructs.FFXIV.Component.GUI;
 using ImGuiNET;
 using RootofRiches.IPC;
+using System;
 using System.Numerics;
 using System.Runtime.InteropServices;
 
@@ -494,6 +495,23 @@ public static unsafe class Util
             ImGui.EndTooltip();
         }
     }
+    internal static Random random = new Random();
+    public static Vector3 RandomPointInTriangle(Vector3 p1, Vector3 p2, Vector3 p3)
+    {
+        float r1 = (float)random.NextDouble();
+        float r2 = (float)random.NextDouble();
+
+        // Ensure the point is inside the triangle
+        if (r1 + r2 > 1)
+        {
+            r1 = 1 - r1;
+            r2 = 1 - r2;
+        }
+
+        // Calculate the random point
+        return (1 - r1 - r2) * p1 + r1 * p2 + r2 * p3;
+    }
+
     #region AutoRetainer
     public static int ToUnixTimestamp(this DateTime value) => (int)Math.Truncate(value.ToUniversalTime().Subtract(new DateTime(1970, 1, 1)).TotalSeconds);
 

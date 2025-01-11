@@ -100,7 +100,7 @@ internal class DebugWindow : Window
                 ImGui.SameLine();
                 if (ImGui.Button("Copy to clipboard"))
                 {
-                    string clipboardText = $"{XPos}f, {YPos}f, {ZPos}f";
+                    string clipboardText = string.Format(CultureInfo.InvariantCulture, "{0:F2}f, {1:F2}f, {2:F2}f", XPos, YPos, ZPos);
                     ImGui.SetClipboardText(clipboardText);
                 }
                 if (ImGui.Button("Vnav Moveto!"))

@@ -213,14 +213,21 @@ namespace RootofRiches.Scheduler
                                 {
                                     TaskTeleport.Enqueue(RhalgrAether, Rhalgr);
                                     TaskMountUp.Enqueue();
-                                    TaskMoveTo.Enqueue(new Vector3(-57.27f, 0f, 48.57f), "Summoning Bell");
+                                    TaskMoveTo.Enqueue(RandomPointInTriangle(
+                                        TurnInDict[Svc.ClientState.TerritoryType].BellPos1,
+                                        TurnInDict[Svc.ClientState.TerritoryType].BellPos2,
+                                        TurnInDict[Svc.ClientState.TerritoryType].BellPos3), "Summoning Bell", 1);
                                     TaskSellVendor.Enqueue();
                                 }
                                 else if (IsInZone(Idyllshire) || (GordianTurnInCount > 0 || AlexandrianTurnInCount > 0))
                                 {
+
                                     TaskTeleport.Enqueue(IdyllshireAether, Idyllshire);
                                     TaskMountUp.Enqueue();
-                                    TaskMoveTo.Enqueue(new Vector3(34, 208, -51), "Summoning Bell");
+                                    TaskMoveTo.Enqueue(RandomPointInTriangle(
+                                        TurnInDict[Svc.ClientState.TerritoryType].BellPos1,
+                                        TurnInDict[Svc.ClientState.TerritoryType].BellPos2,
+                                        TurnInDict[Svc.ClientState.TerritoryType].BellPos3), "Summoning Bell",1);
                                     TaskSellVendor.Enqueue();
                                 }
                             }
@@ -237,7 +244,10 @@ namespace RootofRiches.Scheduler
                                 //logic is added but it needs to be tested
                                 TaskTeleport.Enqueue(RhalgrAether, Rhalgr);
                                 TaskMountUp.Enqueue();
-                                TaskMoveTo.Enqueue(new Vector3(125.88f, 0.68f, 40.67f), "Omega Shop NPC", 1);
+                                TaskMoveTo.Enqueue(RandomPointInTriangle(
+                                        TurnInDict[Svc.ClientState.TerritoryType].NpcPos1,
+                                        TurnInDict[Svc.ClientState.TerritoryType].NpcPos2,
+                                        TurnInDict[Svc.ClientState.TerritoryType].NpcPos3), "Moving to Omega Shop", 1);
                                 TaskMergeInv.Enqueue();
                                 TaskTurnIn.Enqueue();
                                 P.taskManager.Enqueue(() => PreviousArea = CurrentZoneID());
@@ -246,7 +256,10 @@ namespace RootofRiches.Scheduler
                             {
                                 TaskTeleport.Enqueue(IdyllshireAether, Idyllshire);
                                 TaskMountUp.Enqueue();
-                                TaskMoveTo.Enqueue(new Vector3(-19, 211, -36), "Alexander Shop NPC", 1);
+                                TaskMoveTo.Enqueue(RandomPointInTriangle(
+                                        TurnInDict[Svc.ClientState.TerritoryType].NpcPos1,
+                                        TurnInDict[Svc.ClientState.TerritoryType].NpcPos2,
+                                        TurnInDict[Svc.ClientState.TerritoryType].NpcPos3), "Moving to Alexander Shop", 1);
                                 TaskMergeInv.Enqueue();
                                 TaskTurnIn.Enqueue();
                                 P.taskManager.Enqueue(() => PreviousArea = CurrentZoneID());

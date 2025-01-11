@@ -525,12 +525,24 @@ public static class Data
     public static uint Idyllshire = 478;
     public static uint IdyllshireAether = 75;
     public static Vector3 IdyllshireNPCPos = new(-20.98f, 211.00f, -37.74f);
-    public static Vector3 IdyllshireBellPos = new(34.78f, 208.15f, -50.86f);
+    public static Vector3 IdyllshireNPCPos1 = new(-19.43f, 211.00f, -35.29f);
+    public static Vector3 IdyllshireNPCPos2 = new(-18.19f, 211.00f, -36.49f);
+    public static Vector3 IdyllshireNPCPos3 = new(-18.12f, 211.00f, -34.53f);
+    public static Vector3 IdyllshireBellPos = new(34.78f, 208.15f, -50.86f); // Actual bell pos
+    public static Vector3 IdyllshireBellPos1 = new(35.37f, 208.17f, -51.95f); //triangle values
+    public static Vector3 IdyllshireBellPos2 = new(33.41f, 208.24f, -50.55f); //triangle values
+    public static Vector3 IdyllshireBellPos3 = new(33.46f, 208.36f, -52.60f); //triangle values
 
     public static uint Rhalgr = 635;
     public static uint RhalgrAether = 104;
     public static Vector3 RhalgrNPCPos = new Vector3(128.40f, 0.68f, 41.70f);
-    public static Vector3 RhalgrBellPos = new Vector3(-57.27f, 0f, 48.57f);
+    public static Vector3 RhalgrNPCPos1 = new Vector3(125.41f, 0.65f, 39.55f);
+    public static Vector3 RhalgrNPCPos2 = new Vector3(124.71f, 0.65f, 41.31f);
+    public static Vector3 RhalgrNPCPos3 = new Vector3(123.59f, 0.65f, 39.49f);
+    public static Vector3 RhalgrBellPos = new Vector3(-57.27f, 0f, 48.57f); // Actual bell pos
+    public static Vector3 RhalgrBellPos1 = new Vector3(-53.83f, 0f, 46.92f);
+    public static Vector3 RhalgrBellPos2 = new Vector3(-55.33f, 0f, 48.68f);
+    public static Vector3 RhalgrBellPos3 = new Vector3(-57.03f, 0f, 47.42f);
 
     public static readonly HashSet<uint> innZones = new HashSet<uint> { LimsaInn, UlDahInn, GridaniaInn, IshguardInn, KuganeInn, CrystariumInn, OldSharInn, TuliyollaiInn };
 
@@ -656,11 +668,41 @@ public static class Data
     {
         public ulong TurnInNpc { get; set; }
         public Vector3 NpcPos { get; set; }
+        public Vector3 NpcPos1 { get; set; }
+        public Vector3 NpcPos2 { get; set; }
+        public Vector3 NpcPos3 { get; set; }
         public Vector3 BellPos { get; set; }
+        public Vector3 BellPos1 { get; set; }
+        public Vector3 BellPos2 { get; set; }
+        public Vector3 BellPos3 { get; set; }
     }
     public static Dictionary<uint, TurnInData> TurnInDict = new Dictionary<uint, TurnInData>
     {
-        {Idyllshire, new TurnInData{TurnInNpc = Sabina,NpcPos = IdyllshireNPCPos,BellPos = IdyllshireBellPos} },
-        {Rhalgr, new TurnInData{TurnInNpc = Gelfradus,NpcPos = RhalgrNPCPos,BellPos = RhalgrBellPos} },
+        {Idyllshire, 
+            new TurnInData{
+                TurnInNpc = Sabina,
+                NpcPos = IdyllshireNPCPos,
+                NpcPos1 = IdyllshireNPCPos1,
+                NpcPos2 = IdyllshireNPCPos2,
+                NpcPos3 = IdyllshireNPCPos3,
+                BellPos = IdyllshireBellPos,
+                BellPos1 = IdyllshireBellPos1,
+                BellPos2 = IdyllshireBellPos2,
+                BellPos3 = IdyllshireBellPos3
+            }
+        },
+        {Rhalgr, 
+            new TurnInData{
+                TurnInNpc = Gelfradus,
+                NpcPos = RhalgrNPCPos,
+                NpcPos1 = RhalgrNPCPos1,
+                NpcPos2 = RhalgrNPCPos2,
+                NpcPos3 = RhalgrNPCPos3,
+                BellPos = RhalgrBellPos,
+                BellPos1 = RhalgrBellPos1,
+                BellPos2 = RhalgrBellPos2,
+                BellPos3 = RhalgrBellPos3
+            } 
+        },
     };
 }
