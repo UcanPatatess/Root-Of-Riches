@@ -19,7 +19,6 @@ using FFXIVClientStructs.FFXIV.Client.UI.Agent;
 using FFXIVClientStructs.FFXIV.Component.GUI;
 using ImGuiNET;
 using RootofRiches.IPC;
-using System;
 using System.Numerics;
 using System.Runtime.InteropServices;
 
@@ -259,10 +258,21 @@ public static unsafe class Util
     }
     public static bool EnableTurnIn()
     {
-        return P.navmesh.Installed 
-            && P.lifestream.Installed 
-            && P.autoRetainer.Installed 
-            && P.deliveroo.Installed;
+        if (C.TeleportToFC)
+        {
+            return P.navmesh.Installed
+            && P.autoRetainer.Installed
+            && P.deliveroo.Installed
+            && P.lifestream.Installed
+            ;
+        }
+        else
+        {
+            return P.navmesh.Installed
+            && P.autoRetainer.Installed
+            && P.deliveroo.Installed
+            ;
+        }
     }
     public static void ToggleRotation(bool enable)
     {
@@ -511,7 +521,6 @@ public static unsafe class Util
         // Calculate the random point
         return (1 - r1 - r2) * p1 + r1 * p2 + r2 * p3;
     }
-
     #region AutoRetainer
     public static int ToUnixTimestamp(this DateTime value) => (int)Math.Truncate(value.ToUniversalTime().Subtract(new DateTime(1970, 1, 1)).TotalSeconds);
 

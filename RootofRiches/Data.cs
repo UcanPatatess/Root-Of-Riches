@@ -1,4 +1,5 @@
 using System.Numerics;
+using GrandCompany = ECommons.ExcelServices.GrandCompany;
 
 namespace RootofRiches;
 
@@ -470,7 +471,6 @@ public static class Data
     public static uint LimsaUpper = 128; // we need limsa id too which is 129 for the teleport task :d
     public static uint LimsaLower = 129;
     public static uint LimsaAether = 8;
-    public static string LimsaAethernet = "The Aft";
     public static uint LimsaInn = 177;
     public static ulong LimsaInnNPC = 1000974;
     public static Vector3 LimsaInnNPCPos = new(15.43f, 40f, 12.47f);
@@ -481,7 +481,6 @@ public static class Data
 
     public static uint UlDah = 130;
     public static uint UlDahAether = 9;
-    public static string UlDahAethernet = "Adven";
     public static uint UlDahInn = 178;
     public static ulong UlDahInnNPC = 1001976;
     public static Vector3 UlDahInnNPCPos = new(29.5f, 7.45f, -78.32f);
@@ -554,6 +553,27 @@ public static class Data
     public static readonly Vector3 A4NChest1Pos = new(-0.02f, 10.54f, -8.38f);
     public static readonly Vector3 A4NChest2Pos = new(2f, 10.54f, -6.36f);
     public static readonly Vector3 A4NChest3Pos = new(-2.03f, 10.54f, -6.36f);
+
+    #endregion
+
+    #region Grand Company Info
+
+    public static readonly Dictionary<GrandCompany, Vector3> CompanyNPCPoints = new()
+    {
+        [GrandCompany.ImmortalFlames] = new Vector3(-140.6f, 4.1f, -105.6f),
+        [GrandCompany.Maelstrom] = new Vector3(93.0f, 40.3f, 75.6f),
+        [GrandCompany.TwinAdder] = new Vector3(-67.2f, -0.5f, -7.8f),
+    };
+
+    //21069	Maelstrom aetheryte ticket
+    //21070	Twin Adder aetheryte ticket
+    //21071	Immortal Flames aetheryte ticket
+    public static readonly Dictionary<GrandCompany, uint> CompanyItem = new()
+    {
+        [GrandCompany.ImmortalFlames] = 21071,
+        [GrandCompany.Maelstrom] = 21069,
+        [GrandCompany.TwinAdder] = 21070,
+    };
 
     #endregion
 
@@ -645,14 +665,13 @@ public static class Data
         public required ulong InnDoor { get; set; }
         public required Vector3 InnDoorPos { get; set; }
         public uint MainCity2 { get; set; }
-        public string? AethernetCrystal { get; set; }
         public uint MainAether { get; set; }
     }
 
     public static Dictionary<uint, InnData> InnDict = new Dictionary<uint, InnData>
     {
-        { LimsaInn, new InnData { MainCity = LimsaLower, MainAether = LimsaAether,RepairNPC = LimsaRepairNPC, RepairNPCPos = LimsaRepairNPCPos, InnNPC = LimsaInnNPC, InnNPCPos = LimsaInnNPCPos,InnDoor = LimsaInnDoor, MainCity2 = LimsaUpper, AethernetCrystal = LimsaAethernet,InnDoorPos=LimsaInnDoorPos } },
-        { UlDahInn, new InnData { MainCity = UlDah, MainAether = UlDahAether ,RepairNPC = UlDahRepairNPC, RepairNPCPos = UlDahRepairNPCPos, InnNPC = UlDahInnNPC, InnNPCPos = UlDahInnNPCPos,InnDoor = UlDahInnDoor, AethernetCrystal = UlDahAethernet,InnDoorPos=UlDahInnDoorPos } },
+        { LimsaInn, new InnData { MainCity = LimsaLower, MainAether = LimsaAether,RepairNPC = LimsaRepairNPC, RepairNPCPos = LimsaRepairNPCPos, InnNPC = LimsaInnNPC, InnNPCPos = LimsaInnNPCPos,InnDoor = LimsaInnDoor, MainCity2 = LimsaUpper,InnDoorPos=LimsaInnDoorPos } },
+        { UlDahInn, new InnData { MainCity = UlDah, MainAether = UlDahAether ,RepairNPC = UlDahRepairNPC, RepairNPCPos = UlDahRepairNPCPos, InnNPC = UlDahInnNPC, InnNPCPos = UlDahInnNPCPos,InnDoor = UlDahInnDoor,InnDoorPos=UlDahInnDoorPos } },
         { GridaniaInn, new InnData {MainCity = Gridania, MainAether = GridaniaAether, RepairNPC = GridaniaRepairNPC, RepairNPCPos = GridaniaRepairNPCPos, InnNPC = GridaniaInnNPC, InnNPCPos = GridaniaInnNPCPos,InnDoor = GridaniaInnDoor,InnDoorPos=GridaniaInnDoorPos} },
     };
 

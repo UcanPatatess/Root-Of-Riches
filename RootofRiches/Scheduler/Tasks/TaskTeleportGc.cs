@@ -1,18 +1,19 @@
+using GrandCompany = ECommons.ExcelServices.GrandCompany;
 using Dalamud.Game.ClientState.Conditions;
 using ECommons.DalamudServices;
 using ECommons.Throttlers;
 using FFXIVClientStructs.FFXIV.Client.Game.UI;
-using System.Drawing.Text;
+using ECommons.GameHelpers;
+
 
 namespace RootofRiches.Scheduler.Tasks
 {
-    internal static class TaskTeleportInn
+    internal static class TaskTeleportGc
     {
         internal static unsafe void Enqueue()
         {
-            P.taskManager.Enqueue(TeleporttoAethery, "Teleporting to Inn", DConfig);
+            P.taskManager.Enqueue(TeleporttoAethery, "Teleporting to GC", DConfig);
         }
-
         internal static unsafe bool? TeleporttoAethery()
         {
             uint MainAether = 0;
@@ -20,17 +21,22 @@ namespace RootofRiches.Scheduler.Tasks
             uint MainCity2 = 0;
             bool UseSecondZoneID = false;
 
-            if (C.InnOption == "Limsa")
+            if (Player.GrandCompany == GrandCompany.Maelstrom)
             {
                 MainAether = InnDict[LimsaInn].MainAether;
                 MainCity = InnDict[LimsaInn].MainCity;
                 MainCity2 = InnDict[LimsaInn].MainCity2;
                 UseSecondZoneID = true;
             }
-            else
+            else if (Player.GrandCompany == GrandCompany.ImmortalFlames)
             {
-                MainAether = InnDict[C.InnDataID].MainAether;
-                MainCity = InnDict[C.InnDataID].MainCity;
+                MainAether = InnDict[UlDahInn].MainAether;
+                MainCity = InnDict[UlDahInn].MainCity;
+            }
+            else if (Player.GrandCompany == GrandCompany.TwinAdder)
+            {
+                MainAether = InnDict[GridaniaInn].MainAether;
+                MainCity = InnDict[GridaniaInn].MainCity;
             }
 
             if (IsInZone(MainCity) && PlayerNotBusy())

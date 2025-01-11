@@ -6,6 +6,7 @@ using ImGuiNET;
 using System.Globalization;
 using System.Numerics;
 using RootofRiches.IPC;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 
 namespace RootofRiches.Windows;
 
@@ -35,6 +36,8 @@ internal class DebugWindow : Window
     private static float TargetXPos = 0;
     private static float TargetYPos = 0;
     private static float TargetZPos = 0;
+    private static uint TargetDataID = 0;
+    private static string TargetDataIDString = TargetDataID.ToString();
     private string pluginName = "none";
     private string commandInput = "";
     private bool rSenabled = false;
@@ -237,10 +240,18 @@ internal class DebugWindow : Window
                 }
 
                 ImGui.Text($"Is in Inn? {CurrentlyInnInn()}");
-
-                if (ImGui.Button("Target Leg in A4N"))
+                if (ImGui.InputText("##Target Dataid", ref TargetDataIDString, 100))
                 {
-                    TaskTarget.Enqueue(RightForeleg);
+                    if (uint.TryParse(TargetDataIDString, out uint newTargetDataID))
+                    {
+                        TargetDataID = newTargetDataID;
+                    }
+                }
+                
+                ImGui.SameLine();
+                if (ImGui.Button("Target the DataID"))
+                {
+                    TaskTarget.Enqueue(TargetDataID);
                 }
 
                 ImGui.EndTabItem();
@@ -261,75 +272,8 @@ internal class DebugWindow : Window
         }
     }
 
-    private void A4NGuiUi()
-    {
-        ImGui.Text($"A4n Duty is selected {CorrectDuty()}");
-        ImGui.Text("Open A4NMapID in the duty selection");
-        if (ImGui.Button("A4NMapID"))
-        {
-            TaskDutyFinder.Enqueue();
-        }
-        if (ImGui.Button("SelectDuty"))
-        {
-            TaskSelectCorrectDuty.Enqueue();
-        }
-        if (ImGui.Button("TaskLaunchDuty"))
-        {
-            TaskLaunchDuty.Enqueue();
-        }
-        if (ImGui.Button("TaskContentWidnowConfirm"))
-        {
-            TaskContentWidnowConfirm.Enqueue();
-        }
-        if (ImGui.Button("GetInA4n"))
-        {
-            TaskDutyFinder.Enqueue();
-            TaskSelectCorrectDuty.Enqueue();
-            TaskLaunchDuty.Enqueue();
-            TaskContentWidnowConfirm.Enqueue();
-        }
-        if (ImGui.Button("Chest Task"))
-        {
-            TaskMoveTo.Enqueue(A4NChestCenter, "Center Chest", 0.5f);
-            TaskOpenChest.Enqueue(A4NChest1);
-            TaskOpenChest.Enqueue(A4NChest2);
-            TaskOpenChest.Enqueue(A4NChest3);
-        }
-        if (ImGui.Button("Full Inside A4N"))
-        {
-            TaskA4N.Enqueue();
-        }
-
-        if (ImGui.Button("Full A4N Loop"))
-        {
-            TaskDutyFinder.Enqueue();
-            TaskSelectCorrectDuty.Enqueue();
-            TaskLaunchDuty.Enqueue();
-            TaskContentWidnowConfirm.Enqueue();
-            TaskA4N.Enqueue();
-        }
-
-        ImGui.Text($"Are we available/not busy? = {PlayerNotBusy()}");
-        ImGui.SameLine();
-        ImGui.Text($"PluginInstalled : {PluginInstalled("BurningDowntheHouse")}");
-
-        IGameObject? gameObject = null;
-        if (TryGetObjectByDataId(LeftForeleg, out gameObject))
-        {
-            ImGui.Text("Left leg is Targetable");
-        }
-        else if (TryGetObjectByDataId(A4NChest1, out gameObject))
-        {
-            ImGui.Text("Chest are Targetable");
-        }
-        else
-        {
-            ImGui.Text("Nothing is possible to target!");
-        }
-    }
-
     private void TimeTestUi()
     {
-        ImGui.Text($"Task is: {P.taskManager.CurrentTask}");
+        ImGui.Text($"Task is: {CurrentTask()}");
     }
 }

@@ -1,17 +1,51 @@
 using ECommons.DalamudServices;
 using ECommons.Throttlers;
+using RootofRiches.Scheduler.Handlers;
 
 namespace RootofRiches.Scheduler.Tasks
 {
-    internal static class TaskUseAethernet
+    internal unsafe static class TaskUseAethernet
     {
-        internal static void Enqueue()
+        internal static void Enqueue(bool forceuse = false)
         {
             P.taskManager.Enqueue(PlayerNotBusy);
+            if (forceuse)// used for gc turn in
+            {
+                TaskMoveTo.Enqueue(new(-84.03f, 20.77f, 0.02f), "Moving To aetheryte ", 7);
+                TaskTarget.Enqueue(InnDict[LimsaInn].MainAether);
+                TaskInteract.Enqueue(InnDict[LimsaInn].MainAether);
+                P.taskManager.Enqueue(() => GenericHandlers.FireCallback("SelectString", true, 0));
+                P.taskManager.Enqueue(() => GenericHandlers.FireCallback("TelepotTown", true, 11, 1));
+                P.taskManager.Enqueue(() => GenericHandlers.FireCallback("TelepotTown", true, 11, 1));
+                P.taskManager.Enqueue(() => !PlayerNotBusy());
+                P.taskManager.Enqueue(PlayerNotBusy);
+            }
+            else if (!UseAether())
+            {
+                if (C.InnOption == "Limsa")
+                {
+                    TaskMoveTo.Enqueue(new(-84.03f, 20.77f, 0.02f), "Moving To aetheryte ", 7);
+                    TaskTarget.Enqueue(InnDict[C.InnDataID].MainAether);
+                    TaskInteract.Enqueue(InnDict[C.InnDataID].MainAether);
+                    P.taskManager.Enqueue(() => GenericHandlers.FireCallback("SelectString", true, 0));
+                    P.taskManager.Enqueue(() => GenericHandlers.FireCallback("TelepotTown", true, 11, 1));
+                    P.taskManager.Enqueue(() => GenericHandlers.FireCallback("TelepotTown", true, 11, 1));
+                    P.taskManager.Enqueue(() => !PlayerNotBusy());
+                    P.taskManager.Enqueue(PlayerNotBusy);
+                }
+                else if (C.InnOption == "Ul'Dah")
+                {
+                    TaskTarget.Enqueue(InnDict[C.InnDataID].MainAether);
+                    TaskInteract.Enqueue(InnDict[C.InnDataID].MainAether);
+                    P.taskManager.Enqueue(() => GenericHandlers.FireCallback("SelectString", true, 0));
+                    P.taskManager.Enqueue(() => GenericHandlers.FireCallback("TelepotTown", true, 11, 1));
+                    P.taskManager.Enqueue(() => GenericHandlers.FireCallback("TelepotTown", true, 11, 1));
+                    P.taskManager.Enqueue(() => !PlayerNotBusy());
+                    P.taskManager.Enqueue(PlayerNotBusy);
+                }
+            }
             P.taskManager.Enqueue(UseAether);
             P.taskManager.Enqueue(PlayerNotBusy);
-            P.taskManager.EnqueueDelay(1000);
-
         }
         private static bool UseAether()
         {
@@ -30,11 +64,6 @@ namespace RootofRiches.Scheduler.Tasks
             if (C.InnOption == "Gridania")
             {
                 return true;
-            }
-            if (!P.lifestream.IsBusy() && PlayerNotBusy())
-            {
-                if (FrameThrottler.Throttle("SelectYesnoThrottle", 300))
-                    P.lifestream.ExecuteCommand($"{InnDict[C.InnDataID].AethernetCrystal}");
             }
             return false;
         }

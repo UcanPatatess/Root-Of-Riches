@@ -2,12 +2,6 @@ using Dalamud.Game.ClientState.Conditions;
 using ECommons.DalamudServices;
 using ECommons.Throttlers;
 using FFXIVClientStructs.FFXIV.Client.Game.UI;
-using RootofRiches.Scheduler.Handlers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RootofRiches.Scheduler.Tasks
 {
@@ -22,7 +16,7 @@ namespace RootofRiches.Scheduler.Tasks
         {
             if (IsInZone(targetTerritoryId) && PlayerNotBusy())
                 return true;
-            else if (useSecondID && IsInZone(secondZoneID))
+            else if (useSecondID && IsInZone(secondZoneID) && PlayerNotBusy())
                 return true;
 
             if (!Svc.Condition[ConditionFlag.Casting] && PlayerNotBusy() && !IsBetweenAreas && !IsInZone(targetTerritoryId))

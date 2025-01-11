@@ -1,6 +1,7 @@
 
 using Dalamud.Interface.Components;
 using Dalamud.Interface.Utility.Raii;
+using ECommons.ImGuiMethods;
 using ImGuiNET;
 using RootofRiches.Scheduler;
 
@@ -88,13 +89,14 @@ internal class TurninSettingsUi
         {
             if (!C.VendorTurnIn)
                 TeleportToFC = false;
-
             if (ImGui.Checkbox("Teleport to FC##teleporttofc", ref TeleportToFC))
             {
                 C.TeleportToFC = TeleportToFC;
             }
             ImGui.SameLine();
             ImGuiComponents.HelpMarker("Teleport to your Fc to sell gears.");
+            ImGui.SameLine();
+            ImGuiEx.PluginAvailabilityIndicator([new("Lifestream")]);
         }
         if (ImGui.Checkbox("Sell OilCloth Turn-in##SellOilCloth", ref SellOilCloth))
         {
