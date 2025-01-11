@@ -1,8 +1,8 @@
 Main Features to work on:
 → Auto Retainer features
-  → Do retainers
+  → Do retainers(done for only one chara no multi yet)
   → Run Subs
-→ Teleport with different logic(rn language breaks it)
+→ Teleport with different logic(done)
 → Standalone vendor sell
 
 
