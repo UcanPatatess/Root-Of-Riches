@@ -54,6 +54,7 @@ namespace RootofRiches.Scheduler.Tasks
         internal static void Enqueue()
         {
             P.taskManager.Enqueue(PlayerNotBusy);
+            P.taskManager.Enqueue(MergeStacks);// this is pretty hacky i feel.... but also Automaton/Pandora used to also just open the inventory twice before it would actually run. Hopefully this fixes it
             P.taskManager.Enqueue(MergeStacks);
             P.taskManager.Enqueue(PlayerNotBusy);
         }

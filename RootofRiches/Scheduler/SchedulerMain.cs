@@ -259,9 +259,9 @@ namespace RootofRiches.Scheduler
                                         TurnInDict[Svc.ClientState.TerritoryType].NpcPos1,
                                         TurnInDict[Svc.ClientState.TerritoryType].NpcPos2,
                                         TurnInDict[Svc.ClientState.TerritoryType].NpcPos3), "Moving to Omega Shop", 1);
-                                TaskMergeInv.Enqueue();
-                                TaskMergeInv.Enqueue(); // this is pretty hacky i feel.... but also Automaton/Pandora used to also just open the inventory twice before it would actually run. Hopefully this fixes it
+                                TaskMergeInv.Enqueue(); 
                                 TaskTurnIn.Enqueue();
+                                TaskMergeInv.Enqueue();
                                 P.taskManager.Enqueue(() => PreviousArea = CurrentZoneID());
                             }
                             else if (GordianTurnInCount > 0 || AlexandrianTurnInCount > 0)
