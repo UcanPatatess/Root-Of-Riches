@@ -3,8 +3,8 @@
   <Import Project="Dalamud.Plugin.Bootstrap.targets" />
 
   <PropertyGroup>
-    <Version>0.0.0.20</Version>
-    <Description>Time to make some gill..</Description>
+    <Version>0.0.0.21</Version>
+    <Description>Time to make some gil..</Description>
     <PackageProjectUrl>https://github.com/goatcorp/SamplePlugin</PackageProjectUrl>
     <PackageLicenseExpression>AGPL-3.0-or-later</PackageLicenseExpression>
     <IsPackable>false</IsPackable>
