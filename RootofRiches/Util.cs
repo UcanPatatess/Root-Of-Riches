@@ -163,6 +163,9 @@ public static unsafe class Util
         return false;
     }
 
+    public static uint GetCurrentWorld() => Svc.ClientState.LocalPlayer?.CurrentWorld.RowId ?? 0;
+    public static uint GetHomeWorld() => Svc.ClientState.LocalPlayer?.HomeWorld.RowId ?? 0;
+
     public static bool IsBetweenAreas => (Svc.Condition[ConditionFlag.BetweenAreas] || Svc.Condition[ConditionFlag.BetweenAreas51]);
     public static unsafe uint GetGil() => InventoryManager.Instance()->GetGil();
     internal static unsafe float GetDistanceToPlayer(Vector3 v3) => Vector3.Distance(v3, Player.GameObject->Position);
@@ -306,6 +309,18 @@ public static unsafe class Util
             && P.autoRetainer.Installed
             && P.deliveroo.Installed
             ;
+        }
+    }
+
+    public static bool IsOnHomeWorld()
+    {
+        if (C.VendorTurnIn || C.SellOilCloth)
+        {
+            return GetCurrentWorld() == GetHomeWorld();
+        }
+        else
+        {
+            return true;
         }
     }
     public static void ToggleRotation(bool enable)

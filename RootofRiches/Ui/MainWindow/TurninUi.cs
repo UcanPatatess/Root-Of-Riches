@@ -1,4 +1,7 @@
+using Dalamud.Interface;
+using Dalamud.Interface.Colors;
 using Dalamud.Interface.Utility.Raii;
+using ECommons.ImGuiMethods;
 using ImGuiNET;
 using RootofRiches.Scheduler;
 
@@ -21,6 +24,8 @@ internal class TurninUi
             { "Alexandrian", "A9-12", $"{AlexandrianTurnInCount:N0}" },
             { "Deltascape", "O1-4", $"{DeltascapeTurnInCount:N0}" },
         };
+
+        string sellItem = string.Empty;
 
         if (ImGui.BeginTable("RoRAmountofArmorPieces", 2, ImGuiTableFlags.Borders | ImGuiTableFlags.RowBg))
         {
@@ -96,7 +101,7 @@ internal class TurninUi
 
             ImGui.EndTable();
         }
-        using (ImRaii.Disabled(!EnableTurnIn()))
+        using (ImRaii.Disabled(!EnableTurnIn() || !IsOnHomeWorld()))
         {
             if (ImGui.Button(SchedulerMain.DoWeTick ? "Stop" : "Start Turnin"))
             {
@@ -110,6 +115,21 @@ internal class TurninUi
                     SchedulerMain.RunTurnin = true;
                 }
             }
+        }
+        if (!IsOnHomeWorld())
+        {
+            if (C.VendorTurnIn)
+            {
+                sellItem = "Armor pieces";
+            }
+            else if (C.SellOilCloth)
+            {
+                sellItem = "Oil Cloth";
+            }
+            ImGui.SameLine();
+            FontAwesome.Print(ImGuiColors.DalamudRed, FontAwesome.Cross);
+            ImGui.SameLine();
+            ImGui.TextWrapped($"You're not on your homeworld! Can't sell {sellItem} to retainers. Please change settings or return back to main world to start.");
         }
         if (!EnableTurnIn())
         {

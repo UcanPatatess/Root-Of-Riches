@@ -7,6 +7,8 @@ namespace RootofRiches.Ui.MainWindow;
 
 internal class NormalRaidFarm
 {
+    private static string ButtonName = "Normal Raid";
+
     public static void Draw()
     {
         if (ImGui.RadioButton("[A4N] Alexander - Burden of the Father", C.RaidSelected == 0))
@@ -39,10 +41,13 @@ internal class NormalRaidFarm
         {
             ImGui.Text("Raid mode is idle");
         }
-
+        if (C.RaidSelected == 0)
+            ButtonName = "A4N";
+        else if (C.RaidSelected == 1)
+            ButtonName = "O3N";
         using (ImRaii.Disabled(!EnableNormalRaidFarm()))
         {
-            if (ImGui.Button(SchedulerMain.DoWeTick ? "Stop" : "Start A4N"))
+            if (ImGui.Button(SchedulerMain.DoWeTick ? "Stop" : $"Start {ButtonName}"))
             {
                 if (SchedulerMain.DoWeTick)
                 {

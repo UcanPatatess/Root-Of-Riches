@@ -55,7 +55,7 @@ namespace RootofRiches.Scheduler.Tasks
                     {
                         if (elapsedTime < C.SessionStats.FastestO3NRun)
                         {
-                            C.SessionStats.FastestA4NRun = elapsedTime;
+                            C.SessionStats.FastestO3NRun = elapsedTime;
                             PluginLog.Information($"Your new fastest time is: {elapsedTime.TotalSeconds:F2}");
                         }
                         if (elapsedTime < C.Stats.FastestO3NRun)
