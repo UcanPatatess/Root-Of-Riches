@@ -15,7 +15,6 @@ namespace RootofRiches.Scheduler.Tasks
             P.taskManager.Enqueue(() => P.autoRetainer.IsBusy());
             P.taskManager.Enqueue(() => !P.autoRetainer.IsBusy());
             TaskGetOut.Enqueue();
-            P.taskManager.Enqueue(PlayerNotBusy);
         }
         internal unsafe static bool RetainerOpened()
         {
