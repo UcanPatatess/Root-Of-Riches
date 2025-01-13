@@ -19,6 +19,7 @@ namespace RootofRiches.Scheduler
         {
             NRaidRun = 1;
             DoWeTick = true;
+            TimerStarted = false;
             return true;
         }
         internal static bool DisablePlugin()
@@ -44,6 +45,7 @@ namespace RootofRiches.Scheduler
         public static string NRaidTask = "idle";
         public static int NRaidRun;
         public static bool FullRun = false;
+        public static bool TimerStarted = false;
         private static uint PreviousArea = 0;
         private static int RaidSelected = 0;
 
@@ -61,7 +63,7 @@ namespace RootofRiches.Scheduler
                             {
                                 uint ZoneID = CurrentZoneID();
                                 IGameObject? gameObject = null;
-                                if (TryGetObjectByDataId(NRaidDict[ZoneID].Chest1, out gameObject))
+                                if (TryGetObjectByDataId(NRaidDict[ZoneID].ListofChest[0], out gameObject))
                                 {
                                     if (GetRoleByNumber() == "Caster")
                                     {
@@ -79,12 +81,13 @@ namespace RootofRiches.Scheduler
                                     P.taskManager.Enqueue(() => !IsInZone(ZoneID), "Leaving Normal Raids");
                                     hasEnqueuedDutyFinder = false;
                                     P.taskManager.Enqueue(() => NRaidRun = NRaidRun + 1);
-                                    TaskTimer.Enqueue(false, ZoneID);
+                                    if (TimerStarted)
+                                        TaskTimer.Enqueue(false, ZoneID);
                                     P.taskManager.Enqueue(() => NRaidTask = "idle");
                                 }
                                 else if (TryGetObjectByDataId(NRaidDict[ZoneID].BossID, out gameObject))
                                 {
-                                    P.taskManager.Enqueue(() => NRaidTask = $"Targeted {NRaidDict[ZoneID].BossName}");
+                                    P.taskManager.Enqueue(() => NRaidTask = $"Targeted {gameObject?.Name}");
                                     // Left Leg is targetable... which means you aren't in combat/you haven't initiated it yet
                                     P.taskManager.Enqueue(PlayerNotBusy);
                                     TaskTarget.Enqueue(NRaidDict[ZoneID].BossID);
@@ -181,12 +184,19 @@ namespace RootofRiches.Scheduler
                             }
                             else if (!IsAddonActive("ContentsFinder") && !hasEnqueuedDutyFinder)
                             {
-                                TaskTimer.Enqueue(true);
+                                if (!TimerStarted)
+                                {
+                                    TaskTimer.Enqueue(true);
+                                }
                                 P.taskManager.Enqueue(() => NRaidTask = "Opening Contents Finder");
                                 TaskDutyFinder.Enqueue(NRaidDict[ZoneID].DutyID);
                             }
                             else if (IsAddonActive("ContentsFinder"))
                             {
+                                if (!TimerStarted)
+                                {
+                                    TaskTimer.Enqueue(true);
+                                }
                                 TaskDutyFinder.Enqueue(NRaidDict[ZoneID].DutyID);
                                 P.taskManager.Enqueue(() => NRaidTask = "Launching Correct Duty");
                                 TaskSelectCorrectDuty.Enqueue(ZoneID);

@@ -9,6 +9,9 @@ using RootofRiches.IPC;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 using FFXIVClientStructs.FFXIV.Client.UI.Agent;
 using FFXIVClientStructs.FFXIV.Component.GUI;
+using FFXIVClientStructs.FFXIV.Client.Game.Object;
+using System.Security.Policy;
+using Dalamud.Plugin.Services;
 
 namespace RootofRiches.Windows;
 
@@ -54,6 +57,7 @@ internal class DebugWindow : Window
     }
     private int inputBox = 0;
     private uint testDutyID = 0;
+    private IGameObject? gameObject = null;
 
     public override void Draw()
     {
@@ -223,6 +227,14 @@ internal class DebugWindow : Window
             }
             if (ImGui.BeginTabItem("Targeting Debug"))
             {
+                if (TryGetObjectByDataId(LeftForeleg, out gameObject))
+                {
+                    var x = gameObject;
+                    if (x != null)
+                    {
+                        ImGui.Text($"Manip's Left Leg should appear to the right: {x.Name}");
+                    }
+                }
                 if (Svc.Targets?.Target != null)
                 {
                     TargetXPos = (float)Math.Round(Svc.Targets.Target.Position.X, 2);
@@ -273,7 +285,6 @@ internal class DebugWindow : Window
                 {
                     TaskTarget.Enqueue(TargetDataID);
                 }
-
                 ImGui.EndTabItem();
             }
             if (ImGui.BeginTabItem("Time Test"))

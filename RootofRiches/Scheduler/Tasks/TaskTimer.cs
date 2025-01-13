@@ -15,6 +15,7 @@ namespace RootofRiches.Scheduler.Tasks
             {
                 P.stopwatch.Reset();
                 P.stopwatch.Start();
+                SchedulerMain.TimerStarted = true;
             }
             else if (!Calculate)
             {
@@ -72,6 +73,7 @@ namespace RootofRiches.Scheduler.Tasks
                 PluginLog.Information($"Total Run time (Session): {C.SessionStats.TotalRunTime.TotalSeconds:F2}");
                 PluginLog.Information($"Total Run time (Session): {C.Stats.TotalRunTime.TotalSeconds:F2}");
                 C.Save();
+                SchedulerMain.TimerStarted = false;
             }
             return true;
         }

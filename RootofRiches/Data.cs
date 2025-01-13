@@ -775,10 +775,8 @@ public static class Data
     public class NRaidData
     {
         public required Vector3 CenterofChest {get; set; }
-        public required ulong Chest1 { get; set; }
         public required ulong[] ListofChest { get; set; }
         public required ulong BossID { get; set; }
-        public required string BossName { get; set; }
         public required uint DutyID { get; set; }
         public required int PcallID { get; set; }
     }
@@ -789,10 +787,8 @@ public static class Data
             new NRaidData
             {
                 CenterofChest = A4NChestCenter,
-                Chest1 = A4NChest1,
                 ListofChest = [A4NChest1, A4NChest2, A4NChest3],
                 BossID = RightForeleg,
-                BossName = "Right Foreleg",
                 DutyID = 115,
                 PcallID = C.A4NPcallValue
             }
@@ -801,11 +797,9 @@ public static class Data
             new NRaidData
             {
                 CenterofChest = O3NChestCenter,
-                Chest1 = O3NChest1,
                 ListofChest = [O3NChest1, O3NChest2],
                 BossID = Halicarnassus,
-                BossName = "Halicarnassus",
-                DutyID = 0,
+                DutyID = 254, // was set to 0 originally
                 PcallID = C.O3NPcallValue
             }
         }
