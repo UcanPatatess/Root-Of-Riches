@@ -230,26 +230,31 @@ namespace RootofRiches.Scheduler
                             }
                             else if (TotalExchangeItem != 0 || (C.SellOilCloth && GetItemCount(10120) > 0))
                             {
-                                if (IsInZone(Rhalgr) || DeltascapeTurnInCount > 0)
+                                if (DeltascapeTurnInCount > 0)
                                 {
                                     TaskTeleport.Enqueue(RhalgrAether, Rhalgr);
-                                    TaskMountUp.Enqueue();
-                                    TaskMoveTo.Enqueue(RandomPointInTriangle(
-                                        TurnInDict[Svc.ClientState.TerritoryType].BellPos1,
-                                        TurnInDict[Svc.ClientState.TerritoryType].BellPos2,
-                                        TurnInDict[Svc.ClientState.TerritoryType].BellPos3), "Summoning Bell", 1);
-                                    TaskSellVendor.Enqueue();
+                                    if (IsInZone(Rhalgr))
+                                    {
+                                        TaskMountUp.Enqueue();
+                                        TaskMoveTo.Enqueue(RandomPointInTriangle(
+                                            TurnInDict[Svc.ClientState.TerritoryType].BellPos1,
+                                            TurnInDict[Svc.ClientState.TerritoryType].BellPos2,
+                                            TurnInDict[Svc.ClientState.TerritoryType].BellPos3), "Summoning Bell", 1);
+                                        TaskSellVendor.Enqueue();
+                                    }
                                 }
-                                else if (IsInZone(Idyllshire) || (GordianTurnInCount > 0 || AlexandrianTurnInCount > 0))
+                                else if (GordianTurnInCount > 0 || AlexandrianTurnInCount > 0 || (C.SellOilCloth && GetItemCount(10120) > 0))
                                 {
-
                                     TaskTeleport.Enqueue(IdyllshireAether, Idyllshire);
-                                    TaskMountUp.Enqueue();
-                                    TaskMoveTo.Enqueue(RandomPointInTriangle(
-                                        TurnInDict[Svc.ClientState.TerritoryType].BellPos1,
-                                        TurnInDict[Svc.ClientState.TerritoryType].BellPos2,
-                                        TurnInDict[Svc.ClientState.TerritoryType].BellPos3), "Summoning Bell",1);
-                                    TaskSellVendor.Enqueue();
+                                    if (IsInZone(Idyllshire))
+                                    {
+                                        TaskMountUp.Enqueue();
+                                        TaskMoveTo.Enqueue(RandomPointInTriangle(
+                                            TurnInDict[Svc.ClientState.TerritoryType].BellPos1,
+                                            TurnInDict[Svc.ClientState.TerritoryType].BellPos2,
+                                            TurnInDict[Svc.ClientState.TerritoryType].BellPos3), "Summoning Bell", 1);
+                                        TaskSellVendor.Enqueue();
+                                    }
                                 }
                             }
                         }
@@ -262,30 +267,35 @@ namespace RootofRiches.Scheduler
                             }
                             if (DeltascapeTurnInCount > 0)
                             {
-                                //logic is added but it needs to be tested
                                 TaskTeleport.Enqueue(RhalgrAether, Rhalgr);
-                                TaskMountUp.Enqueue();
-                                TaskMoveTo.Enqueue(RandomPointInTriangle(
-                                        TurnInDict[Svc.ClientState.TerritoryType].NpcPos1,
-                                        TurnInDict[Svc.ClientState.TerritoryType].NpcPos2,
-                                        TurnInDict[Svc.ClientState.TerritoryType].NpcPos3), "Moving to Omega Shop", 1);
-                                TaskMergeInv.Enqueue(); 
-                                TaskTurnIn.Enqueue();
-                                TaskMergeInv.Enqueue();
+                                if (IsInZone(Rhalgr))
+                                {
+                                    TaskMountUp.Enqueue();
+                                    TaskMoveTo.Enqueue(RandomPointInTriangle(
+                                            TurnInDict[Svc.ClientState.TerritoryType].NpcPos1,
+                                            TurnInDict[Svc.ClientState.TerritoryType].NpcPos2,
+                                            TurnInDict[Svc.ClientState.TerritoryType].NpcPos3), "Moving to Omega Shop", 1);
+                                    TaskMergeInv.Enqueue();
+                                    TaskTurnIn.Enqueue();
+                                    TaskMergeInv.Enqueue();
+                                }
                                 P.taskManager.Enqueue(() => PreviousArea = CurrentZoneID());
                             }
                             else if (GordianTurnInCount > 0 || AlexandrianTurnInCount > 0)
                             {
                                 TaskTeleport.Enqueue(IdyllshireAether, Idyllshire);
-                                TaskMountUp.Enqueue();
-                                TaskMoveTo.Enqueue(RandomPointInTriangle(
-                                        TurnInDict[Svc.ClientState.TerritoryType].NpcPos1,
-                                        TurnInDict[Svc.ClientState.TerritoryType].NpcPos2,
-                                        TurnInDict[Svc.ClientState.TerritoryType].NpcPos3), "Moving to Alexander Shop", 1);
-                                TaskMergeInv.Enqueue();
-                                TaskMergeInv.Enqueue();
-                                TaskTurnIn.Enqueue();
-                                P.taskManager.Enqueue(() => PreviousArea = CurrentZoneID());
+                                if (IsInZone(Idyllshire))
+                                {
+                                    TaskMountUp.Enqueue();
+                                    TaskMoveTo.Enqueue(RandomPointInTriangle(
+                                            TurnInDict[Svc.ClientState.TerritoryType].NpcPos1,
+                                            TurnInDict[Svc.ClientState.TerritoryType].NpcPos2,
+                                            TurnInDict[Svc.ClientState.TerritoryType].NpcPos3), "Moving to Alexander Shop", 1);
+                                    TaskMergeInv.Enqueue();
+                                    TaskMergeInv.Enqueue();
+                                    TaskTurnIn.Enqueue();
+                                }
+                                P.taskManager.Enqueue(() => PreviousArea = CurrentZoneID()); // i don't know what are we gonna do with these
                             }
                         }
                         else { DisablePlugin(); }
