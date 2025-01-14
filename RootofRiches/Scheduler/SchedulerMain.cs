@@ -175,7 +175,7 @@ namespace RootofRiches.Scheduler
                                     }
                                 }
                             }
-                            else if (C.EnableAutoRetainer && Svc.ClientState.TerritoryType == C.InnDataID && !NeedsRepair(C.RepairSlider) && ARRetainersWaitingToBeProcessed() || ARSubsWaitingToBeProcessed())
+                            else if (C.EnableAutoRetainer && Svc.ClientState.TerritoryType == C.InnDataID && !NeedsRepair(C.RepairSlider) && (ARRetainersWaitingToBeProcessed() || ARSubsWaitingToBeProcessed()))
                             {
                                 if (ARRetainersWaitingToBeProcessed())
                                 {
