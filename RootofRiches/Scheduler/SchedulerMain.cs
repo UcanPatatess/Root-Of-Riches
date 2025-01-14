@@ -128,7 +128,12 @@ namespace RootofRiches.Scheduler
                                 DisablePlugin();
                             }
 
-                            if (C.EnableReturnInn && Svc.ClientState.TerritoryType != C.InnDataID && !NeedsRepair(C.RepairSlider))
+                            if (C.EnableSubsMain && ARSubsWaitingToBeProcessed())
+                            {
+                                P.taskManager.Enqueue(() => NRaidTask = "Resending Deployables");
+                                TaskDoDeployables.Enqueue();
+                            }
+                            else if (C.EnableReturnInn && Svc.ClientState.TerritoryType != C.InnDataID && !NeedsRepair(C.RepairSlider))
                             {
                                 P.taskManager.Enqueue(() => NRaidTask = "Heading to the Inn");
                                 TaskTeleportInn.Enqueue();
@@ -175,21 +180,11 @@ namespace RootofRiches.Scheduler
                                     }
                                 }
                             }
-                            else if (C.EnableAutoRetainer && Svc.ClientState.TerritoryType == C.InnDataID && !NeedsRepair(C.RepairSlider) && (ARRetainersWaitingToBeProcessed() || ARSubsWaitingToBeProcessed()))
+                            else if (C.EnableAutoRetainer && ARRetainersWaitingToBeProcessed() && Svc.ClientState.TerritoryType == C.InnDataID)
                             {
-                                if (ARRetainersWaitingToBeProcessed())
-                                {
-                                    P.taskManager.Enqueue(() => NRaidTask = "Resending Retainers");
-                                    TaskUseAutoRetainer.Enqueue();
-                                    P.taskManager.Enqueue(() => NRaidTask = "idle");
-                                }
-                                if (ARSubsWaitingToBeProcessed())
-                                {
-                                    P.taskManager.Enqueue(() => NRaidTask = "Resending Deployables");
-                                    TaskDoDeployables.Enqueue();
-                                    P.taskManager.Enqueue(() => NRaidTask = "idle");
-                                }
-                                
+                                P.taskManager.Enqueue(() => NRaidTask = "Resending Retainers");
+                                TaskUseAutoRetainer.Enqueue();
+                                P.taskManager.Enqueue(() => NRaidTask = "idle");
                             }
                             else if (!IsAddonActive("ContentsFinder") && !hasEnqueuedDutyFinder)
                             {

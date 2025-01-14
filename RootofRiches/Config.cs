@@ -23,6 +23,7 @@ public class Config : IEzConfig
     public int O3NPcallValue { get; set; } = 0;
     public float RepairSlider { get; set; } = 30f;
     public bool EnableReturnInn { get; set; } = true;
+    public bool EnableSubsMain { get; set; } = false;
     public string RaidOption { get; set; } = "Infinite";
     public uint InnDataID { get; set; } = 177;
     public string InnOption { get; set; } = "Limsa";

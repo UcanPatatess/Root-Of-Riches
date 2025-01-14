@@ -1,3 +1,4 @@
+using Dalamud.Interface.Components;
 using Dalamud.Interface.Utility.Raii;
 using ECommons.ImGuiMethods;
 using ImGuiNET;
@@ -14,6 +15,7 @@ internal class NRaidFarmSettings
 {
     // Counter/Inputs
     private static int AmountToRun = RunAmount;
+    private static bool EnableMainSubs = C.EnableSubsMain;
     private static bool EnableReturnInn = C.EnableReturnInn;
     private static bool EnableRepairMode = C.EnableRepair;
     private static bool EnableAutoRetainer = C.EnableAutoRetainer;
@@ -226,8 +228,23 @@ internal class NRaidFarmSettings
                 }
 
             }
-
             ImGui.TableNextRow();
+
+            // Row #6, Enable Subs on Main
+            ImGui.TableSetColumnIndex(0);
+            ImGui.Text("Enable Subs");
+            ImGuiComponents.HelpMarker("Enable subs on this character. \nMulti Mode subs are coming soon");
+
+            ImGui.TableSetColumnIndex(1);
+            using (ImRaii.Disabled(GetCurrentWorld() != GetHomeWorld()))
+            {
+                if (ImGui.Checkbox("##MainSubCheckbox", ref EnableMainSubs))
+                {
+                    C.EnableSubsMain = EnableMainSubs;
+                }
+            }
+            ImGui.TableNextRow();
+
             ImGui.TableSetColumnIndex(0);
             if (ImGui.Checkbox("Show Settings In Main Window", ref ShowInWindow))
             {

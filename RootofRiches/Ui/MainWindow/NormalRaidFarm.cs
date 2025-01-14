@@ -82,7 +82,7 @@ internal class NormalRaidFarm
         }
         if (C.ShowSettingsInWindow)
         {
-            if (ImGui.BeginChild("##NRaidSettings", new Vector2(510, 200), true))
+            if (ImGui.BeginChild("##NRaidSettings", new Vector2(510, 230), true))
             {
                 SettingsWindow.NRaidFarmSettings.Draw();
             }
