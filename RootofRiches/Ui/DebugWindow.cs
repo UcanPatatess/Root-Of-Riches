@@ -12,6 +12,12 @@ using FFXIVClientStructs.FFXIV.Component.GUI;
 using FFXIVClientStructs.FFXIV.Client.Game.Object;
 using System.Security.Policy;
 using Dalamud.Plugin.Services;
+using ECommons.Automation.NeoTaskManager.Tasks;
+using ECommons.Automation.NeoTaskManager;
+using ECommons;
+using RootofRiches.Scheduler.Handlers;
+using ECommons.ExcelServices.TerritoryEnumeration;
+using ECommons.GameHelpers;
 
 namespace RootofRiches.Windows;
 
@@ -121,29 +127,38 @@ internal class DebugWindow : Window
                     ECommons.Logging.InternalLog.Information("Firing off Vnav Moveto");
                 }
                 if (ImGui.Button("MergeInv"))
-                {
                     TaskMergeInv.Enqueue();
-                }
+
                 ImGui.SameLine();
                 if(ImGui.Button("RepairNpc"))
                     TaskRepairNpc.Enqueue();
+
                 ImGui.SameLine();
                 if(ImGui.Button("Abort Tasks"))
                     P.taskManager.Abort();
+
                 if (ImGui.Button("Self Repair"))
                     TaskSelfRepair.Enqueue();
+
                 ImGui.SameLine();
                 if (ImGui.Button("Teleport Inn"))
                     TaskTeleportInn.Enqueue();
+
                 ImGui.SameLine();
                 if (ImGui.Button("TaskGetIntoInn"))
                     TaskGetIntoInn.Enqueue();
+
                 if (ImGui.Button("Task Escape"))
                     TaskGetOut.Enqueue();
-                if (ImGui.Button("EnableMulti"))
-                {
+
+                if (ImGui.Button("Resend Retainers"))
                     TaskUseAutoRetainer.Enqueue();
-                }
+
+                ImGui.SameLine();
+                if (ImGui.Button("Resend Deployables"))
+                {
+                    TaskDoDeployables.Enqueue();
+                }  
                 
                 ImGui.EndTabItem();
             }
@@ -188,14 +203,27 @@ internal class DebugWindow : Window
                         rSenabled = true;
                     }
                 }
-
-                if (ARAvailableRetainersCurrentCharacter())
+                
+                if (ARRetainersWaitingToBeProcessed())
                     ImGui.Text("Available Retainers on this Character");
-                else if (!ARAvailableRetainersCurrentCharacter())
+                else if (!ARRetainersWaitingToBeProcessed())
                     ImGui.Text("No Retainers Available");
                 else
                     ImGui.Text("Retainer Service not available");
-                if (ImGui.Button("Simple Enable Wrath"))
+
+                if (ARSubsWaitingToBeProcessed())
+                    ImGui.Text("Available Deployables on this Character");
+                else if (!ARSubsWaitingToBeProcessed())
+                    ImGui.Text("No Deployables Available");
+                else
+                    ImGui.Text("Deployables Service not available");
+
+                if (Player.Territory.EqualsAny([.. Houses.List]))
+                    ImGui.Text("In House");
+                else
+                    ImGui.Text("Not In House");
+
+                    if (ImGui.Button("Simple Enable Wrath"))
                 {
                     P.taskManager.Enqueue(() => EnableWrathAuto());
                 }

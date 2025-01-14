@@ -16,7 +16,7 @@ namespace RootofRiches.Scheduler.Tasks
         {
             if (TryGetAddonByName<AtkUnitBase>("ContentsFinderConfirm", out var addon) && IsAddonReady(addon))
             {
-                if (EzThrottler.Throttle("Commencing the duty", 70))
+                if (EzThrottler.Throttle("Commencing the duty", 10))
                 {
                     Callback.Fire(addon, true, 8);
                     return true;

@@ -175,12 +175,21 @@ namespace RootofRiches.Scheduler
                                     }
                                 }
                             }
-                            else if (C.EnableAutoRetainer && Svc.ClientState.TerritoryType == C.InnDataID && !NeedsRepair(C.RepairSlider) && ARAvailableRetainersCurrentCharacter())
+                            else if (C.EnableAutoRetainer && Svc.ClientState.TerritoryType == C.InnDataID && !NeedsRepair(C.RepairSlider) && ARRetainersWaitingToBeProcessed() || ARSubsWaitingToBeProcessed())
                             {
-                                P.taskManager.Enqueue(() => NRaidTask = "Resending Retainers");
-                                TaskUseAutoRetainer.Enqueue(); // still in testing
-                                //TaskGetOut.Enqueue();
-                                P.taskManager.Enqueue(() => NRaidTask = "idle");
+                                if (ARRetainersWaitingToBeProcessed())
+                                {
+                                    P.taskManager.Enqueue(() => NRaidTask = "Resending Retainers");
+                                    TaskUseAutoRetainer.Enqueue();
+                                    P.taskManager.Enqueue(() => NRaidTask = "idle");
+                                }
+                                if (ARSubsWaitingToBeProcessed())
+                                {
+                                    P.taskManager.Enqueue(() => NRaidTask = "Resending Deployables");
+                                    TaskDoDeployables.Enqueue();
+                                    P.taskManager.Enqueue(() => NRaidTask = "idle");
+                                }
+                                
                             }
                             else if (!IsAddonActive("ContentsFinder") && !hasEnqueuedDutyFinder)
                             {

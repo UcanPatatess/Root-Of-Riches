@@ -6,6 +6,7 @@ using ECommons.Automation.NeoTaskManager;
 using ECommons.Configuration;
 using ECommons.DalamudServices;
 using RootofRiches.IPC;
+using RootofRiches.IPC.Lifestream;
 using RootofRiches.Scheduler;
 using RootofRiches.Scheduler.Handlers;
 using RootofRiches.Ui.MainWindow;
@@ -64,6 +65,7 @@ public class Plugin : IDalamudPlugin
         // IPC's
         taskManager = new();
         autoRetainer = new();
+        autoRetainerApi = new();
         deliveroo = new();
         lifestream = new();
         navmesh = new();
@@ -116,6 +118,7 @@ public class Plugin : IDalamudPlugin
         ECommonsMain.Dispose();
         Safe(TextAdvanceManager.UnlockTA);
         Safe(YesAlreadyManager.Unlock);
+        autoRetainerApi.Dispose();
     }
     private void OnCommand(string command, string args)
     {

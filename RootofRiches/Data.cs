@@ -1,3 +1,4 @@
+using ECommons.ExcelServices.TerritoryEnumeration;
 using System.Numerics;
 using GrandCompany = ECommons.ExcelServices.GrandCompany;
 
@@ -723,6 +724,28 @@ public static class Data
     // variables to be used across the place
     public static bool RunInfinite = true;
     public static int RunAmount = 1;
+
+    public static uint[] Workshops = [Houses.Company_Workshop_Empyreum, Houses.Company_Workshop_The_Goblet, Houses.Company_Workshop_Mist, Houses.Company_Workshop_Shirogane, Houses.Company_Workshop_The_Lavender_Beds];
+    public static uint[] PrivateHouses = [
+        Houses.Private_Cottage_Mist,
+        Houses.Private_House_Mist,
+        Houses.Private_Mansion_Mist,
+        Houses.Private_Cottage_The_Lavender_Beds,
+        Houses.Private_House_The_Lavender_Beds,
+        Houses.Private_Mansion_The_Lavender_Beds,
+        Houses.Private_Cottage_The_Goblet,
+        Houses.Private_House_The_Goblet,
+        Houses.Private_Mansion_The_Goblet,
+        Houses.Private_Cottage_Shirogane,
+        Houses.Private_House_Shirogane,
+        Houses.Private_Mansion_Shirogane,
+        Houses.Private_Cottage_Empyreum,
+        Houses.Private_House_Empyreum,
+        Houses.Private_Mansion_Empyreum,
+        Houses.Private_Cottage_Minimalist,
+        Houses.Private_House_Minimalist,
+        Houses.Private_Mansion_Minimalist,
+        ];
 
     #region Turnin Dictionaries
 

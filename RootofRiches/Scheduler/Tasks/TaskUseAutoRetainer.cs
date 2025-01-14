@@ -10,7 +10,7 @@ namespace RootofRiches.Scheduler.Tasks
             if (!P.autoRetainer.GetOptionRetainerSense())
                 P.taskManager.Enqueue(() => P.autoRetainer.SetOptionRetainerSense(true));
             P.taskManager.Enqueue(RetainerOpened);
-            P.taskManager.Enqueue(() => !ARAvailableRetainersCurrentCharacter());
+            P.taskManager.Enqueue(() => !ARRetainersWaitingToBeProcessed());
             P.taskManager.Enqueue(() => P.autoRetainer.SetOptionRetainerSense(false));
             P.taskManager.Enqueue(() => P.autoRetainer.IsBusy());
             P.taskManager.Enqueue(() => !P.autoRetainer.IsBusy());
