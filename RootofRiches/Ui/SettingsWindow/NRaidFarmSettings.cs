@@ -218,7 +218,7 @@ internal class NRaidFarmSettings
 
             ImGui.TableSetColumnIndex(1);
             ImGui.SetNextItemWidth(150);
-            using (ImRaii.Disabled(!EnableReturnInn || !P.autoRetainer.Installed))
+            using (ImRaii.Disabled(GetCurrentWorld() != GetHomeWorld() || !EnableReturnInn || !P.autoRetainer.Installed))
             {
                 if (ImGui.Checkbox("##MainRetCheckbox", ref EnableAutoRetainer))
                 {
@@ -230,6 +230,10 @@ internal class NRaidFarmSettings
                 if (!C.EnableReturnInn)
                 {
                     EnableAutoRetainer = false;
+                    C.EnableAutoRetainer = false;
+                }
+                if(GetCurrentWorld() != GetHomeWorld())
+                {
                     C.EnableAutoRetainer = false;
                 }
             }
