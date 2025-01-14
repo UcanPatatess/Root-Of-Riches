@@ -7,7 +7,7 @@ namespace RootofRiches.Ui.SettingsWindow;
 internal class SettingsWindow : Window
 {
     public SettingsWindow():
-    base ("Root of Riches Settings") 
+    base ("Root of Riches Settings ###RORSettingsWindow") 
     {
         SizeConstraints = new()
         {

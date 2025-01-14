@@ -24,7 +24,7 @@ namespace RootofRiches.Windows;
 
 internal class DebugWindow : Window
 {
-    public new static readonly string WindowName = "RoR Debug";
+    public new static readonly string WindowName = "RoR Debug###RORDebugWindow";
     public DebugWindow() : 
         base(WindowName)
     {

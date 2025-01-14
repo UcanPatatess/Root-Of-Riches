@@ -12,7 +12,7 @@ namespace RootofRiches.Ui.MainWindow;
 internal class MainWindow : Window
 {
     public MainWindow() :
-    base($"Root of Riches {P.GetType().Assembly.GetName().Version}")
+    base($"Root of Riches {P.GetType().Assembly.GetName().Version} ###RORMainWindow")
     {
         SizeConstraints = new()
         {
