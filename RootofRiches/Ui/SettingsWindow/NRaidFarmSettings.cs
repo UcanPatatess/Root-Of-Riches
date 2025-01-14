@@ -109,7 +109,7 @@ internal class NRaidFarmSettings
             }
 
             ImGui.TableSetColumnIndex(2);
-            if (ImGui.Checkbox("Enable Return Inn", ref EnableReturnInn))
+            if (ImGui.Checkbox("##Root of Riches - Enable Return Inn", ref EnableReturnInn))
             {
                 C.EnableReturnInn = EnableReturnInn;
             }
@@ -174,7 +174,7 @@ internal class NRaidFarmSettings
 
             ImGui.TableSetColumnIndex(2);
 
-            if (ImGui.Checkbox("Enable Repair Mode", ref EnableRepairMode))
+            if (ImGui.Checkbox("##Root of Riches - Enable Repair Mode", ref EnableRepairMode))
             {
                 C.EnableRepair = EnableRepairMode;
             }
@@ -213,36 +213,46 @@ internal class NRaidFarmSettings
 
             // Row #5, Use Auto Retainer
             ImGui.TableSetColumnIndex(0);
-            ImGui.Text("Use Auto Retainer");
+            ImGui.Text("Enable Retainers");
+            ImGuiComponents.HelpMarker("Enable Retainers on this character. \nMulti Mode Retainers are coming soon");
 
             ImGui.TableSetColumnIndex(1);
             ImGui.SetNextItemWidth(150);
-            using (ImRaii.Disabled(!EnableReturnInn))
+            using (ImRaii.Disabled(!EnableReturnInn || !P.autoRetainer.Installed))
             {
-                if (ImGui.Checkbox("", ref EnableAutoRetainer))
+                if (ImGui.Checkbox("##MainRetCheckbox", ref EnableAutoRetainer))
+                {
+                }
+                if (P.autoRetainer.Installed)
                     C.EnableAutoRetainer = EnableAutoRetainer;
+                else
+                    C.EnableAutoRetainer = false;
                 if (!C.EnableReturnInn)
                 {
                     EnableAutoRetainer = false;
                     C.EnableAutoRetainer = false;
                 }
-
             }
+            ImGuiEx.PluginAvailabilityIndicator([new("AutoRetainer")]);
             ImGui.TableNextRow();
 
             // Row #6, Enable Subs on Main
             ImGui.TableSetColumnIndex(0);
             ImGui.Text("Enable Subs");
             ImGuiComponents.HelpMarker("Enable subs on this character. \nMulti Mode subs are coming soon");
-
+            
             ImGui.TableSetColumnIndex(1);
-            using (ImRaii.Disabled(GetCurrentWorld() != GetHomeWorld()))
+            using (ImRaii.Disabled(GetCurrentWorld() != GetHomeWorld() || !P.autoRetainer.Installed))
             {
                 if (ImGui.Checkbox("##MainSubCheckbox", ref EnableMainSubs))
                 {
-                    C.EnableSubsMain = EnableMainSubs;
                 }
+                if (P.autoRetainer.Installed)
+                    C.EnableSubsMain = EnableMainSubs;
+                else
+                    C.EnableSubsMain = false;
             }
+            ImGuiEx.PluginAvailabilityIndicator([new("AutoRetainer")]);
             ImGui.TableNextRow();
 
             ImGui.TableSetColumnIndex(0);
