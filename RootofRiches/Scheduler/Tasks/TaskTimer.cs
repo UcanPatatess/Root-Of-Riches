@@ -6,6 +6,7 @@ namespace RootofRiches.Scheduler.Tasks
     {
         internal static void Enqueue(bool Calculate, uint ZoneID = 0)
         {
+            TaskPluginLog.Enqueue("Updating the Timers for statistics");
             P.taskManager.Enqueue(() => TimerManager(Calculate, ZoneID), "Calculating Time");
         }
 

@@ -10,6 +10,7 @@ namespace RootofRiches.Scheduler.Tasks
     {
         internal static void Enqueue()
         {
+            TaskPluginLog.Enqueue("Heading on INN (going into the Inn)");
             TaskTarget.Enqueue(InnDict[C.InnDataID].InnNPC);
             TaskInteract.Enqueue(InnDict[C.InnDataID].InnNPC);
             P.taskManager.Enqueue(GetInn);

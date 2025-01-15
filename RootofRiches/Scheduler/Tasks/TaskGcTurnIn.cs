@@ -14,6 +14,7 @@ namespace RootofRiches.Scheduler.Tasks
     {
         internal static void Enqueue(GrandCompany? companyNullable = null)
         {
+            TaskPluginLog.Enqueue("Heading to your Grand Company");
             P.taskManager.Enqueue(() => UpdateCurrentTask("Moving to GC"));
             companyNullable = Player.GrandCompany;
             if (companyNullable == GrandCompany.Unemployed)

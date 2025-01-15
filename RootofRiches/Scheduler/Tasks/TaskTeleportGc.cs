@@ -12,6 +12,7 @@ namespace RootofRiches.Scheduler.Tasks
     {
         internal static unsafe void Enqueue()
         {
+            TaskPluginLog.Enqueue("Teleporting to the GC");
             P.taskManager.Enqueue(TeleporttoAethery, "Teleporting to GC", DConfig);
         }
         internal static unsafe bool? TeleporttoAethery()

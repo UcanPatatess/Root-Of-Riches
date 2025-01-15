@@ -8,7 +8,9 @@ namespace RootofRiches.Scheduler.Tasks
     {
         internal static void Enqueue()
         {
+            TaskPluginLog.Enqueue("Commencing the Duty");
             P.taskManager.Enqueue(ContentsFinderConfirm);
+            TaskPluginLog.Enqueue("Waiting for player to Get into Zone");
             P.taskManager.Enqueue(() => IsInZone(A4NMapID) || IsInZone(O3NMapID));
             P.taskManager.Enqueue(PlayerNotBusy);
         }

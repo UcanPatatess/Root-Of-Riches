@@ -10,6 +10,7 @@ namespace RootofRiches.Scheduler.Tasks
     {
         internal static void Enqueue()
         {
+            TaskPluginLog.Enqueue("Repairing Self");
             P.taskManager.Enqueue(PlayerNotBusy);
             P.taskManager.Enqueue(OpenSelfRepair);
             P.taskManager.Enqueue(SelfRepair);

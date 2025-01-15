@@ -9,6 +9,7 @@ namespace RootofRiches.Scheduler.Tasks
     {
         internal static void Enqueue()
         {
+            TaskPluginLog.Enqueue("Leaving the Inn");
             TaskMoveTo.Enqueue(InnDict[C.InnDataID].InnDoorPos, "Moving closer to door");
             TaskTarget.Enqueue(InnDict[C.InnDataID].InnDoor);
             TaskInteract.Enqueue(InnDict[C.InnDataID].InnDoor);

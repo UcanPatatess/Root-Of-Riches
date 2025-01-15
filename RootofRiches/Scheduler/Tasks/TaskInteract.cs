@@ -9,6 +9,7 @@ namespace RootofRiches.Scheduler.Tasks
             IGameObject? gameObject = null;
             P.taskManager.Enqueue(PlayerNotBusy);
             P.taskManager.Enqueue(() => TryGetObjectByDataId(dataID, out gameObject));
+            TaskPluginLog.Enqueue($"Interacting w/ {gameObject?.Name}");
             P.taskManager.Enqueue(() => InteractWithObject(gameObject));
         }
     }

@@ -9,6 +9,7 @@ namespace RootofRiches.Scheduler.Tasks
     {
         public static void Enqueue()
         {
+            TaskPluginLog.Enqueue("Mounting up!");
             P.taskManager.Enqueue(() => UpdateCurrentTask("Mounting Up"));
             P.taskManager.Enqueue(MountUp);
             P.taskManager.Enqueue(() => UpdateCurrentTask("idle"));

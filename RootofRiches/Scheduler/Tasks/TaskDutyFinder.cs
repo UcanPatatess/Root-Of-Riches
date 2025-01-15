@@ -10,6 +10,7 @@ namespace RootofRiches.Scheduler.Tasks
         internal static void Enqueue(uint DutyID)
         {
             P.taskManager.Enqueue(PlayerNotBusy);
+            TaskPluginLog.Enqueue("Opening Duty Finder/Opening to specific duty");
             P.taskManager.Enqueue(() => OpenDutyFinder(DutyID));
         }
 

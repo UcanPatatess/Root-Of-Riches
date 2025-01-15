@@ -130,15 +130,20 @@ namespace RootofRiches.Scheduler
 
                             if (C.EnableSubsMain && ARSubsWaitingToBeProcessed())
                             {
+                                PLogInfo("Enable Subs on Main is true");
+                                PLogInfo("Subs are ready to be processed, running task to send subs");
                                 P.taskManager.Enqueue(() => NRaidTask = "Resending Deployables");
                                 TaskDoDeployables.Enqueue();
                             }
                             else if (C.EnableReturnInn && Svc.ClientState.TerritoryType != C.InnDataID && !NeedsRepair(C.RepairSlider))
                             {
+                                TaskPluginLog.Enqueue("Inn Return is enabled | No Repairs are needed | Not in Inn Already, heading to Inn");
                                 P.taskManager.Enqueue(() => NRaidTask = "Heading to the Inn");
                                 TaskTeleportInn.Enqueue();
                                 TaskUseAethernet.Enqueue();
+                                TaskPluginLog.Enqueue("Walking to the Inn NPC");
                                 TaskMoveTo.Enqueue(InnDict[C.InnDataID].InnNPCPos, "Walking to Inn Npc");
+                                TaskPluginLog.Enqueue("");
                                 TaskGetIntoInn.Enqueue();
                                 P.taskManager.Enqueue(() => NRaidTask = "idle");
                             }

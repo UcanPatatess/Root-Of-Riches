@@ -9,9 +9,9 @@ using RootofRiches.IPC;
 using RootofRiches.IPC.Lifestream;
 using RootofRiches.Scheduler;
 using RootofRiches.Scheduler.Handlers;
+using RootofRiches.Ui.Debugwindow;
 using RootofRiches.Ui.MainWindow;
 using RootofRiches.Ui.SettingsWindow;
-using RootofRiches.Windows;
 using System.Diagnostics;
 
 

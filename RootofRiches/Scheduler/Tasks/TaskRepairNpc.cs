@@ -9,6 +9,7 @@ namespace RootofRiches.Scheduler.Tasks
     {
         internal static void Enqueue()
         {
+            TaskPluginLog.Enqueue("Task to repair at Inn NPC");
             TaskTarget.Enqueue(InnDataID);
             TaskInteract.Enqueue(InnDataID);
             P.taskManager.Enqueue(RepairNpc);

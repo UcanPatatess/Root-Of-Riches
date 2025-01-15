@@ -10,6 +10,7 @@ namespace RootofRiches.Scheduler.Tasks
             Svc.Log.Debug($"Targeting {objectID}");
             IGameObject? gameObject = null;
             P.taskManager.Enqueue(() => TryGetObjectByDataId(objectID, out gameObject), "Getting Object");
+            TaskPluginLog.Enqueue($"Targeting By ID. Target is: {gameObject?.DataId}");
             P.taskManager.Enqueue(() => TargetByID(gameObject), "Targeting Object");
         }
     }

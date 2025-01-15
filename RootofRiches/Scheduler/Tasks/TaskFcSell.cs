@@ -6,6 +6,7 @@ namespace RootofRiches.Scheduler.Tasks
     {
         internal static void Enqueue()
         {
+            TaskPluginLog.Enqueue("Heading to your Free Company");
             P.taskManager.Enqueue(() => UpdateCurrentTask("Going to Fc"));
             P.taskManager.Enqueue(GoHome,configuration:LSConfig);
             P.taskManager.EnqueueDelay(1000);

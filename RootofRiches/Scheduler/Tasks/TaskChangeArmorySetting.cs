@@ -6,6 +6,7 @@ namespace RootofRiches.Scheduler.Tasks
     {
         internal static void Enqueue()
         {
+            TaskPluginLog.Enqueue("Changing Armory Setting");
             P.taskManager.Enqueue(() => UpdateCurrentTask("Changing Armory Setting"));
             P.taskManager.Enqueue(GenericHandlers.OpenCharaSettings);
             P.taskManager.Enqueue(() => GenericHandlers.FireCallback("ConfigCharacter", true, 10, 0, 20));
@@ -13,6 +14,7 @@ namespace RootofRiches.Scheduler.Tasks
             P.taskManager.Enqueue(() => GenericHandlers.FireCallback("ConfigCharacter", true, 0));
             P.taskManager.Enqueue(() => GenericHandlers.FireCallback("ConfigCharacter", true, -1));
             P.taskManager.Enqueue(() => UpdateCurrentTask("idle"));
+            TaskPluginLog.Enqueue("Armory Setting Updated");
         }
     }
 }

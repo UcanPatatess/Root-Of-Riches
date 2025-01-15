@@ -7,6 +7,7 @@ namespace RootofRiches.Scheduler.Tasks
     {
         internal static void Enqueue()
         {
+            TaskPluginLog.Enqueue("Getting out of NPC Menu's (Task GetOut)");
             P.taskManager.Enqueue(GetOut);
         }
         internal unsafe static bool GetOut() 

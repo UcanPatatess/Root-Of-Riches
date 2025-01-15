@@ -23,6 +23,7 @@ namespace RootofRiches.Scheduler.Tasks
             {
                 if (EzThrottler.Throttle("Teleport Throttle", 1100))
                 {
+                    PLogInfo($"Teleporting to {aetherytID} at {targetTerritoryId}");
                     Telepo.Instance()->Teleport(aetherytID, 0);
                     return false;
                 }

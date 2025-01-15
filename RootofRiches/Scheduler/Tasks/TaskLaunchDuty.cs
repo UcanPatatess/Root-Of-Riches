@@ -8,6 +8,7 @@ namespace RootofRiches.Scheduler.Tasks
     {
         internal static void Enqueue()
         {
+            TaskPluginLog.Enqueue("Launching the Duty");
             P.taskManager.Enqueue(Run);
         }
         internal static unsafe bool? Run()

@@ -10,6 +10,7 @@ namespace RootofRiches.Scheduler.Tasks
     {
         internal static unsafe void Enqueue()
         {
+            TaskPluginLog.Enqueue("Teleporting to Inn");
             P.taskManager.Enqueue(TeleporttoAethery, "Teleporting to Inn", DConfig);
         }
 

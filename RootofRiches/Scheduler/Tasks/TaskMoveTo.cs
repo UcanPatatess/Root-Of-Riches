@@ -17,6 +17,7 @@ namespace RootofRiches.Scheduler.Tasks
         }
         internal unsafe static void Enqueue(Vector3 targetPosition, string destination, float toleranceDistance = 3f)
         {
+            TaskPluginLog.Enqueue($"Moving to {destination}");
             P.taskManager.Enqueue(() => UpdateCurrentTask($"Moving to {destination}"), "Task Update");
             P.taskManager.Enqueue(() => MoveTo(targetPosition, toleranceDistance), $"{destination}");
             P.taskManager.Enqueue(() => UpdateCurrentTask("idle"), "Task Update");

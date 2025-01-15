@@ -6,6 +6,7 @@ namespace RootofRiches.Scheduler.Tasks
     {
         internal static void Enqueue()
         {
+            TaskPluginLog.Enqueue("Using Auto Retainer Task");
             P.taskManager.Enqueue(PlayerNotBusy);
             if (!P.autoRetainer.GetOptionRetainerSense())
                 P.taskManager.Enqueue(() => P.autoRetainer.SetOptionRetainerSense(true));

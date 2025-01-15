@@ -7,6 +7,7 @@ namespace RootofRiches.Scheduler.Tasks
     {
         internal static void Enqueue()
         {
+            TaskPluginLog.Enqueue("Task to sell at Vendors");
             P.taskManager.Enqueue(() => UpdateCurrentTask("Selling to vendor"));
             P.taskManager.Enqueue(SellVendor);
             TaskGetOut.Enqueue();
