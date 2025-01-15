@@ -9,6 +9,7 @@ namespace RootofRiches.Scheduler.Tasks
         internal static void Enqueue()
         {
             P.taskManager.Enqueue(Run);
+            TaskContentWidnowConfirm.Enqueue();
         }
         internal static unsafe bool? Run()
         {

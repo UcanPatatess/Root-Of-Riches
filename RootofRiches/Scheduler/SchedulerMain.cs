@@ -79,6 +79,7 @@ namespace RootofRiches.Scheduler
                                     P.taskManager.Enqueue(LeaveDuty);
                                     P.taskManager.Enqueue(() => UpdateStats(ZoneID));
                                     P.taskManager.Enqueue(() => !IsInZone(ZoneID), "Leaving Normal Raids");
+                                    P.taskManager.Enqueue(PlayerNotBusy);
                                     hasEnqueuedDutyFinder = false;
                                     P.taskManager.Enqueue(() => NRaidRun = NRaidRun + 1);
                                     if (TimerStarted)
@@ -206,12 +207,6 @@ namespace RootofRiches.Scheduler
                                 TaskSelectCorrectDuty.Enqueue(ZoneID);
                                 TaskLaunchDuty.Enqueue();
                                 hasEnqueuedDutyFinder = true;
-                            }
-                            else if (IsAddonActive("ContentsFinderConfirm"))
-                            {
-                                P.taskManager.Enqueue(() => NRaidTask = "Confirming the duty");
-                                TaskContentWidnowConfirm.Enqueue();
-                                P.taskManager.Enqueue(() => NRaidTask = "idle");
                             }
                         }
                         else
