@@ -1,4 +1,8 @@
+using Dalamud.Interface;
+using Dalamud.Interface.Colors;
+using Dalamud.Interface.Components;
 using Dalamud.Interface.Utility.Raii;
+using ECommons.ImGuiMethods;
 using ImGuiNET;
 using RootofRiches.Scheduler;
 using System.Numerics;
@@ -45,7 +49,7 @@ internal class NormalRaidFarm
             ButtonName = "A4N";
         else if (C.RaidSelected == 1)
             ButtonName = "O3N";
-        using (ImRaii.Disabled(!EnableNormalRaidFarm()))
+        using (ImRaii.Disabled(!EnableNormalRaidFarm() || (P.bossmod.Installed && PluginInstalled(AltBossMod)) ))
         {
             if (ImGui.Button(SchedulerMain.DoWeTick ? "Stop" : $"Start {ButtonName}"))
             {
@@ -59,6 +63,11 @@ internal class NormalRaidFarm
                     SchedulerMain.RunA4N = true;
                 }
             }
+        }
+        if (P.bossmod.Installed && PluginInstalled(AltBossMod))
+        {
+            ImGui.SameLine();
+            ImGuiEx.InfoMarker("Hey! You seem to have 2 different versions of bossmod installed. >.> \nPlease disable one of them before you can actually run it", ImGuiColors.DalamudRed);
         }
         if (!EnableNormalRaidFarm())
         {
