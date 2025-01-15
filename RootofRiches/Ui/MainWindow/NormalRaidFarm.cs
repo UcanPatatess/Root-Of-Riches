@@ -30,7 +30,7 @@ internal class NormalRaidFarm
         TimeSpan currentTime = P.stopwatch.Elapsed;
         string currentTimeF = currentTime.ToString(@"mm\:ss\.fff");
         ImGui.Text($"Time Elapsed is: {currentTimeF}");
-        if (SchedulerMain.DoWeTick && SchedulerMain.RunA4N)
+        if (SchedulerMain.DoWeTick && SchedulerMain.RunNRaid)
         {
             if (RunInfinite)
             {
@@ -60,7 +60,7 @@ internal class NormalRaidFarm
                 else
                 {
                     SchedulerMain.EnablePlugin(); // Call EnablePlugin if not running
-                    SchedulerMain.RunA4N = true;
+                    SchedulerMain.RunNRaid = true;
                 }
             }
         }

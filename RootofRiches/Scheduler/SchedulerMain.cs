@@ -28,7 +28,7 @@ namespace RootofRiches.Scheduler
             P.taskManager.Abort();
             P.navmesh.Stop();
             RunTurnin = false;
-            RunA4N = false;
+            RunNRaid = false;
             hasEnqueuedDutyFinder = false;
             P.stopwatch.Restart();
             P.stopwatch.Stop();
@@ -40,7 +40,7 @@ namespace RootofRiches.Scheduler
         }
 
         public static bool RunTurnin = false; // Used for Turnin Toggle
-        public static bool RunA4N = false; // Used for N-Raid Toggle
+        public static bool RunNRaid = false; // Used for N-Raid Toggle
         public static bool hasEnqueuedDutyFinder = false; // used for enque throtle flag
         public static string NRaidTask = "idle";
         public static int NRaidRun;
@@ -55,7 +55,7 @@ namespace RootofRiches.Scheduler
             {
                 if (!P.taskManager.IsBusy)
                 {
-                    if (RunA4N)
+                    if (RunNRaid)
                     {
                         if (IsInZone(A4NMapID) || IsInZone(O3NMapID))
                         {

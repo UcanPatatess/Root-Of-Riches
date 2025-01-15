@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -52,8 +53,12 @@ internal class TargetingDebug
             if (ImGui.Button("Copy Target XYZ"))
             {
                 ImGui.SetClipboardText($"{TargetXPos.ToString("0.00", CultureInfo.InvariantCulture)}f, " +
-           $"{TargetYPos.ToString("0.00", CultureInfo.InvariantCulture)}f, " +
-           $"{TargetZPos.ToString("0.00", CultureInfo.InvariantCulture)}f");
+                                       $"{TargetYPos.ToString("0.00", CultureInfo.InvariantCulture)}f, " +
+                                       $"{TargetZPos.ToString("0.00", CultureInfo.InvariantCulture)}f");
+            }
+            if (ImGui.Button("Move to target (Based off of Lo"))
+            {
+                TaskMoveTo.Enqueue(Svc.Targets.Target.Position, "Target Location", 1);
             }
         }
         else
