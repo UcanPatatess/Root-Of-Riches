@@ -3,7 +3,6 @@ using Dalamud.Game.ClientState.Objects.Types;
 using ECommons.DalamudServices;
 using ECommons.Logging;
 using RootofRiches.Scheduler.Tasks;
-using System.Numerics;
 
 namespace RootofRiches.Scheduler
 {
@@ -237,28 +236,22 @@ namespace RootofRiches.Scheduler
                                 if (DeltascapeTurnInCount > 0 || IsInZone(Rhalgr))
                                 {
                                     TaskTeleport.Enqueue(RhalgrAether, Rhalgr);
-                                    if (IsInZone(Rhalgr))
-                                    {
-                                        TaskMountUp.Enqueue();
-                                        TaskMoveTo.Enqueue(RandomPointInTriangle(
-                                            TurnInDict[Svc.ClientState.TerritoryType].BellPos1,
-                                            TurnInDict[Svc.ClientState.TerritoryType].BellPos2,
-                                            TurnInDict[Svc.ClientState.TerritoryType].BellPos3), "Summoning Bell", 1);
-                                        TaskSellVendor.Enqueue();
-                                    }
+                                    TaskMountUp.Enqueue();
+                                    TaskMoveTo.Enqueue(RandomPointInTriangle(
+                                        TurnInDict[Svc.ClientState.TerritoryType].BellPos1,
+                                        TurnInDict[Svc.ClientState.TerritoryType].BellPos2,
+                                        TurnInDict[Svc.ClientState.TerritoryType].BellPos3), "Summoning Bell", 1);
+                                    TaskSellVendor.Enqueue();
                                 }
                                 else if (GordianTurnInCount > 0 || AlexandrianTurnInCount > 0 || (C.SellOilCloth && GetItemCount(10120) > 0) || IsInZone(Idyllshire))
                                 {
                                     TaskTeleport.Enqueue(IdyllshireAether, Idyllshire);
-                                    if (IsInZone(Idyllshire))
-                                    {
-                                        TaskMountUp.Enqueue();
-                                        TaskMoveTo.Enqueue(RandomPointInTriangle(
-                                            TurnInDict[Svc.ClientState.TerritoryType].BellPos1,
-                                            TurnInDict[Svc.ClientState.TerritoryType].BellPos2,
-                                            TurnInDict[Svc.ClientState.TerritoryType].BellPos3), "Summoning Bell", 1);
-                                        TaskSellVendor.Enqueue();
-                                    }
+                                    TaskMountUp.Enqueue();
+                                    TaskMoveTo.Enqueue(RandomPointInTriangle(
+                                        TurnInDict[Svc.ClientState.TerritoryType].BellPos1,
+                                        TurnInDict[Svc.ClientState.TerritoryType].BellPos2,
+                                        TurnInDict[Svc.ClientState.TerritoryType].BellPos3), "Summoning Bell", 1);
+                                    TaskSellVendor.Enqueue();
                                 }
                             }
                         }
