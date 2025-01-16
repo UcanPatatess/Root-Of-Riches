@@ -6,11 +6,19 @@ namespace RootofRiches;
 
 public static class Data
 {
+
     #region Normal Raid Items
+
+    #region Raid Armor Counts [Normal Raids]
+
     public static int TotalExchangeItem = 0;
     public static int GordianTurnInCount = 0;
     public static int AlexandrianTurnInCount = 0;
     public static int DeltascapeTurnInCount = 0;
+
+    #endregion
+
+    #region Normal Raid ID's
 
     // Deltascape Item IDs
     public static int DeltascapeLensID = 19111;
@@ -36,12 +44,20 @@ public static class Data
     public static int AlexandrianPedalID = 16550;
     public static int AlexandrianBoltID = 16552;
 
+    #endregion
+
+    #region Item Buy Amounts
+
     private static int BoltBuyAmount = 1;
     private static int PedalBuyAmount = 2;
     private static int SpringBuyAmount = 4;
     private static int CrankBuyAmount = 2;
     private static int ShaftBuyAmount = 4;
     private static int LensBuyAmount = 2;
+
+    #endregion
+
+    #region Is There Items to Trade Bool
 
     public static bool IsThereTradeItem()
     {
@@ -111,6 +127,322 @@ public static class Data
         // Final Decision
         return !(GordianTurnInCount < 1 && DeltascapeTurnInCount < 1 && AlexandrianTurnInCount < 1);
     }
+
+    #endregion
+
+    #region Omega Raid Tables
+
+    public static int[,] GelfradusTable = new int[,]
+    {
+            {0, DeltascapeShaftID, ShaftBuyAmount, 19438, 3, 0}, // x4
+            {0, DeltascapeShaftID, ShaftBuyAmount, 19444, 4, 0},
+            {0, DeltascapeShaftID, ShaftBuyAmount, 19450, 5, 0},
+            {0, DeltascapeSpringID, SpringBuyAmount, 19440, 9, 0}, // x4
+            {0, DeltascapeSpringID, SpringBuyAmount, 19446, 10, 0},
+            {0, DeltascapeSpringID, SpringBuyAmount, 19452, 11, 0},
+            {0, DeltascapeCrankID, CrankBuyAmount, 19439, 6, 0}, // x2
+            {0, DeltascapeCrankID, CrankBuyAmount, 19445, 7, 0},
+            {0, DeltascapeCrankID, CrankBuyAmount, 19451, 8, 0},
+            {0, DeltascapePedalID, PedalBuyAmount, 19441, 12, 0}, // x2
+            {0, DeltascapePedalID, PedalBuyAmount, 19447, 13, 0},
+            {0, DeltascapePedalID, PedalBuyAmount, 19453, 14, 0},
+            {0, DeltascapeLensID, LensBuyAmount, 19437, 0, 0}, // x2
+            {0, DeltascapeLensID, LensBuyAmount, 19443, 1, 0},
+            {0, DeltascapeLensID, LensBuyAmount, 19449, 2, 0},
+            {0, DeltascapeBoltID, BoltBuyAmount, 19479, 15, 0}, // x1
+            {0, DeltascapeBoltID, BoltBuyAmount, 19480, 16, 0},
+            {0, DeltascapeBoltID, BoltBuyAmount, 19484, 17, 0},
+            {0, DeltascapeBoltID, BoltBuyAmount, 19485, 18, 0},
+            {0, DeltascapeBoltID, BoltBuyAmount, 19489, 19, 0},
+            {0, DeltascapeBoltID, BoltBuyAmount, 19490, 20, 0},
+            {0, DeltascapeBoltID, BoltBuyAmount, 19494, 21, 0},
+            {0, DeltascapeBoltID, BoltBuyAmount, 19495, 22, 0},
+
+            {1, DeltascapeShaftID, ShaftBuyAmount, 19462, 2, 1},
+            {1, DeltascapeShaftID, ShaftBuyAmount, 19456, 3, 1},
+            {1, DeltascapeSpringID, SpringBuyAmount, 19464, 6, 1},
+            {1, DeltascapeSpringID, SpringBuyAmount, 19458, 7, 1},
+            {1, DeltascapeCrankID, CrankBuyAmount, 19463, 4, 1},
+            {1, DeltascapeCrankID, CrankBuyAmount, 19457, 5, 1},
+            {1, DeltascapePedalID, PedalBuyAmount, 19465, 8, 1},
+            {1, DeltascapePedalID, PedalBuyAmount, 19459, 9, 1},
+            {1, DeltascapeLensID, LensBuyAmount, 19461, 0, 1},
+            {1, DeltascapeLensID, LensBuyAmount, 19455, 1, 1},
+            {1, DeltascapeBoltID, BoltBuyAmount, 19481, 10, 1},
+            {1, DeltascapeBoltID, BoltBuyAmount, 19486, 11, 1},
+            {1, DeltascapeBoltID, BoltBuyAmount, 19491, 12, 1},
+            {1, DeltascapeBoltID, BoltBuyAmount, 19496, 13, 1},
+
+            {2, DeltascapeShaftID, ShaftBuyAmount, 19474, 2, 2},
+            {2, DeltascapeShaftID, ShaftBuyAmount, 19468, 3, 2},
+            {2, DeltascapeSpringID, SpringBuyAmount, 19476, 6, 2},
+            {2, DeltascapeSpringID, SpringBuyAmount, 19470, 7, 2},
+            {2, DeltascapeCrankID, CrankBuyAmount, 19475, 4, 2},
+            {2, DeltascapeCrankID, CrankBuyAmount, 19469, 5, 2},
+            {2, DeltascapePedalID, PedalBuyAmount, 19477, 8, 2},
+            {2, DeltascapePedalID, PedalBuyAmount, 19471, 9, 2},
+            {2, DeltascapeLensID, LensBuyAmount, 19473, 0, 2},
+            {2, DeltascapeLensID, LensBuyAmount, 19467, 1, 2},
+            {2, DeltascapeBoltID, BoltBuyAmount, 19483, 10, 2},
+            {2, DeltascapeBoltID, BoltBuyAmount, 19482, 11, 2},
+            {2, DeltascapeBoltID, BoltBuyAmount, 19488, 12, 2},
+            {2, DeltascapeBoltID, BoltBuyAmount, 19487, 13, 2},
+            {2, DeltascapeBoltID, BoltBuyAmount, 19493, 14, 2},
+            {2, DeltascapeBoltID, BoltBuyAmount, 19492, 15, 2},
+            {2, DeltascapeBoltID, BoltBuyAmount, 19498, 16, 2},
+            {2, DeltascapeBoltID, BoltBuyAmount, 19497, 17, 2},
+    };
+
+    #endregion
+
+    #region Alexander Raid Tables
+
+    public static int[,] SabinaTable = new int[,]
+    {
+            {0, GordianShaftID, ShaftBuyAmount, 11455, 3, 0},
+            {0, GordianShaftID, ShaftBuyAmount, 11456, 4, 0},
+            {0, GordianShaftID, ShaftBuyAmount, 11457, 5, 0},
+            {0, GordianSpringID, SpringBuyAmount, 11476, 9, 0},
+            {0, GordianSpringID, SpringBuyAmount, 11477, 10, 0},
+            {0, GordianSpringID, SpringBuyAmount, 11478, 11, 0},
+            {0, GordianCrankID, CrankBuyAmount, 11462, 6, 0},
+            {0, GordianCrankID, CrankBuyAmount, 11463, 7, 0},
+            {0, GordianCrankID, CrankBuyAmount, 11464, 8, 0},
+            {0, GordianPedalID, PedalBuyAmount, 11483, 12, 0},
+            {0, GordianPedalID, PedalBuyAmount, 11484, 13, 0},
+            {0, GordianPedalID, PedalBuyAmount, 11485, 14, 0},
+            {0, GordianLensID, LensBuyAmount, 11448, 0, 0},
+            {0, GordianLensID, LensBuyAmount, 11449, 1, 0},
+            {0, GordianLensID, LensBuyAmount, 11450, 2, 0},
+            {0, GordianBoltID, BoltBuyAmount, 11490, 15, 0},
+            {0, GordianBoltID, BoltBuyAmount, 11491, 16, 0},
+            {0, GordianBoltID, BoltBuyAmount, 11495, 17, 0},
+            {0, GordianBoltID, BoltBuyAmount, 11496, 18, 0},
+            {0, GordianBoltID, BoltBuyAmount, 11500, 19, 0},
+            {0, GordianBoltID, BoltBuyAmount, 11501, 20, 0},
+            {0, GordianBoltID, BoltBuyAmount, 11505, 21, 0},
+            {0, GordianBoltID, BoltBuyAmount, 11506, 22, 0},
+
+            {1, GordianShaftID, ShaftBuyAmount, 11459, 2, 0},
+            {1, GordianShaftID, ShaftBuyAmount, 11458, 3, 0},
+            {1, GordianSpringID, SpringBuyAmount, 11480, 6, 0},
+            {1, GordianSpringID, SpringBuyAmount, 11479, 7, 0},
+            {1, GordianCrankID, CrankBuyAmount, 11466, 4, 0},
+            {1, GordianCrankID, CrankBuyAmount, 11465, 5, 0},
+            {1, GordianPedalID, PedalBuyAmount, 11487, 8, 0},
+            {1, GordianPedalID, PedalBuyAmount, 11486, 9, 0},
+            {1, GordianLensID, LensBuyAmount, 11452, 0, 0},
+            {1, GordianLensID, LensBuyAmount, 11451, 1, 0},
+            {1, GordianBoltID, BoltBuyAmount, 11492, 10, 0},
+            {1, GordianBoltID, BoltBuyAmount, 11497, 11, 0},
+            {1, GordianBoltID, BoltBuyAmount, 11502, 12, 0},
+            {1, GordianBoltID, BoltBuyAmount, 11507, 13, 0},
+
+            {2, GordianShaftID, ShaftBuyAmount, 11461, 2, 0},
+            {2, GordianShaftID, ShaftBuyAmount, 11460, 3, 0},
+            {2, GordianSpringID, SpringBuyAmount, 11482, 6, 0},
+            {2, GordianSpringID, SpringBuyAmount, 11481, 7, 0},
+            {2, GordianCrankID, CrankBuyAmount, 11468, 4, 0},
+            {2, GordianCrankID, CrankBuyAmount, 11467, 5, 0},
+            {2, GordianPedalID, PedalBuyAmount, 11489, 8, 0},
+            {2, GordianPedalID, PedalBuyAmount, 11488, 9, 0},
+            {2, GordianLensID, LensBuyAmount, 11454, 0, 0},
+            {2, GordianLensID, LensBuyAmount, 11453, 1, 0},
+            {2, GordianBoltID, BoltBuyAmount, 11494, 10, 0},
+            {2, GordianBoltID, BoltBuyAmount, 11493, 11, 0},
+            {2, GordianBoltID, BoltBuyAmount, 11499, 12, 0},
+            {2, GordianBoltID, BoltBuyAmount, 11498, 13, 0},
+            {2, GordianBoltID, BoltBuyAmount, 11504, 14, 0},
+            {2, GordianBoltID, BoltBuyAmount, 11503, 15, 0},
+            {2, GordianBoltID, BoltBuyAmount, 11509, 16, 0},
+            {2, GordianBoltID, BoltBuyAmount, 11508, 17, 0},
+
+            {0, AlexandrianShaftID, ShaftBuyAmount, 16404, 3, 2},
+            {0, AlexandrianShaftID, ShaftBuyAmount, 16410, 4, 2},
+            {0, AlexandrianShaftID, ShaftBuyAmount, 16416, 5, 2},
+            {0, AlexandrianSpringID, SpringBuyAmount, 16406, 9, 2},
+            {0, AlexandrianSpringID, SpringBuyAmount, 16412, 10, 2},
+            {0, AlexandrianSpringID, SpringBuyAmount, 16418, 11, 2},
+            {0, AlexandrianCrankID, CrankBuyAmount, 16405, 6, 2},
+            {0, AlexandrianCrankID, CrankBuyAmount, 16411, 7, 2},
+            {0, AlexandrianCrankID, CrankBuyAmount, 16417, 8, 2},
+            {0, AlexandrianPedalID, PedalBuyAmount, 16407, 12, 2},
+            {0, AlexandrianPedalID, PedalBuyAmount, 16413, 13, 2},
+            {0, AlexandrianPedalID, PedalBuyAmount, 16419, 14, 2},
+            {0, AlexandrianLensID, LensBuyAmount, 16403, 0, 2},
+            {0, AlexandrianLensID, LensBuyAmount, 16409, 1, 2},
+            {0, AlexandrianLensID, LensBuyAmount, 16415, 2, 2},
+            {0, AlexandrianBoltID, BoltBuyAmount, 16445, 15, 2},
+            {0, AlexandrianBoltID, BoltBuyAmount, 16446, 16, 2},
+            {0, AlexandrianBoltID, BoltBuyAmount, 16450, 17, 2},
+            {0, AlexandrianBoltID, BoltBuyAmount, 16451, 18, 2},
+            {0, AlexandrianBoltID, BoltBuyAmount, 16455, 19, 2},
+            {0, AlexandrianBoltID, BoltBuyAmount, 16456, 20, 2},
+            {0, AlexandrianBoltID, BoltBuyAmount, 16460, 21, 2},
+            {0, AlexandrianBoltID, BoltBuyAmount, 16461, 22, 2},
+
+            {1, AlexandrianShaftID, ShaftBuyAmount, 16428, 2, 2},
+            {1, AlexandrianShaftID, ShaftBuyAmount, 16422, 3, 2},
+            {1, AlexandrianSpringID, SpringBuyAmount, 16430, 6, 2},
+            {1, AlexandrianSpringID, SpringBuyAmount, 16424, 7, 2},
+            {1, AlexandrianCrankID, CrankBuyAmount, 16429, 4, 2},
+            {1, AlexandrianCrankID, CrankBuyAmount, 16423, 5, 2},
+            {1, AlexandrianPedalID, PedalBuyAmount, 16431, 8, 2},
+            {1, AlexandrianPedalID, PedalBuyAmount, 16425, 9, 2},
+            {1, AlexandrianLensID, LensBuyAmount, 16427, 0, 2},
+            {1, AlexandrianLensID, LensBuyAmount, 16421, 1, 2},
+            {1, AlexandrianBoltID, BoltBuyAmount, 16447, 10, 2},
+            {1, AlexandrianBoltID, BoltBuyAmount, 16452, 11, 2},
+            {1, AlexandrianBoltID, BoltBuyAmount, 16457, 12, 2},
+            {1, AlexandrianBoltID, BoltBuyAmount, 16462, 13, 2},
+
+            {2, AlexandrianShaftID, ShaftBuyAmount, 16440, 2, 2},
+            {2, AlexandrianShaftID, ShaftBuyAmount, 16434, 3, 2},
+            {2, AlexandrianSpringID, SpringBuyAmount, 16442, 6, 2},
+            {2, AlexandrianSpringID, SpringBuyAmount, 16436, 7, 2},
+            {2, AlexandrianCrankID, CrankBuyAmount, 16441, 4, 2},
+            {2, AlexandrianCrankID, CrankBuyAmount, 16435, 5, 2},
+            {2, AlexandrianPedalID, PedalBuyAmount, 16443, 8, 2},
+            {2, AlexandrianPedalID, PedalBuyAmount, 16437, 9, 2},
+            {2, AlexandrianLensID, LensBuyAmount, 16439, 0, 2},
+            {2, AlexandrianLensID, LensBuyAmount, 16433, 1, 2},
+            {2, AlexandrianBoltID, BoltBuyAmount, 16449, 10, 2},
+            {2, AlexandrianBoltID, BoltBuyAmount, 16448, 11, 2},
+            {2, AlexandrianBoltID, BoltBuyAmount, 16454, 12, 2},
+            {2, AlexandrianBoltID, BoltBuyAmount, 16453, 13, 2},
+            {2, AlexandrianBoltID, BoltBuyAmount, 16459, 14, 2},
+            {2, AlexandrianBoltID, BoltBuyAmount, 16458, 15, 2},
+            {2, AlexandrianBoltID, BoltBuyAmount, 16464, 16, 2},
+            {2, AlexandrianBoltID, BoltBuyAmount, 16463, 17, 2},
+    };
+
+    #endregion
+
+    #endregion
+
+    #region Location Data
+
+    #region Normal Raid Data Points
+
+    // Alexander - The Burder of the Father (A4N) 
+    public static uint A4NMapID = 445;
+    public static ulong RightForeleg = 4107;
+    public static ulong LeftForeleg = 4108;
+    public static ulong Manipulator = 3902;
+    public static ulong A4NChest1 = 438;
+    public static ulong A4NChest2 = 480;
+    public static ulong A4NChest3 = 479;
+    public static Vector3 RightForeLegPos = new(-6.53f, 10.54f, -7.56f);
+    public static Vector3 A4NChestCenter = new Vector3(-0.08f, 10.6f, -6.46f);
+
+    // Deltascape V3.0 (O3N)
+    public static uint O3NMapID = 693;
+    public static ulong Halicarnassus = 7700;
+    public static ulong O3NChest1 = 930;
+    public static ulong O3NChest2 = 929;
+    public static Vector3 O3NChestCenter = new Vector3(-0.01f, 0.00f, -5.42f);
+
+    #endregion
+
+    #region Main Cities/Inns
+
+    public static uint LimsaUpper = 128; // we need limsa id too which is 129 for the teleport task :d
+    public static uint LimsaLower = 129;
+    public static uint LimsaAether = 8;
+    public static uint LimsaInn = 177;
+    public static ulong LimsaInnNPC = 1000974;
+    public static Vector3 LimsaInnNPCPos = new(15.43f, 40f, 12.47f);
+    public static ulong LimsaRepairNPC = 1003251;
+    public static Vector3 LimsaRepairNPCPos = new(17.72f, 40.2f, 3.95f);
+    public static ulong LimsaInnDoor = 2001010;
+    public static Vector3 LimsaInnDoorPos = new(-0.02f, 1.45f, 7.52f);
+
+    public static uint UlDah = 130;
+    public static uint UlDahAether = 9;
+    public static uint UlDahInn = 178;
+    public static ulong UlDahInnNPC = 1001976;
+    public static Vector3 UlDahInnNPCPos = new(29.5f, 7.45f, -78.32f);
+    public static ulong UlDahRepairNPC = 1004416;
+    public static Vector3 UlDahRepairNPCPos = new(32.85f, 7f, -81.32f);
+    public static ulong UlDahInnDoor = 2001011;
+    public static Vector3 UlDahInnDoorPos = new(0.02f, 1.97f, 8.13f);
+
+    public static uint Gridania = 132;
+    public static uint GridaniaAether = 2;
+    public static uint GridaniaInn = 179;
+    public static ulong GridaniaInnNPC = 1000102;
+    public static Vector3 GridaniaInnNPCPos = new(23.7f, -8.1f, 100.05f);
+    public static ulong GridaniaRepairNPC = 1000394;
+    public static Vector3 GridaniaRepairNPCPos = new(24.83f, -8f, 93.19f);
+    public static ulong GridaniaInnDoor = 2000087;
+    public static Vector3 GridaniaInnDoorPos = new(0.02f, 1.45f, 7.71f);
+
+    public static uint Ishguard = 418;
+    public static uint IshguardAether = 70;
+    public static uint IshguardInn = 429;
+
+    public static uint Kugane = 628;
+    public static uint KuganeAether = 111;
+    public static uint KuganeInn = 629;
+
+    public static uint Crystarium = 819;
+    public static uint CrystariumAether = 133;
+    public static uint CrystariumInn = 843;
+
+    public static uint OldShar = 962;
+    public static uint OldSharAether = 182;
+    public static uint OldSharInn = 990;
+
+    public static uint Tuliyollai = 1185;
+    public static uint TuliyollaAether = 216;
+    public static uint TuliyollaiInn = 1205;
+
+    public static readonly HashSet<uint> innZones = new HashSet<uint> { LimsaInn, UlDahInn, GridaniaInn, IshguardInn, KuganeInn, CrystariumInn, OldSharInn, TuliyollaiInn };
+
+    #endregion
+
+    #region Turnin Locations
+
+    // Turnin Locations
+    public static uint Idyllshire = 478;
+    public static uint IdyllshireAether = 75;
+    public static ulong Sabina = 1012227; // Turnin NPC
+    public static Vector3 IdyllshireNPCPos = new(-20.98f, 211.00f, -37.74f);
+    public static Vector3 IdyllshireNPCPos1 = new(-19.43f, 211.00f, -35.29f);
+    public static Vector3 IdyllshireNPCPos2 = new(-18.19f, 211.00f, -36.49f);
+    public static Vector3 IdyllshireNPCPos3 = new(-18.12f, 211.00f, -34.53f);
+    public static Vector3 IdyllshireBellPos = new(34.78f, 208.15f, -50.86f); // Actual bell pos
+    public static Vector3 IdyllshireBellPos1 = new(35.37f, 208.17f, -51.95f); //triangle values
+    public static Vector3 IdyllshireBellPos2 = new(33.41f, 208.24f, -50.55f); //triangle values
+    public static Vector3 IdyllshireBellPos3 = new(33.46f, 208.36f, -52.60f); //triangle values
+
+    public static uint Rhalgr = 635;
+    public static uint RhalgrAether = 104;
+    public static ulong Gelfradus = 1019452; // Turnin NPC
+    public static Vector3 RhalgrNPCPos = new Vector3(128.40f, 0.68f, 41.70f);
+    public static Vector3 RhalgrNPCPos1 = new Vector3(125.41f, 0.65f, 39.55f);
+    public static Vector3 RhalgrNPCPos2 = new Vector3(124.71f, 0.65f, 41.31f);
+    public static Vector3 RhalgrNPCPos3 = new Vector3(123.59f, 0.65f, 39.49f);
+    public static Vector3 RhalgrBellPos = new Vector3(-57.27f, 0f, 48.57f); // Actual bell pos
+    public static Vector3 RhalgrBellPos1 = new Vector3(-53.83f, 0f, 46.92f);
+    public static Vector3 RhalgrBellPos2 = new Vector3(-55.33f, 0f, 48.68f);
+    public static Vector3 RhalgrBellPos3 = new Vector3(-57.03f, 0f, 47.42f);
+
+    #endregion
+
+    #region Universal ID's 
+
+    // Retainers
+    public static ulong SummoningBell = 2000403;
+
+    #endregion
+
+    #endregion
+
+    #region Dictionaries
+
+    #region ItemID -> Armory Table Dictionary
+
     public static Dictionary<int, int> ItemIdArmoryTable { get; } = new Dictionary<int, int>
     {
         // ArmoryHead = 3201
@@ -215,190 +547,143 @@ public static class Data
 
     #endregion
 
-    #region Omega Raid Tables
+    #region Inn Dictionary
 
-    public static int[,] GelfradusTable = new int[,]
+    public class InnData
     {
-        {0, DeltascapeShaftID, ShaftBuyAmount, 19438, 3, 0}, // x4
-        {0, DeltascapeShaftID, ShaftBuyAmount, 19444, 4, 0},
-        {0, DeltascapeShaftID, ShaftBuyAmount, 19450, 5, 0},
-        {0, DeltascapeSpringID, SpringBuyAmount, 19440, 9, 0}, // x4
-        {0, DeltascapeSpringID, SpringBuyAmount, 19446, 10, 0},
-        {0, DeltascapeSpringID, SpringBuyAmount, 19452, 11, 0},
-        {0, DeltascapeCrankID, CrankBuyAmount, 19439, 6, 0}, // x2
-        {0, DeltascapeCrankID, CrankBuyAmount, 19445, 7, 0},
-        {0, DeltascapeCrankID, CrankBuyAmount, 19451, 8, 0},
-        {0, DeltascapePedalID, PedalBuyAmount, 19441, 12, 0}, // x2
-        {0, DeltascapePedalID, PedalBuyAmount, 19447, 13, 0},
-        {0, DeltascapePedalID, PedalBuyAmount, 19453, 14, 0},
-        {0, DeltascapeLensID, LensBuyAmount, 19437, 0, 0}, // x2
-        {0, DeltascapeLensID, LensBuyAmount, 19443, 1, 0},
-        {0, DeltascapeLensID, LensBuyAmount, 19449, 2, 0},
-        {0, DeltascapeBoltID, BoltBuyAmount, 19479, 15, 0}, // x1
-        {0, DeltascapeBoltID, BoltBuyAmount, 19480, 16, 0},
-        {0, DeltascapeBoltID, BoltBuyAmount, 19484, 17, 0},
-        {0, DeltascapeBoltID, BoltBuyAmount, 19485, 18, 0},
-        {0, DeltascapeBoltID, BoltBuyAmount, 19489, 19, 0},
-        {0, DeltascapeBoltID, BoltBuyAmount, 19490, 20, 0},
-        {0, DeltascapeBoltID, BoltBuyAmount, 19494, 21, 0},
-        {0, DeltascapeBoltID, BoltBuyAmount, 19495, 22, 0},
+        public required uint MainCity { get; set; }
+        public ulong RepairNPC { get; set; }
+        public Vector3 RepairNPCPos { get; set; }
+        public required ulong InnNPC { get; set; }
+        public required Vector3 InnNPCPos { get; set; }
+        public required ulong InnDoor { get; set; }
+        public required Vector3 InnDoorPos { get; set; }
+        public uint MainCity2 { get; set; }
+        public uint MainAether { get; set; }
+    }
 
-        {1, DeltascapeShaftID, ShaftBuyAmount, 19462, 2, 1},
-        {1, DeltascapeShaftID, ShaftBuyAmount, 19456, 3, 1},
-        {1, DeltascapeSpringID, SpringBuyAmount, 19464, 6, 1},
-        {1, DeltascapeSpringID, SpringBuyAmount, 19458, 7, 1},
-        {1, DeltascapeCrankID, CrankBuyAmount, 19463, 4, 1},
-        {1, DeltascapeCrankID, CrankBuyAmount, 19457, 5, 1},
-        {1, DeltascapePedalID, PedalBuyAmount, 19465, 8, 1},
-        {1, DeltascapePedalID, PedalBuyAmount, 19459, 9, 1},
-        {1, DeltascapeLensID, LensBuyAmount, 19461, 0, 1},
-        {1, DeltascapeLensID, LensBuyAmount, 19455, 1, 1},
-        {1, DeltascapeBoltID, BoltBuyAmount, 19481, 10, 1},
-        {1, DeltascapeBoltID, BoltBuyAmount, 19486, 11, 1},
-        {1, DeltascapeBoltID, BoltBuyAmount, 19491, 12, 1},
-        {1, DeltascapeBoltID, BoltBuyAmount, 19496, 13, 1},
-
-        {2, DeltascapeShaftID, ShaftBuyAmount, 19474, 2, 2},
-        {2, DeltascapeShaftID, ShaftBuyAmount, 19468, 3, 2},
-        {2, DeltascapeSpringID, SpringBuyAmount, 19476, 6, 2},
-        {2, DeltascapeSpringID, SpringBuyAmount, 19470, 7, 2},
-        {2, DeltascapeCrankID, CrankBuyAmount, 19475, 4, 2},
-        {2, DeltascapeCrankID, CrankBuyAmount, 19469, 5, 2},
-        {2, DeltascapePedalID, PedalBuyAmount, 19477, 8, 2},
-        {2, DeltascapePedalID, PedalBuyAmount, 19471, 9, 2},
-        {2, DeltascapeLensID, LensBuyAmount, 19473, 0, 2},
-        {2, DeltascapeLensID, LensBuyAmount, 19467, 1, 2},
-        {2, DeltascapeBoltID, BoltBuyAmount, 19483, 10, 2},
-        {2, DeltascapeBoltID, BoltBuyAmount, 19482, 11, 2},
-        {2, DeltascapeBoltID, BoltBuyAmount, 19488, 12, 2},
-        {2, DeltascapeBoltID, BoltBuyAmount, 19487, 13, 2},
-        {2, DeltascapeBoltID, BoltBuyAmount, 19493, 14, 2},
-        {2, DeltascapeBoltID, BoltBuyAmount, 19492, 15, 2},
-        {2, DeltascapeBoltID, BoltBuyAmount, 19498, 16, 2},
-        {2, DeltascapeBoltID, BoltBuyAmount, 19497, 17, 2},
+    public static Dictionary<uint, InnData> InnDict = new Dictionary<uint, InnData>
+    {
+        {LimsaInn,
+            new InnData{
+                MainCity = LimsaLower,
+                MainAether = LimsaAether,
+                RepairNPC = LimsaRepairNPC,
+                RepairNPCPos = LimsaRepairNPCPos,
+                InnNPC = LimsaInnNPC,
+                InnNPCPos = LimsaInnNPCPos,
+                InnDoor = LimsaInnDoor,
+                MainCity2 = LimsaUpper,
+                InnDoorPos=LimsaInnDoorPos
+            }
+        },
+        {UlDahInn,
+            new InnData{
+                MainCity = UlDah,
+                MainAether = UlDahAether,
+                RepairNPC = UlDahRepairNPC,
+                RepairNPCPos = UlDahRepairNPCPos,
+                InnNPC = UlDahInnNPC,
+                InnNPCPos = UlDahInnNPCPos,
+                InnDoor = UlDahInnDoor,
+                InnDoorPos=UlDahInnDoorPos
+            }
+        },
+        {GridaniaInn,
+            new InnData{
+                MainCity = Gridania,
+                MainAether = GridaniaAether,
+                RepairNPC = GridaniaRepairNPC,
+                RepairNPCPos = GridaniaRepairNPCPos,
+                InnNPC = GridaniaInnNPC,
+                InnNPCPos = GridaniaInnNPCPos,
+                InnDoor = GridaniaInnDoor,
+                InnDoorPos=GridaniaInnDoorPos
+            }
+        },
     };
 
     #endregion
 
-    #region Alexander Raid Tables
+    #region Turnin Dictionaries
 
-    public static int[,] SabinaTable = new int[,]
+    public class TurnInData
     {
-        {0, GordianShaftID, ShaftBuyAmount, 11455, 3, 0},
-        {0, GordianShaftID, ShaftBuyAmount, 11456, 4, 0},
-        {0, GordianShaftID, ShaftBuyAmount, 11457, 5, 0},
-        {0, GordianSpringID, SpringBuyAmount, 11476, 9, 0},
-        {0, GordianSpringID, SpringBuyAmount, 11477, 10, 0},
-        {0, GordianSpringID, SpringBuyAmount, 11478, 11, 0},
-        {0, GordianCrankID, CrankBuyAmount, 11462, 6, 0},
-        {0, GordianCrankID, CrankBuyAmount, 11463, 7, 0},
-        {0, GordianCrankID, CrankBuyAmount, 11464, 8, 0},
-        {0, GordianPedalID, PedalBuyAmount, 11483, 12, 0},
-        {0, GordianPedalID, PedalBuyAmount, 11484, 13, 0},
-        {0, GordianPedalID, PedalBuyAmount, 11485, 14, 0},
-        {0, GordianLensID, LensBuyAmount, 11448, 0, 0},
-        {0, GordianLensID, LensBuyAmount, 11449, 1, 0},
-        {0, GordianLensID, LensBuyAmount, 11450, 2, 0},
-        {0, GordianBoltID, BoltBuyAmount, 11490, 15, 0},
-        {0, GordianBoltID, BoltBuyAmount, 11491, 16, 0},
-        {0, GordianBoltID, BoltBuyAmount, 11495, 17, 0},
-        {0, GordianBoltID, BoltBuyAmount, 11496, 18, 0},
-        {0, GordianBoltID, BoltBuyAmount, 11500, 19, 0},
-        {0, GordianBoltID, BoltBuyAmount, 11501, 20, 0},
-        {0, GordianBoltID, BoltBuyAmount, 11505, 21, 0},
-        {0, GordianBoltID, BoltBuyAmount, 11506, 22, 0},
+        public ulong TurnInNpc { get; set; }
+        public Vector3 NpcPos { get; set; }
+        public Vector3 NpcPos1 { get; set; }
+        public Vector3 NpcPos2 { get; set; }
+        public Vector3 NpcPos3 { get; set; }
+        public Vector3 BellPos { get; set; }
+        public Vector3 BellPos1 { get; set; }
+        public Vector3 BellPos2 { get; set; }
+        public Vector3 BellPos3 { get; set; }
+    }
+    public static Dictionary<uint, TurnInData> TurnInDict = new Dictionary<uint, TurnInData>
+    {
+        {Idyllshire,
+            new TurnInData{
+                TurnInNpc = Sabina,
+                NpcPos = IdyllshireNPCPos,
+                NpcPos1 = IdyllshireNPCPos1,
+                NpcPos2 = IdyllshireNPCPos2,
+                NpcPos3 = IdyllshireNPCPos3,
+                BellPos = IdyllshireBellPos,
+                BellPos1 = IdyllshireBellPos1,
+                BellPos2 = IdyllshireBellPos2,
+                BellPos3 = IdyllshireBellPos3
+            }
+        },
+        {Rhalgr,
+            new TurnInData{
+                TurnInNpc = Gelfradus,
+                NpcPos = RhalgrNPCPos,
+                NpcPos1 = RhalgrNPCPos1,
+                NpcPos2 = RhalgrNPCPos2,
+                NpcPos3 = RhalgrNPCPos3,
+                BellPos = RhalgrBellPos,
+                BellPos1 = RhalgrBellPos1,
+                BellPos2 = RhalgrBellPos2,
+                BellPos3 = RhalgrBellPos3
+            }
+        },
+    };
 
-        {1, GordianShaftID, ShaftBuyAmount, 11459, 2, 0},
-        {1, GordianShaftID, ShaftBuyAmount, 11458, 3, 0},
-        {1, GordianSpringID, SpringBuyAmount, 11480, 6, 0},
-        {1, GordianSpringID, SpringBuyAmount, 11479, 7, 0},
-        {1, GordianCrankID, CrankBuyAmount, 11466, 4, 0},
-        {1, GordianCrankID, CrankBuyAmount, 11465, 5, 0},
-        {1, GordianPedalID, PedalBuyAmount, 11487, 8, 0},
-        {1, GordianPedalID, PedalBuyAmount, 11486, 9, 0},
-        {1, GordianLensID, LensBuyAmount, 11452, 0, 0},
-        {1, GordianLensID, LensBuyAmount, 11451, 1, 0},
-        {1, GordianBoltID, BoltBuyAmount, 11492, 10, 0},
-        {1, GordianBoltID, BoltBuyAmount, 11497, 11, 0},
-        {1, GordianBoltID, BoltBuyAmount, 11502, 12, 0},
-        {1, GordianBoltID, BoltBuyAmount, 11507, 13, 0},
+    #endregion
 
-        {2, GordianShaftID, ShaftBuyAmount, 11461, 2, 0},
-        {2, GordianShaftID, ShaftBuyAmount, 11460, 3, 0},
-        {2, GordianSpringID, SpringBuyAmount, 11482, 6, 0},
-        {2, GordianSpringID, SpringBuyAmount, 11481, 7, 0},
-        {2, GordianCrankID, CrankBuyAmount, 11468, 4, 0},
-        {2, GordianCrankID, CrankBuyAmount, 11467, 5, 0},
-        {2, GordianPedalID, PedalBuyAmount, 11489, 8, 0},
-        {2, GordianPedalID, PedalBuyAmount, 11488, 9, 0},
-        {2, GordianLensID, LensBuyAmount, 11454, 0, 0},
-        {2, GordianLensID, LensBuyAmount, 11453, 1, 0},
-        {2, GordianBoltID, BoltBuyAmount, 11494, 10, 0},
-        {2, GordianBoltID, BoltBuyAmount, 11493, 11, 0},
-        {2, GordianBoltID, BoltBuyAmount, 11499, 12, 0},
-        {2, GordianBoltID, BoltBuyAmount, 11498, 13, 0},
-        {2, GordianBoltID, BoltBuyAmount, 11504, 14, 0},
-        {2, GordianBoltID, BoltBuyAmount, 11503, 15, 0},
-        {2, GordianBoltID, BoltBuyAmount, 11509, 16, 0},
-        {2, GordianBoltID, BoltBuyAmount, 11508, 17, 0},
+    #region Normal Raid Dictionaries
 
-        {0, AlexandrianShaftID, ShaftBuyAmount, 16404, 3, 2},
-        {0, AlexandrianShaftID, ShaftBuyAmount, 16410, 4, 2},
-        {0, AlexandrianShaftID, ShaftBuyAmount, 16416, 5, 2},
-        {0, AlexandrianSpringID, SpringBuyAmount, 16406, 9, 2},
-        {0, AlexandrianSpringID, SpringBuyAmount, 16412, 10, 2},
-        {0, AlexandrianSpringID, SpringBuyAmount, 16418, 11, 2},
-        {0, AlexandrianCrankID, CrankBuyAmount, 16405, 6, 2},
-        {0, AlexandrianCrankID, CrankBuyAmount, 16411, 7, 2},
-        {0, AlexandrianCrankID, CrankBuyAmount, 16417, 8, 2},
-        {0, AlexandrianPedalID, PedalBuyAmount, 16407, 12, 2},
-        {0, AlexandrianPedalID, PedalBuyAmount, 16413, 13, 2},
-        {0, AlexandrianPedalID, PedalBuyAmount, 16419, 14, 2},
-        {0, AlexandrianLensID, LensBuyAmount, 16403, 0, 2},
-        {0, AlexandrianLensID, LensBuyAmount, 16409, 1, 2},
-        {0, AlexandrianLensID, LensBuyAmount, 16415, 2, 2},
-        {0, AlexandrianBoltID, BoltBuyAmount, 16445, 15, 2},
-        {0, AlexandrianBoltID, BoltBuyAmount, 16446, 16, 2},
-        {0, AlexandrianBoltID, BoltBuyAmount, 16450, 17, 2},
-        {0, AlexandrianBoltID, BoltBuyAmount, 16451, 18, 2},
-        {0, AlexandrianBoltID, BoltBuyAmount, 16455, 19, 2},
-        {0, AlexandrianBoltID, BoltBuyAmount, 16456, 20, 2},
-        {0, AlexandrianBoltID, BoltBuyAmount, 16460, 21, 2},
-        {0, AlexandrianBoltID, BoltBuyAmount, 16461, 22, 2},
+    public class NRaidData
+    {
+        public required Vector3 CenterofChest { get; set; }
+        public required ulong[] ListofChest { get; set; }
+        public required ulong BossID { get; set; }
+        public required uint DutyID { get; set; }
+        public required int PcallID { get; set; }
+    }
 
-        {1, AlexandrianShaftID, ShaftBuyAmount, 16428, 2, 2},
-        {1, AlexandrianShaftID, ShaftBuyAmount, 16422, 3, 2},
-        {1, AlexandrianSpringID, SpringBuyAmount, 16430, 6, 2},
-        {1, AlexandrianSpringID, SpringBuyAmount, 16424, 7, 2},
-        {1, AlexandrianCrankID, CrankBuyAmount, 16429, 4, 2},
-        {1, AlexandrianCrankID, CrankBuyAmount, 16423, 5, 2},
-        {1, AlexandrianPedalID, PedalBuyAmount, 16431, 8, 2},
-        {1, AlexandrianPedalID, PedalBuyAmount, 16425, 9, 2},
-        {1, AlexandrianLensID, LensBuyAmount, 16427, 0, 2},
-        {1, AlexandrianLensID, LensBuyAmount, 16421, 1, 2},
-        {1, AlexandrianBoltID, BoltBuyAmount, 16447, 10, 2},
-        {1, AlexandrianBoltID, BoltBuyAmount, 16452, 11, 2},
-        {1, AlexandrianBoltID, BoltBuyAmount, 16457, 12, 2},
-        {1, AlexandrianBoltID, BoltBuyAmount, 16462, 13, 2},
-
-        {2, AlexandrianShaftID, ShaftBuyAmount, 16440, 2, 2},
-        {2, AlexandrianShaftID, ShaftBuyAmount, 16434, 3, 2},
-        {2, AlexandrianSpringID, SpringBuyAmount, 16442, 6, 2},
-        {2, AlexandrianSpringID, SpringBuyAmount, 16436, 7, 2},
-        {2, AlexandrianCrankID, CrankBuyAmount, 16441, 4, 2},
-        {2, AlexandrianCrankID, CrankBuyAmount, 16435, 5, 2},
-        {2, AlexandrianPedalID, PedalBuyAmount, 16443, 8, 2},
-        {2, AlexandrianPedalID, PedalBuyAmount, 16437, 9, 2},
-        {2, AlexandrianLensID, LensBuyAmount, 16439, 0, 2},
-        {2, AlexandrianLensID, LensBuyAmount, 16433, 1, 2},
-        {2, AlexandrianBoltID, BoltBuyAmount, 16449, 10, 2},
-        {2, AlexandrianBoltID, BoltBuyAmount, 16448, 11, 2},
-        {2, AlexandrianBoltID, BoltBuyAmount, 16454, 12, 2},
-        {2, AlexandrianBoltID, BoltBuyAmount, 16453, 13, 2},
-        {2, AlexandrianBoltID, BoltBuyAmount, 16459, 14, 2},
-        {2, AlexandrianBoltID, BoltBuyAmount, 16458, 15, 2},
-        {2, AlexandrianBoltID, BoltBuyAmount, 16464, 16, 2},
-        {2, AlexandrianBoltID, BoltBuyAmount, 16463, 17, 2},
+    public static Dictionary<uint, NRaidData> NRaidDict = new Dictionary<uint, NRaidData>
+    {
+        { A4NMapID, // A4N Selected
+            new NRaidData
+            {
+                CenterofChest = A4NChestCenter,
+                ListofChest = [A4NChest1, A4NChest2, A4NChest3],
+                BossID = RightForeleg,
+                DutyID = 115,
+                PcallID = C.A4NPcallValue
+            }
+        },
+        { O3NMapID, // O3N
+            new NRaidData
+            {
+                CenterofChest = O3NChestCenter,
+                ListofChest = [O3NChest1, O3NChest2],
+                BossID = Halicarnassus,
+                DutyID = 254, // was set to 0 originally
+                PcallID = C.O3NPcallValue
+            }
+        }
     };
 
     #endregion
@@ -410,8 +695,6 @@ public static class Data
         public int CurrentItemCount { get; set; }
         public int AvailableArmory { get; set; }
     }
-
-    public static string AltBossMod = "BossModReborn";
 
     public static Dictionary<int, VendorSellData> VendorSellDict = new Dictionary<int, VendorSellData>
     {
@@ -454,115 +737,45 @@ public static class Data
 
     #endregion
 
-    #region Normal Raid Data Points
-
-    // Alexander - The Burder of the Father (A4N) 
-    public static uint A4NMapID = 445;
-    public static ulong RightForeleg = 4107;
-    public static ulong LeftForeleg = 4108;
-    public static ulong Manipulator = 3902;
-    public static ulong A4NChest1 = 438;
-    public static ulong A4NChest2 = 480;
-    public static ulong A4NChest3 = 479;
-    public static Vector3 RightForeLegPos = new(-6.53f, 10.54f, -7.56f);
-    public static Vector3 A4NChestCenter = new Vector3(-0.08f, 10.6f, -6.46f);
-
-    // Deltascape V3.0 (O3N)
-    public static uint O3NMapID = 693;
-    public static ulong Halicarnassus = 7700;
-    public static ulong O3NChest1 = 930;
-    public static ulong O3NChest2 = 929;
-    public static Vector3 O3NChestCenter = new Vector3(-0.01f, 0.00f, -5.42f);
-
-    // Retainer
-    public static ulong SummoningBell = 2000403;
-
-    // TurnIn Shop
-    public static ulong Sabina = 1012227;
-    public static ulong Gelfradus = 1019452;
-
     #endregion
 
-    #region Zone Info
+    #region Misc Info's
 
-    #region Main Cities
-    // City -> Inn -> ReapirNPC -> 
-    public static uint LimsaUpper = 128; // we need limsa id too which is 129 for the teleport task :d
-    public static uint LimsaLower = 129;
-    public static uint LimsaAether = 8;
-    public static uint LimsaInn = 177;
-    public static ulong LimsaInnNPC = 1000974;
-    public static Vector3 LimsaInnNPCPos = new(15.43f, 40f, 12.47f);
-    public static ulong LimsaRepairNPC = 1003251;
-    public static Vector3 LimsaRepairNPCPos = new(17.72f, 40.2f, 3.95f);
-    public static ulong LimsaInnDoor = 2001010;
-    public static Vector3 LimsaInnDoorPos = new(-0.02f, 1.45f, 7.52f);
+    public static string AltBossMod = "BossModReborn";
 
-    public static uint UlDah = 130;
-    public static uint UlDahAether = 9;
-    public static uint UlDahInn = 178;
-    public static ulong UlDahInnNPC = 1001976;
-    public static Vector3 UlDahInnNPCPos = new(29.5f, 7.45f, -78.32f);
-    public static ulong UlDahRepairNPC = 1004416;
-    public static Vector3 UlDahRepairNPCPos = new(32.85f, 7f, -81.32f);
-    public static ulong UlDahInnDoor = 2001011;
-    public static Vector3 UlDahInnDoorPos = new(0.02f, 1.97f, 8.13f);
+    #region Housing/Workshops
 
-    public static uint Gridania = 132;
-    public static uint GridaniaAether = 2;
-    public static uint GridaniaInn = 179;
-    public static ulong GridaniaInnNPC = 1000102;
-    public static Vector3 GridaniaInnNPCPos = new(23.7f, -8.1f, 100.05f);
-    public static ulong GridaniaRepairNPC = 1000394;
-    public static Vector3 GridaniaRepairNPCPos = new(24.83f, -8f, 93.19f);
-    public static ulong GridaniaInnDoor = 2000087;
-    public static Vector3 GridaniaInnDoorPos = new(0.02f, 1.45f, 7.71f);
+    // variables to be used across the place
+    public static bool RunInfinite = true;
+    public static int RunAmount = 1;
 
-    public static uint Ishguard = 418;
-    public static uint IshguardAether = 70;
-    public static uint IshguardInn = 429;
-
-    public static uint Kugane = 628;
-    public static uint KuganeAether = 111;
-    public static uint KuganeInn = 629;
-
-    public static uint Crystarium = 819;
-    public static uint CrystariumAether = 133;
-    public static uint CrystariumInn = 843;
-
-    public static uint OldShar = 962;
-    public static uint OldSharAether = 182;
-    public static uint OldSharInn = 990;
-
-    public static uint Tuliyollai = 1185;
-    public static uint TuliyollaAether = 216;
-    public static uint TuliyollaiInn = 1205;
-    #endregion
-
-    // Turnin Locations
-    public static uint Idyllshire = 478;
-    public static uint IdyllshireAether = 75;
-    public static Vector3 IdyllshireNPCPos = new(-20.98f, 211.00f, -37.74f);
-    public static Vector3 IdyllshireNPCPos1 = new(-19.43f, 211.00f, -35.29f);
-    public static Vector3 IdyllshireNPCPos2 = new(-18.19f, 211.00f, -36.49f);
-    public static Vector3 IdyllshireNPCPos3 = new(-18.12f, 211.00f, -34.53f);
-    public static Vector3 IdyllshireBellPos = new(34.78f, 208.15f, -50.86f); // Actual bell pos
-    public static Vector3 IdyllshireBellPos1 = new(35.37f, 208.17f, -51.95f); //triangle values
-    public static Vector3 IdyllshireBellPos2 = new(33.41f, 208.24f, -50.55f); //triangle values
-    public static Vector3 IdyllshireBellPos3 = new(33.46f, 208.36f, -52.60f); //triangle values
-
-    public static uint Rhalgr = 635;
-    public static uint RhalgrAether = 104;
-    public static Vector3 RhalgrNPCPos = new Vector3(128.40f, 0.68f, 41.70f);
-    public static Vector3 RhalgrNPCPos1 = new Vector3(125.41f, 0.65f, 39.55f);
-    public static Vector3 RhalgrNPCPos2 = new Vector3(124.71f, 0.65f, 41.31f);
-    public static Vector3 RhalgrNPCPos3 = new Vector3(123.59f, 0.65f, 39.49f);
-    public static Vector3 RhalgrBellPos = new Vector3(-57.27f, 0f, 48.57f); // Actual bell pos
-    public static Vector3 RhalgrBellPos1 = new Vector3(-53.83f, 0f, 46.92f);
-    public static Vector3 RhalgrBellPos2 = new Vector3(-55.33f, 0f, 48.68f);
-    public static Vector3 RhalgrBellPos3 = new Vector3(-57.03f, 0f, 47.42f);
-
-    public static readonly HashSet<uint> innZones = new HashSet<uint> { LimsaInn, UlDahInn, GridaniaInn, IshguardInn, KuganeInn, CrystariumInn, OldSharInn, TuliyollaiInn };
+    public static uint[] Workshops = [
+        Houses.Company_Workshop_Empyreum,
+            Houses.Company_Workshop_The_Goblet,
+            Houses.Company_Workshop_Mist,
+            Houses.Company_Workshop_Shirogane,
+            Houses.Company_Workshop_The_Lavender_Beds
+        ];
+    public static uint[] PrivateHouses = [
+        Houses.Private_Cottage_Mist,
+            Houses.Private_House_Mist,
+            Houses.Private_Mansion_Mist,
+            Houses.Private_Cottage_The_Lavender_Beds,
+            Houses.Private_House_The_Lavender_Beds,
+            Houses.Private_Mansion_The_Lavender_Beds,
+            Houses.Private_Cottage_The_Goblet,
+            Houses.Private_House_The_Goblet,
+            Houses.Private_Mansion_The_Goblet,
+            Houses.Private_Cottage_Shirogane,
+            Houses.Private_House_Shirogane,
+            Houses.Private_Mansion_Shirogane,
+            Houses.Private_Cottage_Empyreum,
+            Houses.Private_House_Empyreum,
+            Houses.Private_Mansion_Empyreum,
+            Houses.Private_Cottage_Minimalist,
+            Houses.Private_House_Minimalist,
+            Houses.Private_Mansion_Minimalist,
+            ];
 
     #endregion
 
@@ -663,176 +876,6 @@ public static class Data
     public static int TotalGear = 0;
     #endregion
 
-    #region Inn Dictionaries
-
-    public class InnData
-    {
-        public required uint MainCity { get; set; }
-        public ulong RepairNPC { get; set; }
-        public Vector3 RepairNPCPos { get; set; }
-        public required ulong InnNPC { get; set; }
-        public required Vector3 InnNPCPos { get; set; }
-        public required ulong InnDoor { get; set; }
-        public required Vector3 InnDoorPos { get; set; }
-        public uint MainCity2 { get; set; }
-        public uint MainAether { get; set; }
-    }
-
-    public static Dictionary<uint, InnData> InnDict = new Dictionary<uint, InnData>
-    {
-        {LimsaInn, 
-            new InnData{ 
-                MainCity = LimsaLower, 
-                MainAether = LimsaAether,
-                RepairNPC = LimsaRepairNPC, 
-                RepairNPCPos = LimsaRepairNPCPos, 
-                InnNPC = LimsaInnNPC, 
-                InnNPCPos = LimsaInnNPCPos,
-                InnDoor = LimsaInnDoor, 
-                MainCity2 = LimsaUpper,
-                InnDoorPos=LimsaInnDoorPos 
-            } 
-        },
-        {UlDahInn, 
-            new InnData{ 
-                MainCity = UlDah, 
-                MainAether = UlDahAether,
-                RepairNPC = UlDahRepairNPC, 
-                RepairNPCPos = UlDahRepairNPCPos, 
-                InnNPC = UlDahInnNPC, 
-                InnNPCPos = UlDahInnNPCPos,
-                InnDoor = UlDahInnDoor,
-                InnDoorPos=UlDahInnDoorPos 
-            }
-        },
-        {GridaniaInn, 
-            new InnData{
-                MainCity = Gridania, 
-                MainAether = GridaniaAether, 
-                RepairNPC = GridaniaRepairNPC, 
-                RepairNPCPos = GridaniaRepairNPCPos, 
-                InnNPC = GridaniaInnNPC, 
-                InnNPCPos = GridaniaInnNPCPos,
-                InnDoor = GridaniaInnDoor,
-                InnDoorPos=GridaniaInnDoorPos
-            } 
-        },
-    };
-
     #endregion
 
-    // variables to be used across the place
-    public static bool RunInfinite = true;
-    public static int RunAmount = 1;
-
-    public static uint[] Workshops = [Houses.Company_Workshop_Empyreum, Houses.Company_Workshop_The_Goblet, Houses.Company_Workshop_Mist, Houses.Company_Workshop_Shirogane, Houses.Company_Workshop_The_Lavender_Beds];
-    public static uint[] PrivateHouses = [
-        Houses.Private_Cottage_Mist,
-        Houses.Private_House_Mist,
-        Houses.Private_Mansion_Mist,
-        Houses.Private_Cottage_The_Lavender_Beds,
-        Houses.Private_House_The_Lavender_Beds,
-        Houses.Private_Mansion_The_Lavender_Beds,
-        Houses.Private_Cottage_The_Goblet,
-        Houses.Private_House_The_Goblet,
-        Houses.Private_Mansion_The_Goblet,
-        Houses.Private_Cottage_Shirogane,
-        Houses.Private_House_Shirogane,
-        Houses.Private_Mansion_Shirogane,
-        Houses.Private_Cottage_Empyreum,
-        Houses.Private_House_Empyreum,
-        Houses.Private_Mansion_Empyreum,
-        Houses.Private_Cottage_Minimalist,
-        Houses.Private_House_Minimalist,
-        Houses.Private_Mansion_Minimalist,
-        ];
-
-    #region Turnin Dictionaries
-
-    public class TurnInData
-    {
-        public ulong TurnInNpc { get; set; }
-        public Vector3 NpcPos { get; set; }
-        public Vector3 NpcPos1 { get; set; }
-        public Vector3 NpcPos2 { get; set; }
-        public Vector3 NpcPos3 { get; set; }
-        public Vector3 BellPos { get; set; }
-        public Vector3 BellPos1 { get; set; }
-        public Vector3 BellPos2 { get; set; }
-        public Vector3 BellPos3 { get; set; }
-    }
-    public static Dictionary<uint, TurnInData> TurnInDict = new Dictionary<uint, TurnInData>
-    {
-        {Idyllshire, 
-            new TurnInData{
-                TurnInNpc = Sabina,
-                NpcPos = IdyllshireNPCPos,
-                NpcPos1 = IdyllshireNPCPos1,
-                NpcPos2 = IdyllshireNPCPos2,
-                NpcPos3 = IdyllshireNPCPos3,
-                BellPos = IdyllshireBellPos,
-                BellPos1 = IdyllshireBellPos1,
-                BellPos2 = IdyllshireBellPos2,
-                BellPos3 = IdyllshireBellPos3
-            }
-        },
-        {Rhalgr, 
-            new TurnInData{
-                TurnInNpc = Gelfradus,
-                NpcPos = RhalgrNPCPos,
-                NpcPos1 = RhalgrNPCPos1,
-                NpcPos2 = RhalgrNPCPos2,
-                NpcPos3 = RhalgrNPCPos3,
-                BellPos = RhalgrBellPos,
-                BellPos1 = RhalgrBellPos1,
-                BellPos2 = RhalgrBellPos2,
-                BellPos3 = RhalgrBellPos3
-            } 
-        },
-    };
-
-    #endregion
-
-    #region Normal Raid Dictionaries
-
-    public class NRaidData
-    {
-        public required Vector3 CenterofChest {get; set; }
-        public required ulong[] ListofChest { get; set; }
-        public required ulong BossID { get; set; }
-        public required uint DutyID { get; set; }
-        public required int PcallID { get; set; }
-    }
-
-    public static Dictionary<uint, NRaidData> NRaidDict = new Dictionary<uint, NRaidData>
-    {
-        { A4NMapID, // A4N Selected
-            new NRaidData
-            {
-                CenterofChest = A4NChestCenter,
-                ListofChest = [A4NChest1, A4NChest2, A4NChest3],
-                BossID = RightForeleg,
-                DutyID = 115,
-                PcallID = C.A4NPcallValue
-            }
-        },
-        { O3NMapID, // O3N
-            new NRaidData
-            {
-                CenterofChest = O3NChestCenter,
-                ListofChest = [O3NChest1, O3NChest2],
-                BossID = Halicarnassus,
-                DutyID = 254, // was set to 0 originally
-                PcallID = C.O3NPcallValue
-            }
-        }
-    };
-
-    #endregion
-
-    #region TestStuff
-
-
-
-    #endregion
 }
