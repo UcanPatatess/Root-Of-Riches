@@ -2,6 +2,7 @@ using Dalamud.Game.ClientState.Conditions;
 using Dalamud.Game.ClientState.Objects.Types;
 using ECommons.DalamudServices;
 using ECommons.Logging;
+using FFXIVClientStructs.FFXIV.Component.GUI;
 using RootofRiches.Scheduler.Tasks;
 
 namespace RootofRiches.Scheduler
@@ -185,6 +186,8 @@ namespace RootofRiches.Scheduler
                                     }
                                 }
                             }
+                            else if (!ARRetainersWaitingToBeProcessed() && (TryGetAddonByName<AtkUnitBase>("RetainerList", out var RetainerAddon) && IsAddonReady(RetainerAddon)))
+                                TaskGetOut.Enqueue();
                             else if (C.EnableAutoRetainer && ARRetainersWaitingToBeProcessed() && Svc.ClientState.TerritoryType == C.InnDataID)
                             {
                                 P.taskManager.Enqueue(() => NRaidTask = "Resending Retainers");
@@ -255,7 +258,7 @@ namespace RootofRiches.Scheduler
                                 }
                             }
                         }
-                        else if (IsThereTradeItem())
+                        else if (TradeItems)
                         {
                             if (!C.ChangeArmory)
                             {
