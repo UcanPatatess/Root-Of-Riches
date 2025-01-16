@@ -258,7 +258,7 @@ namespace RootofRiches.Scheduler
                                 }
                             }
                         }
-                        else if (TradeItems)
+                        else if (IsThereTradeItem())
                         {
                             if (!C.ChangeArmory)
                             {
