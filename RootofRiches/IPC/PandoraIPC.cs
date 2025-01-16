@@ -1,7 +1,7 @@
 using ECommons.EzIpcManager;
 
 namespace RootofRiches.IPC;
-
+#nullable disable
 public class PandoraIPC
 {
     public const string Name = "PandorasBox";

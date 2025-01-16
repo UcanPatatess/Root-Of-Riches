@@ -234,7 +234,7 @@ namespace RootofRiches.Scheduler
                             }
                             else if (TotalExchangeItem != 0 || (C.SellOilCloth && GetItemCount(10120) > 0))
                             {
-                                if (DeltascapeTurnInCount > 0)
+                                if (DeltascapeTurnInCount > 0 || IsInZone(Rhalgr))
                                 {
                                     TaskTeleport.Enqueue(RhalgrAether, Rhalgr);
                                     if (IsInZone(Rhalgr))
@@ -247,7 +247,7 @@ namespace RootofRiches.Scheduler
                                         TaskSellVendor.Enqueue();
                                     }
                                 }
-                                else if (GordianTurnInCount > 0 || AlexandrianTurnInCount > 0 || (C.SellOilCloth && GetItemCount(10120) > 0))
+                                else if (GordianTurnInCount > 0 || AlexandrianTurnInCount > 0 || (C.SellOilCloth && GetItemCount(10120) > 0) || IsInZone(Idyllshire))
                                 {
                                     TaskTeleport.Enqueue(IdyllshireAether, Idyllshire);
                                     if (IsInZone(Idyllshire))
