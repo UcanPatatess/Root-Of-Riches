@@ -5,7 +5,7 @@ using System.Numerics;
 
 namespace RootofRiches.Scheduler.Tasks
 {
-    internal static class TaskUseAutoRetainer
+    internal static class TaskUseRetainer
     {
         internal static void Enqueue()
         {
@@ -13,14 +13,11 @@ namespace RootofRiches.Scheduler.Tasks
             TryGetObjectByDataId(SummoningBell, out gameObject);
             TaskPluginLog.Enqueue("Using Auto Retainer Task");
             P.taskManager.Enqueue(PlayerNotBusy);
-            if (!P.autoRetainer.GetOptionRetainerSense())
-                P.taskManager.Enqueue(() => P.autoRetainer.SetOptionRetainerSense(true));
+            TaskMoveTo.Enqueue(gameObject.Position, "Retainer Bell", 4);
             TaskTarget.Enqueue(SummoningBell);
-            if (gameObject != null && GetDistanceToVectorPoint(Svc.Targets.Target.Position) > 3)
-                TaskMoveTo.Enqueue(Svc.Targets.Target.Position, "Retainer Bell", 3);
+            TaskInteract.Enqueue(SummoningBell);
             P.taskManager.Enqueue(RetainerOpened);
             P.taskManager.Enqueue(() => !ARRetainersWaitingToBeProcessed());
-            P.taskManager.Enqueue(() => P.autoRetainer.SetOptionRetainerSense(false));
             P.taskManager.Enqueue(() => P.autoRetainer.IsBusy());
             P.taskManager.Enqueue(() => !P.autoRetainer.IsBusy());
             TaskGetOut.Enqueue();

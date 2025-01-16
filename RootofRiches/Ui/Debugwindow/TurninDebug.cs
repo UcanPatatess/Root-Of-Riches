@@ -111,7 +111,7 @@ internal class TurninDebug
             TaskGetOut.Enqueue();
 
         if (ImGui.Button("Resend Retainers"))
-            TaskUseAutoRetainer.Enqueue();
+            TaskUseRetainer.Enqueue();
 
         ImGui.SameLine();
         if (ImGui.Button("Resend Deployables"))

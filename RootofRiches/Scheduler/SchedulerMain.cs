@@ -188,7 +188,7 @@ namespace RootofRiches.Scheduler
                             else if (C.EnableAutoRetainer && ARRetainersWaitingToBeProcessed() && Svc.ClientState.TerritoryType == C.InnDataID)
                             {
                                 P.taskManager.Enqueue(() => NRaidTask = "Resending Retainers");
-                                TaskUseAutoRetainer.Enqueue();
+                                TaskUseRetainer.Enqueue();
                                 P.taskManager.Enqueue(() => NRaidTask = "idle");
                             }
                             else if (!IsAddonActive("ContentsFinder") && !hasEnqueuedDutyFinder)
