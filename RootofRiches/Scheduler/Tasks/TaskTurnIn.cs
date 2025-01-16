@@ -1,3 +1,4 @@
+using ECommons.Automation;
 using ECommons.DalamudServices;
 using ECommons.GameFunctions;
 using ECommons.Throttlers;
@@ -6,22 +7,18 @@ using FFXIVClientStructs.FFXIV.Client.Game.Event;
 using FFXIVClientStructs.FFXIV.Client.UI.Agent;
 using FFXIVClientStructs.FFXIV.Component.GUI;
 using RootofRiches.Scheduler.Handlers;
-using ECommons.Automation;
-using Dalamud.Game.ClientState.Objects.Types;
 
 namespace RootofRiches.Scheduler.Tasks
 {
     internal static class TaskTurnIn
     {
-        public static bool AreWeTurningIn=false;
         internal unsafe static void Enqueue()
         {
             P.taskManager.Enqueue(() => UpdateCurrentTask("TaskTurnIn"));
-            
-        int? lastShopType = null;
-        int? LastIconShopType = null;
+            int? lastShopType = null;
+            int? LastIconShopType = null;
 
-        int[,] TableName = null!;
+            int[,] TableName = null!;
             if (Svc.ClientState.TerritoryType == 478)
                 TableName = SabinaTable;
             if (Svc.ClientState.TerritoryType == 635)
@@ -47,7 +44,7 @@ namespace RootofRiches.Scheduler.Tasks
                 int ItemAmount = VendorSellDict[itemType].CurrentItemCount;
                 int GearAmount = GetItemCount(gearItem);
                 int CanExchange = (int)Math.Floor((double)ItemAmount / itemTypeBuy);
-                
+
                 int ArmoryType = 0;
                 if (ItemIdArmoryTable.TryGetValue(gearItem, out int category))
                 {
@@ -115,7 +112,7 @@ namespace RootofRiches.Scheduler.Tasks
                     else
                     {
                         Exchange(gearItem, pcallValue, 1);
-                        VendorSellDict[itemType].CurrentItemCount = ItemAmount - (1* itemTypeBuy);
+                        VendorSellDict[itemType].CurrentItemCount = ItemAmount - (1 * itemTypeBuy);
                         SlotINV -= 1;
                     }
                     if (LastIconShopType != null && iconShopType != LastIconShopType)
@@ -158,7 +155,7 @@ namespace RootofRiches.Scheduler.Tasks
             }
             return false;
         }
-        internal static void OpenShopMenu(int SelectIconString, int SelectString,bool armory = true)
+        internal static void OpenShopMenu(int SelectIconString, int SelectString, bool armory = true)
         {
             P.taskManager.EnqueueDelay(100);
             TaskTarget.Enqueue(TurnInDict[Svc.ClientState.TerritoryType].TurnInNpc);
@@ -179,13 +176,12 @@ namespace RootofRiches.Scheduler.Tasks
             if (Amount > 127)
                 Amount = 127;
 
-            
             P.taskManager.Enqueue(() => DoExchange(gearItem, "ShopExchangeItem", true, 0, List, Amount));
             P.taskManager.EnqueueDelay(100);
         }
         internal unsafe static bool DoExchange(int gearItem, string AddonName, bool kapkac, params int[] gibeme)
         {
-            if (DidAmountChange(0,GetItemCount(gearItem)))
+            if (DidAmountChange(0, GetItemCount(gearItem)))
             {
                 return true;
             }
@@ -201,7 +197,7 @@ namespace RootofRiches.Scheduler.Tasks
             }
             else if (TryGetAddonByName<AtkUnitBase>(AddonName, out var addon) && IsAddonReady(addon))
             {
-                if(FrameThrottler.Throttle("RootofRichesGenericThrottlee", 20))
+                if (FrameThrottler.Throttle("RootofRichesGenericThrottlee", 20))
                     Callback.Fire(addon, kapkac, gibeme.Cast<object>().ToArray());
             }
             return false;

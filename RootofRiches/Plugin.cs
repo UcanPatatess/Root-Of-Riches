@@ -37,6 +37,7 @@ public class Plugin : IDalamudPlugin
     internal AutoRetainerIPC autoRetainer;
     internal DeliverooIPC deliveroo;
     internal LifestreamIPC lifestream;
+    internal PandoraIPC pandora;
     internal NavmeshIPC navmesh;
     internal BossModIPC bossmod;
     internal WrathIPC wrath;
@@ -69,6 +70,7 @@ public class Plugin : IDalamudPlugin
         deliveroo = new();
         lifestream = new();
         navmesh = new();
+        pandora = new();
         bossmod = new();
         wrath = new();
         rorIPC = new();

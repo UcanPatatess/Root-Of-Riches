@@ -1,13 +1,8 @@
 using Dalamud.Game.ClientState.Objects.Types;
-using FFXIVClientStructs.FFXIV.Client.Game.Object;
 using ImGuiNET;
 using RootofRiches.Scheduler.Tasks;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace RootofRiches.Ui.Debugwindow;
 
@@ -27,5 +22,9 @@ internal class MiscDebug
             if (gameObject != null && (GetDistanceToVectorPoint(bellPos) > 3))
                 TaskMoveTo.Enqueue(bellPos, "Retainer Bell", 1);
         }
+        FancyPluginUiString(P.pandora.Installed, "Pandora IPC Test", "");
+        var isenabled = P.pandora.GetFeatureEnabled("Auto-select Turn-ins") ?? false;
+
+        FancyPluginUiString(isenabled, "Pandora Auto-select Turn-ins Test", "");
     }
 }
