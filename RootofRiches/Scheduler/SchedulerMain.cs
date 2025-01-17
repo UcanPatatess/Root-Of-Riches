@@ -2,6 +2,7 @@ using Dalamud.Game.ClientState.Conditions;
 using Dalamud.Game.ClientState.Objects.Types;
 using ECommons.DalamudServices;
 using ECommons.Logging;
+using FFXIVClientStructs.FFXIV.Client.Game.Object;
 using FFXIVClientStructs.FFXIV.Component.GUI;
 using RootofRiches.Scheduler.Tasks;
 
@@ -35,7 +36,11 @@ namespace RootofRiches.Scheduler
             FullRun = false;
             NRaidTask = "idle";
             UpdateCurrentTask("idle");
-            ToggleRotation(false);
+            if (InitatedRotation)
+            {
+                ToggleRotation(false);
+                InitatedRotation = false;
+            }
             return true;
         }
 
@@ -46,6 +51,7 @@ namespace RootofRiches.Scheduler
         public static int NRaidRun;
         public static bool FullRun = false;
         public static bool TimerStarted = false;
+        public static bool InitatedRotation = false;
         private static uint PreviousArea = 0;
         private static int RaidSelected = 0;
 
@@ -59,61 +65,61 @@ namespace RootofRiches.Scheduler
                     {
                         if (IsInZone(A4NMapID) || IsInZone(O3NMapID))
                         {
-                            if (!Svc.Condition[ConditionFlag.InCombat])
+                            uint ZoneID = CurrentZoneID();
+                            IGameObject? gameObject = null;
+                            if (TryGetClosestEnemy(out gameObject) && gameObject != null)
                             {
-                                uint ZoneID = CurrentZoneID();
-                                IGameObject? gameObject = null;
-                                if (TryGetObjectByDataId(NRaidDict[ZoneID].ListofChest[0], out gameObject))
-                                {
-                                    if (GetRoleByNumber() == "Caster")
-                                    {
-
-                                    }
-                                    ToggleRotation(false);
-                                    P.taskManager.Enqueue(() => NRaidTask = "Gathering your riches");
-                                    TaskMoveTo.Enqueue(NRaidDict[ZoneID].CenterofChest, "Center Chest", 0.5f);
-                                    for (int i = 0; i < NRaidDict[ZoneID].ListofChest.Length; i++)
-                                    {
-                                        TaskInteract.Enqueue(NRaidDict[ZoneID].ListofChest[i]);
-                                    }
-                                    P.taskManager.Enqueue(LeaveDuty);
-                                    P.taskManager.Enqueue(() => UpdateStats(ZoneID));
-                                    P.taskManager.Enqueue(() => !IsInZone(ZoneID), "Leaving Normal Raids");
-                                    P.taskManager.Enqueue(PlayerNotBusy);
-                                    hasEnqueuedDutyFinder = false;
-                                    P.taskManager.Enqueue(() => NRaidRun = NRaidRun + 1);
-                                    if (TimerStarted)
-                                        TaskTimer.Enqueue(false, ZoneID);
-                                    P.taskManager.Enqueue(() => NRaidTask = "idle");
-                                }
-                                else if (TryGetObjectByDataId(NRaidDict[ZoneID].BossID, out gameObject))
+                                if (!Svc.Condition[ConditionFlag.InCombat] && !InitatedRotation)
                                 {
                                     P.taskManager.Enqueue(() => NRaidTask = $"Targeted {gameObject?.Name}");
-                                    // Left Leg is targetable... which means you aren't in combat/you haven't initiated it yet
                                     P.taskManager.Enqueue(PlayerNotBusy);
-                                    TaskTarget.Enqueue(NRaidDict[ZoneID].BossID);
+                                    TaskTarget.Enqueue(gameObject.DataId);
                                     ToggleRotation(true);
                                     SetBMRange(24);
-                                    if (GetRoleByNumber() == "Tank")
-                                    {
-                                        P.taskManager.Enqueue(() => NRaidTask = "Entering Combat");
-                                        P.taskManager.Enqueue(() => MoveToCombat(RightForeLegPos), "Moving to Combat");
-                                    }
-                                    else
-                                    {
-                                        P.taskManager.Enqueue(() => NRaidTask = "Entering Combat");
-                                        P.taskManager.Enqueue(() => Svc.Condition[ConditionFlag.InCombat]);
-
-                                    }
+                                    P.taskManager.Enqueue(() => NRaidTask = "Entering Combat");
+                                    P.taskManager.Enqueue(() => Svc.Condition[ConditionFlag.InCombat]);
                                     P.taskManager.Enqueue(() => NRaidTask = "Waiting for combat to finish");
+                                    P.taskManager.Enqueue(() => InitatedRotation = true);
                                     P.taskManager.Enqueue(() => !Svc.Condition[ConditionFlag.InCombat], "Waiting for combat to end", DConfig);
-                                    P.taskManager.Enqueue(PlayerNotBusy, "Waiting for Cutscene", DConfig);
+                                    P.taskManager.Enqueue(PlayerNotBusy, "Waiting for Player to be available again", DConfig);
+                                }
+                                else if (Svc.Condition[ConditionFlag.InCombat] && !InitatedRotation)
+                                {
+                                    P.taskManager.Enqueue(() => NRaidTask = $"Targeted {gameObject?.Name}");
+                                    TaskTarget.Enqueue(gameObject.DataId);
+                                    ToggleRotation(true);
+                                    SetBMRange(24);
+                                    P.taskManager.Enqueue(() => NRaidTask = "Entering Combat");
+                                    P.taskManager.Enqueue(() => Svc.Condition[ConditionFlag.InCombat]);
+                                    P.taskManager.Enqueue(() => NRaidTask = "Waiting for combat to finish");
+                                    P.taskManager.Enqueue(() => InitatedRotation = true);
+                                    P.taskManager.Enqueue(() => !Svc.Condition[ConditionFlag.InCombat], "Waiting for combat to end", DConfig);
+                                    P.taskManager.Enqueue(PlayerNotBusy, "Waiting for Player to be available again", DConfig);
                                 }
                                 else
                                 {
                                     P.taskManager.EnqueueDelay(100);
                                     // just an exit for it to catch/reset in case either of these come false (it shouldn't, but better to have a failsafe)
                                 }
+                            }
+                            else if (TryGetObjectByDataId(NRaidDict[ZoneID].ListofChest[0], out gameObject))
+                            {
+                                ToggleRotation(false);
+                                P.taskManager.Enqueue(() => NRaidTask = "Gathering your riches");
+                                TaskMoveTo.Enqueue(NRaidDict[ZoneID].CenterofChest, "Center Chest", 0.5f);
+                                for (int i = 0; i < NRaidDict[ZoneID].ListofChest.Length; i++)
+                                {
+                                    TaskInteract.Enqueue(NRaidDict[ZoneID].ListofChest[i]);
+                                }
+                                P.taskManager.Enqueue(LeaveDuty);
+                                P.taskManager.Enqueue(() => UpdateStats(ZoneID), "Updating Stats");
+                                P.taskManager.Enqueue(() => !IsInZone(ZoneID), "Leaving Normal Raids");
+                                P.taskManager.Enqueue(PlayerNotBusy, "Waiting for Player to not be busy");
+                                hasEnqueuedDutyFinder = false;
+                                P.taskManager.Enqueue(() => NRaidRun = NRaidRun + 1, "Adding a Counter to Normal Raid");
+                                InitatedRotation = false;
+                                TaskTimer.Enqueue(false, ZoneID);
+                                P.taskManager.Enqueue(() => NRaidTask = "idle", "Setting Task to Idle");
                             }
                         }
                         else if ((!IsInZone(A4NMapID) || !IsInZone(O3NMapID)) && (NRaidRun <= RunAmount || RunInfinite))
@@ -187,7 +193,9 @@ namespace RootofRiches.Scheduler
                                 }
                             }
                             else if (!ARRetainersWaitingToBeProcessed() && (TryGetAddonByName<AtkUnitBase>("RetainerList", out var RetainerAddon) && IsAddonReady(RetainerAddon)))
+                            {
                                 TaskGetOut.Enqueue();
+                            }
                             else if (C.EnableAutoRetainer && ARRetainersWaitingToBeProcessed() && Svc.ClientState.TerritoryType == C.InnDataID)
                             {
                                 P.taskManager.Enqueue(() => NRaidTask = "Resending Retainers");

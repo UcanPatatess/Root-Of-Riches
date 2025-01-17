@@ -329,18 +329,23 @@ public static class Data
     public static ulong RightForeleg = 4107;
     public static ulong LeftForeleg = 4108;
     public static ulong Manipulator = 3902;
+    public static ulong PanzerDoll = 3906;
     public static ulong A4NChest1 = 438;
     public static ulong A4NChest2 = 480;
     public static ulong A4NChest3 = 479;
     public static Vector3 RightForeLegPos = new(-6.53f, 10.54f, -7.56f);
     public static Vector3 A4NChestCenter = new Vector3(-0.08f, 10.6f, -6.46f);
+    public static ulong[] A4NEnemies = { RightForeleg, LeftForeleg, Manipulator, PanzerDoll };
 
     // Deltascape V3.0 (O3N)
     public static uint O3NMapID = 693;
     public static ulong Halicarnassus = 7700;
+    public static ulong GreatDragon = 7702;
     public static ulong O3NChest1 = 930;
     public static ulong O3NChest2 = 929;
     public static Vector3 O3NChestCenter = new Vector3(-0.01f, 0.00f, -5.42f);
+    public static ulong[] O3NEntities = { Halicarnassus };
+    public static ulong[] O3NChest = { O3NChest1, O3NChest2 };
 
     #endregion
 
