@@ -69,38 +69,17 @@ namespace RootofRiches.Scheduler
                             IGameObject? gameObject = null;
                             if (TryGetClosestEnemy(out gameObject) && gameObject != null)
                             {
-                                if (!Svc.Condition[ConditionFlag.InCombat] && !InitatedRotation)
-                                {
-                                    P.taskManager.Enqueue(() => NRaidTask = $"Targeted {gameObject?.Name}");
-                                    P.taskManager.Enqueue(PlayerNotBusy);
-                                    TaskTarget.Enqueue(gameObject.DataId);
-                                    ToggleRotation(true);
-                                    SetBMRange(24);
-                                    P.taskManager.Enqueue(() => NRaidTask = "Entering Combat");
-                                    P.taskManager.Enqueue(() => Svc.Condition[ConditionFlag.InCombat]);
-                                    P.taskManager.Enqueue(() => NRaidTask = "Waiting for combat to finish");
-                                    P.taskManager.Enqueue(() => InitatedRotation = true);
-                                    P.taskManager.Enqueue(() => !Svc.Condition[ConditionFlag.InCombat], "Waiting for combat to end", DConfig);
-                                    P.taskManager.Enqueue(PlayerNotBusy, "Waiting for Player to be available again", DConfig);
-                                }
-                                else if (Svc.Condition[ConditionFlag.InCombat] && !InitatedRotation)
-                                {
-                                    P.taskManager.Enqueue(() => NRaidTask = $"Targeted {gameObject?.Name}");
-                                    TaskTarget.Enqueue(gameObject.DataId);
-                                    ToggleRotation(true);
-                                    SetBMRange(24);
-                                    P.taskManager.Enqueue(() => NRaidTask = "Entering Combat");
-                                    P.taskManager.Enqueue(() => Svc.Condition[ConditionFlag.InCombat]);
-                                    P.taskManager.Enqueue(() => NRaidTask = "Waiting for combat to finish");
-                                    P.taskManager.Enqueue(() => InitatedRotation = true);
-                                    P.taskManager.Enqueue(() => !Svc.Condition[ConditionFlag.InCombat], "Waiting for combat to end", DConfig);
-                                    P.taskManager.Enqueue(PlayerNotBusy, "Waiting for Player to be available again", DConfig);
-                                }
-                                else
-                                {
-                                    P.taskManager.EnqueueDelay(100);
-                                    // just an exit for it to catch/reset in case either of these come false (it shouldn't, but better to have a failsafe)
-                                }
+                                P.taskManager.Enqueue(() => NRaidTask = $"Targeted {gameObject?.Name}");
+                                P.taskManager.Enqueue(PlayerNotBusy);
+                                TaskTarget.Enqueue(gameObject.DataId);
+                                ToggleRotation(true);
+                                SetBMRange(24);
+                                P.taskManager.Enqueue(() => NRaidTask = "Entering Combat");
+                                P.taskManager.Enqueue(() => Svc.Condition[ConditionFlag.InCombat]);
+                                P.taskManager.Enqueue(() => NRaidTask = "Waiting for combat to finish");
+                                P.taskManager.Enqueue(() => InitatedRotation = true);   
+                                P.taskManager.Enqueue(() => !Svc.Condition[ConditionFlag.InCombat], "Waiting for combat to end", DConfig);
+                                P.taskManager.Enqueue(PlayerNotBusy, "Waiting for Player to be available again", DConfig);
                             }
                             else if (TryGetObjectByDataId(NRaidDict[ZoneID].ListofChest[0], out gameObject))
                             {
@@ -120,6 +99,11 @@ namespace RootofRiches.Scheduler
                                 InitatedRotation = false;
                                 TaskTimer.Enqueue(false, ZoneID);
                                 P.taskManager.Enqueue(() => NRaidTask = "idle", "Setting Task to Idle");
+                            }
+                            else
+                            {
+                                TaskMoveTo.Enqueue(NRaidDict[CurrentZoneID()].CenterofChest, "Center Chest", 0.5f);
+                                // just an exit for it to catch/reset in case either of these come false (it shouldn't, but better to have a failsafe)
                             }
                         }
                         else if ((!IsInZone(A4NMapID) || !IsInZone(O3NMapID)) && (NRaidRun <= RunAmount || RunInfinite))
