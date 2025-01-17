@@ -1,13 +1,9 @@
 using Dalamud.Game.ClientState.Objects.Types;
-using ECommons;
 using ECommons.DalamudServices;
-using ECommons.ExcelServices;
 using ECommons.GameHelpers;
-using ECommons.Reflection;
 using ImGuiNET;
 using Lumina.Excel.Sheets;
 using RootofRiches.Scheduler.Tasks;
-using RootofRiches.Scheduler.Tasks.GroupTask;
 using System.Numerics;
 
 
@@ -36,10 +32,6 @@ internal class MiscDebug
 
         ImGui.Text($"Job type: {GetJobType()}");
 
-        if (ImGui.Button("Targeting Test"))
-        {
-            GroupNRaidTask.Enqueue();
-        }
     }
 
     private static string GetJobType()
