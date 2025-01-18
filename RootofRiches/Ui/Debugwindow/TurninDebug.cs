@@ -30,6 +30,7 @@ internal class TurninDebug
 
     public static void Draw()
     {
+        ImGui.Text($"Free Inventory Slots: {GetInventoryFreeSlotCount()}");
         ImGui.Text($"General Information");
         ImGui.Text($"Current Task: {CurrentTask()}");
         ImGui.Text($"TerritoryID: " + Svc.ClientState.TerritoryType);

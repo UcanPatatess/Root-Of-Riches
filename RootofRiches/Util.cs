@@ -25,6 +25,7 @@ using RootofRiches.IPC;
 using System.Numerics;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
+using static System.Net.Mime.MediaTypeNames;
 
 
 namespace RootofRiches;
@@ -333,33 +334,54 @@ public static unsafe class Util
     {
         if (enable)
         {
+            float range = 3;
+            int altrange = 2;
+            var j = Player.JobId;
+            if (Svc.Data.GetExcelSheet<ClassJob>().TryGetRow(j, out var row))
+            {
+                switch (row.ClassJobCategory.RowId)
+                {
+                    case 30:
+                        // Physical DPS Class;
+                        range = 2.8f;
+                        altrange = 2;
+                        break;
+                    case 31:
+                        // Magicic DPS Class
+                        range = 24.0f;
+                        altrange = 24;
+                        break;
+                    default:
+                        range = 2.8f;
+                        break;
+                }
+            }
+
             if (PluginInstalled("WrathCombo"))
             {
-                //RunCommand("wrath auto on");
-                if (PluginInstalled("BossMod"))
+                EnableWrathAuto();
+
+                if (PluginInstalled("BossMod")) // If you have Veyns BossMod and Wrath Installed at the same time
                 {
                     P.bossmod.AddPreset("ROR Passive", Resources.BMRotations.rootPassive);
                     P.bossmod.SetPreset("ROR Passive");
-                    P.bossmod.SetRange(2.5f);
-                    EnableWrathAuto();
+                    P.bossmod.SetRange(range);
                     RunCommand("vbm ai on");
                 }
-                if (PluginInstalled(AltBossMod))
+                if (PluginInstalled(AltBossMod)) // If you have... alternative bossmod installed & also Wrath
                 {
-                    RunCommand("vbm maxdistancetarget 2.6");
-                    RunCommand("vbm followtarget");
-                    RunCommand("vbm follow combat on");
+                    RunCommand($"vbmai maxdistancetarget {altrange}");
                     RunCommand("vbmai on");
+                    RunCommand("vbmai followtarget on");
+                    RunCommand("vbmai followcombat on");
                 }
             }
-            else
+            else if (P.bossmod.Installed) // If you have ONLY Veyn's BossMod
             {
                 RunCommand("vbm ai on");
-                if (PluginInstalled("BossMod"))
-                {
-                    P.bossmod.AddPreset("RoR Boss", Resources.BMRotations.rootBoss);
-                    P.bossmod.SetPreset("RoR Boss");
-                }
+                P.bossmod.AddPreset("RoR Boss", Resources.BMRotations.rootBoss);
+                P.bossmod.SetPreset("RoR Boss");
+                P.bossmod.SetRange(range);
             }
         }
         else if (!enable)
