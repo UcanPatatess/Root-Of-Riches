@@ -9,7 +9,7 @@ namespace RootofRiches.Scheduler.Tasks
         internal static void Enqueue(bool forceuse = false)
         {
             P.taskManager.Enqueue(PlayerNotBusy);
-            if (forceuse)// used for gc turn in
+            if (forceuse && Svc.ClientState.TerritoryType != InnDict[C.InnDataID].MainCity2)// used for gc turn in limsa
             {
                 TaskMoveTo.Enqueue(new(-84.03f, 20.77f, 0.02f), "Moving To aetheryte ", 7);
                 TaskTarget.Enqueue(InnDict[LimsaInn].MainAether);

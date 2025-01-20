@@ -24,7 +24,7 @@ namespace RootofRiches.Scheduler.Tasks
             }
             var company = companyNullable.Value;
             var pos = CompanyNPCPoints[company];
-            if (Player.GrandCompany == company && InventoryManager.Instance()->GetInventoryItemCount(CompanyItem[company]) > 0)
+            if (Player.GrandCompany == company && InventoryManager.Instance()->GetInventoryItemCount(CompanyItem[company]) > 0 && GetDistanceToVectorPoint(pos) > 50 )
             {
                 P.taskManager.Enqueue(() =>
                 {

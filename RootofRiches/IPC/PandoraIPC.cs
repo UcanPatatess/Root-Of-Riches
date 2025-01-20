@@ -11,5 +11,5 @@ public class PandoraIPC
     public bool Installed => PluginInstalled(Name);
 
     [EzIPC] public Func<string,bool?> GetFeatureEnabled;
-
+    [EzIPC] public Func<string,string, bool?> GetConfigEnabled;
 }

@@ -102,7 +102,7 @@ namespace RootofRiches.Scheduler
                             }
                             else
                             {
-                                TaskMoveTo.Enqueue(NRaidDict[CurrentZoneID()].CenterofChest, "Center Chest", 0.5f);
+                                P.taskManager.EnqueueDelay(100);
                                 // just an exit for it to catch/reset in case either of these come false (it shouldn't, but better to have a failsafe)
                             }
                         }

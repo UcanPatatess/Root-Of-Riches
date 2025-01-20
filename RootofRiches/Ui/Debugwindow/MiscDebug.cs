@@ -26,7 +26,8 @@ internal class MiscDebug
                 TaskMoveTo.Enqueue(bellPos, "Retainer Bell", 1);
         }
         FancyPluginUiString(P.pandora.Installed, "Pandora IPC Test", "");
-        var isenabled = P.pandora.GetFeatureEnabled("Auto-select Turn-ins") ?? false;
+        var isenabled = (P.pandora.GetFeatureEnabled("Auto-select Turn-ins") ?? false)
+                && (P.pandora.GetConfigEnabled("Auto-select Turn-ins", "AutoConfirm") ?? false);
 
         FancyPluginUiString(isenabled, "Pandora Auto-select Turn-ins Test", "");
 
