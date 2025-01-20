@@ -417,7 +417,7 @@ public static unsafe class Util
             WrathIPC.SetAutoRotationState(lease, true);
             // make sure the job is ready for Auto-Rotation
             
-            //WrathIPC.SetCurrentJobAutoRotationReady(lease);
+            WrathIPC.SetCurrentJobAutoRotationReady(lease);
             // if the job is ready, all the user's settings are locked
             // if the job is not ready, it turns on the job's simple modes, or if those don't
             // exist, it turns on the job's advanced modes with all options enabled
