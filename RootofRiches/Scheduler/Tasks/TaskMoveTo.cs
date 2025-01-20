@@ -37,9 +37,9 @@ namespace RootofRiches.Scheduler.Tasks
                 if (ActionManager.Instance()->GetActionStatus(ActionType.GeneralAction, 4) == 0 && ActionManager.Instance()->QueuedActionId != 4 && !Player.Character->IsCasting)
                     ActionManager.Instance()->UseAction(ActionType.GeneralAction, 4);
 
-                //peloton
-                if (ActionManager.Instance()->GetActionStatus(ActionType.Action, 7557) == 0 && ActionManager.Instance()->QueuedActionId != 7557 && !Player.Character->IsCasting && !Player.Object.StatusList.Any(x => x.StatusId == 1199))
-                    ActionManager.Instance()->UseAction(ActionType.Action, 7557);
+                //peloton removed couse sus
+                //if (ActionManager.Instance()->GetActionStatus(ActionType.Action, 7557) == 0 && ActionManager.Instance()->QueuedActionId != 7557 && !Player.Character->IsCasting && !Player.Object.StatusList.Any(x => x.StatusId == 1199))
+                //    ActionManager.Instance()->UseAction(ActionType.Action, 7557);
             }
             if (P.navmesh.PathfindInProgress() || P.navmesh.IsRunning() || IsMoving()) return false;
 
