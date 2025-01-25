@@ -414,6 +414,13 @@ public static unsafe class Util
             return true;
         }
     }
+
+    #region Normal Raid Functions
+
+    private static readonly AbandonDuty ExitDuty = Marshal.GetDelegateForFunctionPointer<AbandonDuty>(Svc.SigScanner.ScanText("E8 ?? ?? ?? ?? 48 8B 43 28 41 B2 01"));
+    private delegate void AbandonDuty(bool a1);
+    public static void LeaveDuty() => ExitDuty(false);
+
     public static void ToggleRotation(bool enable)
     {
         if (enable)
@@ -475,8 +482,11 @@ public static unsafe class Util
                 //RunCommand("wrath auto off");
                 P.bossmod.DisablePresets();
                 ReleaseWrathControl();
-                RunCommand("vbm ai off");
-                if (PluginInstalled(AltBossMod))
+                if (PluginInstalled("BossMod"))
+                {
+                    RunCommand("vbm ai off");
+                }
+                else if (PluginInstalled(AltBossMod))
                 {
                     RunCommand("vbmai off");
                 }
@@ -489,13 +499,6 @@ public static unsafe class Util
         }
     }
 
-    #region Normal Raid Functions
-
-    private static readonly AbandonDuty ExitDuty = Marshal.GetDelegateForFunctionPointer<AbandonDuty>(Svc.SigScanner.ScanText("E8 ?? ?? ?? ?? 48 8B 43 28 41 B2 01"));
-    private delegate void AbandonDuty(bool a1);
-    public static void LeaveDuty() => ExitDuty(false);
-
-    #region Wrath
     public static void EnableWrathAuto()
     {
         if (!WrathIPC.IsEnabled) return;
@@ -503,6 +506,9 @@ public static unsafe class Util
         {
             var lease = (Guid)WrathIPC.CurrentLease!;
             // enable Wrath Combo Auto-Rotation
+
+            WrathIPC.SetAutoRotationState(lease, true);
+            // make sure the job is ready for Auto-Rotation
 
             WrathIPC.SetCurrentJobAutoRotationReady(lease);
             // if the job is ready, all the user's settings are locked
@@ -516,7 +522,6 @@ public static unsafe class Util
                             "\n" + e.Message);
         }
     }
-
     public static void EnableWrathAutoAndConfigureIt()
     {
         if (!WrathIPC.IsEnabled) return;
@@ -539,7 +544,6 @@ public static unsafe class Util
                             "\n" + e.Message);
         }
     }
-
     public static void ReleaseWrathControl()
     {
         if (!WrathIPC.IsEnabled) return;
@@ -555,7 +559,6 @@ public static unsafe class Util
                             "\n" + e.Message);
         }
     }
-    #endregion
 
     public static void SetBMRange(float range)
     {

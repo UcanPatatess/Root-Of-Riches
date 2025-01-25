@@ -36,11 +36,7 @@ namespace RootofRiches.Scheduler
             FullRun = false;
             NRaidTask = "idle";
             UpdateCurrentTask("idle");
-            if (InitatedRotation)
-            {
-                ToggleRotation(false);
-                InitatedRotation = false;
-            }
+            ToggleRotation(false);
             return true;
         }
 

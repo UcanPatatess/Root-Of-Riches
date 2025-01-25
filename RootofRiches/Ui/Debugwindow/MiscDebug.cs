@@ -76,6 +76,10 @@ internal class MiscDebug
         {
             ExecuteAction(SkillID);
         }
+        if (ImGui.Button("Execute OGCD"))
+        {
+            ExecuteAbility(SkillID);
+        }
         ImGui.SetNextItemWidth(100);
         if (ImGui.InputInt("##DictionaryID", ref DictionaryValue))
         {
