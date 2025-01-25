@@ -194,6 +194,193 @@ public static unsafe class Util
         return new Vector2(v.X - v2.X, v.Z - v2.Z).Length();
     }
 
+    public static bool ClosetoVendor()
+    {
+        if (PlayerInRange(new Vector3(-20.98f, 211.00f, -37.74f), 6) && IsInZone(Idyllshire))
+            return true;
+        else if (PlayerInRange(new Vector3(128.40f, 0.68f, 41.70f), 6) && IsInZone(Rhalgr))
+            return true;
+        else return false;
+    }
+
+    #endregion
+
+    #region Normal Raid Functions
+
+    private static readonly AbandonDuty ExitDuty = Marshal.GetDelegateForFunctionPointer<AbandonDuty>(Svc.SigScanner.ScanText("E8 ?? ?? ?? ?? 48 8B 43 28 41 B2 01"));
+    private delegate void AbandonDuty(bool a1);
+    public static void LeaveDuty() => ExitDuty(false);
+
+    public static void ToggleRotation(bool enable)
+    {
+        if (enable)
+        {
+            float range = 3;
+            int altrange = 2;
+            var j = Player.JobId;
+            if (Svc.Data.GetExcelSheet<ClassJob>().TryGetRow(j, out var row))
+            {
+                switch (row.ClassJobCategory.RowId)
+                {
+                    case 30:
+                        // Physical DPS Class;
+                        range = 2.8f;
+                        altrange = 2;
+                        break;
+                    case 31:
+                        // Magicic DPS Class
+                        range = 24.0f;
+                        altrange = 24;
+                        break;
+                    default:
+                        range = 2.8f;
+                        break;
+                }
+            }
+
+            if (PluginInstalled("WrathCombo"))
+            {
+                EnableWrathAuto();
+
+                if (PluginInstalled("BossMod")) // If you have Veyns BossMod and Wrath Installed at the same time
+                {
+                    P.bossmod.AddPreset("ROR Passive", Resources.BMRotations.rootPassive);
+                    P.bossmod.SetPreset("ROR Passive");
+                    P.bossmod.SetRange(range);
+                    RunCommand("vbm ai on");
+                }
+                if (PluginInstalled(AltBossMod)) // If you have... alternative bossmod installed & also Wrath
+                {
+                    RunCommand($"vbmai maxdistancetarget {altrange}");
+                    RunCommand("vbmai on");
+                    RunCommand("vbmai followtarget on");
+                    RunCommand("vbmai followcombat on");
+                }
+            }
+            else if (P.bossmod.Installed) // If you have ONLY Veyn's BossMod
+            {
+                RunCommand("vbm ai on");
+                P.bossmod.AddPreset("RoR Boss", Resources.BMRotations.rootBoss);
+                P.bossmod.SetPreset("RoR Boss");
+                P.bossmod.SetRange(range);
+            }
+        }
+        else if (!enable)
+        {
+            if (PluginInstalled("WrathCombo"))
+            {
+                //RunCommand("wrath auto off");
+                P.bossmod.DisablePresets();
+                ReleaseWrathControl();
+                if (PluginInstalled("BossMod"))
+                {
+                    RunCommand("vbm ai off");
+                }
+                else if (PluginInstalled(AltBossMod))
+                {
+                    RunCommand("vbmai off");
+                }
+            }
+            else
+            {
+                RunCommand("vbm ai off");
+                P.bossmod.DisablePresets();
+            }
+        }
+    }
+
+    public static void EnableWrathAuto()
+    {
+        if (!WrathIPC.IsEnabled) return;
+        try
+        {
+            var lease = (Guid)WrathIPC.CurrentLease!;
+            // enable Wrath Combo Auto-Rotation
+
+            WrathIPC.SetAutoRotationState(lease, true);
+            // make sure the job is ready for Auto-Rotation
+
+            WrathIPC.SetCurrentJobAutoRotationReady(lease);
+            // if the job is ready, all the user's settings are locked
+            // if the job is not ready, it turns on the job's simple modes, or if those don't
+            // exist, it turns on the job's advanced modes with all options enabled
+        }
+        catch (Exception e)
+        {
+            PluginLog.Error("Unknown Wrath IPC error," +
+                            "probably inability to register a lease." +
+                            "\n" + e.Message);
+        }
+    }
+    public static void EnableWrathAutoAndConfigureIt()
+    {
+        if (!WrathIPC.IsEnabled) return;
+        try
+        {
+            var lease = (Guid)WrathIPC.CurrentLease!;
+            WrathIPC.SetAutoRotationState(lease, true);
+            WrathIPC.SetCurrentJobAutoRotationReady(lease);
+            WrathIPC.SetAutoRotationConfigState(lease,
+                WrathIPC.AutoRotationConfigOption.InCombatOnly, false);
+            WrathIPC.SetAutoRotationConfigState(lease,
+                WrathIPC.AutoRotationConfigOption.AutoRez, true);
+            WrathIPC.SetAutoRotationConfigState(lease,
+                WrathIPC.AutoRotationConfigOption.SingleTargetHPP, 60);
+        }
+        catch (Exception e)
+        {
+            PluginLog.Error("Unknown Wrath IPC error," +
+                            "probably inability to register a lease." +
+                            "\n" + e.Message);
+        }
+    }
+    public static void ReleaseWrathControl()
+    {
+        if (!WrathIPC.IsEnabled) return;
+        try
+        {
+            WrathIPC.ReleaseControl((Guid)WrathIPC.CurrentLease!);
+            WrathIPC.RoRLease = null;
+        }
+        catch (Exception e)
+        {
+            PluginLog.Error("Unknown Wrath IPC error," +
+                            "probably inability to register a lease." +
+                            "\n" + e.Message);
+        }
+    }
+
+    public static void SetBMRange(float range)
+    {
+        if (GetRoleByNumber() == "Melee")
+            P.bossmod.SetRange(3);
+        else if (GetRoleByNumber() == "Caster")
+            P.bossmod.SetRange(range);
+        else
+            P.bossmod.SetRange(2.5f);
+    }
+
+    #endregion
+
+    #region AutoRetainer
+    public static int ToUnixTimestamp(this DateTime value) => (int)Math.Truncate(value.ToUniversalTime().Subtract(new DateTime(1970, 1, 1)).TotalSeconds);
+    public static bool ARAvailableRetainersCurrentCharacter() => P.autoRetainer.AreAnyRetainersAvailableForCurrentChara(); // old check gonna use the below now
+    private static unsafe ParallelQuery<ulong> GetAllEnabledCharacters() => P.autoRetainerApi.GetRegisteredCharacters().AsParallel().Where(c => P.autoRetainerApi.GetOfflineCharacterData(c).Enabled);
+
+    public static unsafe bool ARRetainersWaitingToBeProcessed(bool allCharacters = false)
+    {
+        return !allCharacters
+            ? P.autoRetainerApi.GetOfflineCharacterData(Svc.ClientState.LocalContentId).RetainerData.AsParallel().Any(x => x.HasVenture && x.VentureEndsAt <= DateTime.Now.ToUnixTimestamp())
+            : GetAllEnabledCharacters().Any(character => P.autoRetainerApi.GetOfflineCharacterData(character).RetainerData.Any(x => x.HasVenture && x.VentureEndsAt <= DateTime.Now.ToUnixTimestamp()));
+    }
+
+    public static unsafe bool ARSubsWaitingToBeProcessed(bool allCharacters = false)
+    {
+        return !allCharacters
+            ? P.autoRetainerApi.GetOfflineCharacterData(Svc.ClientState.LocalContentId).OfflineSubmarineData.AsParallel().Any(x => x.ReturnTime <= DateTime.Now.ToUnixTimestamp())
+            : GetAllEnabledCharacters().Any(c => P.autoRetainerApi.GetOfflineCharacterData(c).OfflineSubmarineData.Any(x => x.ReturnTime <= DateTime.Now.ToUnixTimestamp()));
+    }
+
     #endregion
 
     public static string icurrentTask = "idle";
@@ -415,164 +602,6 @@ public static unsafe class Util
         }
     }
 
-    #region Normal Raid Functions
-
-    private static readonly AbandonDuty ExitDuty = Marshal.GetDelegateForFunctionPointer<AbandonDuty>(Svc.SigScanner.ScanText("E8 ?? ?? ?? ?? 48 8B 43 28 41 B2 01"));
-    private delegate void AbandonDuty(bool a1);
-    public static void LeaveDuty() => ExitDuty(false);
-
-    public static void ToggleRotation(bool enable)
-    {
-        if (enable)
-        {
-            float range = 3;
-            int altrange = 2;
-            var j = Player.JobId;
-            if (Svc.Data.GetExcelSheet<ClassJob>().TryGetRow(j, out var row))
-            {
-                switch (row.ClassJobCategory.RowId)
-                {
-                    case 30:
-                        // Physical DPS Class;
-                        range = 2.8f;
-                        altrange = 2;
-                        break;
-                    case 31:
-                        // Magicic DPS Class
-                        range = 24.0f;
-                        altrange = 24;
-                        break;
-                    default:
-                        range = 2.8f;
-                        break;
-                }
-            }
-
-            if (PluginInstalled("WrathCombo"))
-            {
-                EnableWrathAuto();
-
-                if (PluginInstalled("BossMod")) // If you have Veyns BossMod and Wrath Installed at the same time
-                {
-                    P.bossmod.AddPreset("ROR Passive", Resources.BMRotations.rootPassive);
-                    P.bossmod.SetPreset("ROR Passive");
-                    P.bossmod.SetRange(range);
-                    RunCommand("vbm ai on");
-                }
-                if (PluginInstalled(AltBossMod)) // If you have... alternative bossmod installed & also Wrath
-                {
-                    RunCommand($"vbmai maxdistancetarget {altrange}");
-                    RunCommand("vbmai on");
-                    RunCommand("vbmai followtarget on");
-                    RunCommand("vbmai followcombat on");
-                }
-            }
-            else if (P.bossmod.Installed) // If you have ONLY Veyn's BossMod
-            {
-                RunCommand("vbm ai on");
-                P.bossmod.AddPreset("RoR Boss", Resources.BMRotations.rootBoss);
-                P.bossmod.SetPreset("RoR Boss");
-                P.bossmod.SetRange(range);
-            }
-        }
-        else if (!enable)
-        {
-            if (PluginInstalled("WrathCombo"))
-            {
-                //RunCommand("wrath auto off");
-                P.bossmod.DisablePresets();
-                ReleaseWrathControl();
-                if (PluginInstalled("BossMod"))
-                {
-                    RunCommand("vbm ai off");
-                }
-                else if (PluginInstalled(AltBossMod))
-                {
-                    RunCommand("vbmai off");
-                }
-            }
-            else
-            {
-                RunCommand("vbm ai off");
-                P.bossmod.DisablePresets();
-            }
-        }
-    }
-
-    public static void EnableWrathAuto()
-    {
-        if (!WrathIPC.IsEnabled) return;
-        try
-        {
-            var lease = (Guid)WrathIPC.CurrentLease!;
-            // enable Wrath Combo Auto-Rotation
-
-            WrathIPC.SetAutoRotationState(lease, true);
-            // make sure the job is ready for Auto-Rotation
-
-            WrathIPC.SetCurrentJobAutoRotationReady(lease);
-            // if the job is ready, all the user's settings are locked
-            // if the job is not ready, it turns on the job's simple modes, or if those don't
-            // exist, it turns on the job's advanced modes with all options enabled
-        }
-        catch (Exception e)
-        {
-            PluginLog.Error("Unknown Wrath IPC error," +
-                            "probably inability to register a lease." +
-                            "\n" + e.Message);
-        }
-    }
-    public static void EnableWrathAutoAndConfigureIt()
-    {
-        if (!WrathIPC.IsEnabled) return;
-        try
-        {
-            var lease = (Guid)WrathIPC.CurrentLease!;
-            WrathIPC.SetAutoRotationState(lease, true);
-            WrathIPC.SetCurrentJobAutoRotationReady(lease);
-            WrathIPC.SetAutoRotationConfigState(lease,
-                WrathIPC.AutoRotationConfigOption.InCombatOnly, false);
-            WrathIPC.SetAutoRotationConfigState(lease,
-                WrathIPC.AutoRotationConfigOption.AutoRez, true);
-            WrathIPC.SetAutoRotationConfigState(lease,
-                WrathIPC.AutoRotationConfigOption.SingleTargetHPP, 60);
-        }
-        catch (Exception e)
-        {
-            PluginLog.Error("Unknown Wrath IPC error," +
-                            "probably inability to register a lease." +
-                            "\n" + e.Message);
-        }
-    }
-    public static void ReleaseWrathControl()
-    {
-        if (!WrathIPC.IsEnabled) return;
-        try
-        {
-            WrathIPC.ReleaseControl((Guid)WrathIPC.CurrentLease!);
-            WrathIPC.RoRLease = null;
-        }
-        catch (Exception e)
-        {
-            PluginLog.Error("Unknown Wrath IPC error," +
-                            "probably inability to register a lease." +
-                            "\n" + e.Message);
-        }
-    }
-
-    public static void SetBMRange(float range)
-    {
-        if (GetRoleByNumber() == "Melee")
-            P.bossmod.SetRange(3);
-        else if (GetRoleByNumber() == "Caster")
-            P.bossmod.SetRange(range);
-        else
-            P.bossmod.SetRange(2.5f);
-    }
-
-    #endregion
-
-
     public static void FancyCheckmark(bool enabled)
     {
         if (!enabled)
@@ -637,25 +666,4 @@ public static unsafe class Util
 
         return mainAddon;
     }
-
-    #region AutoRetainer
-    public static int ToUnixTimestamp(this DateTime value) => (int)Math.Truncate(value.ToUniversalTime().Subtract(new DateTime(1970, 1, 1)).TotalSeconds);
-    public static bool ARAvailableRetainersCurrentCharacter() => P.autoRetainer.AreAnyRetainersAvailableForCurrentChara(); // old check gonna use the below now
-    private static unsafe ParallelQuery<ulong> GetAllEnabledCharacters() => P.autoRetainerApi.GetRegisteredCharacters().AsParallel().Where(c => P.autoRetainerApi.GetOfflineCharacterData(c).Enabled);
-
-    public static unsafe bool ARRetainersWaitingToBeProcessed(bool allCharacters = false)
-    {
-        return !allCharacters
-            ? P.autoRetainerApi.GetOfflineCharacterData(Svc.ClientState.LocalContentId).RetainerData.AsParallel().Any(x => x.HasVenture && x.VentureEndsAt <= DateTime.Now.ToUnixTimestamp())
-            : GetAllEnabledCharacters().Any(character => P.autoRetainerApi.GetOfflineCharacterData(character).RetainerData.Any(x => x.HasVenture && x.VentureEndsAt <= DateTime.Now.ToUnixTimestamp()));
-    }
-
-    public static unsafe bool ARSubsWaitingToBeProcessed(bool allCharacters = false)
-    {
-        return !allCharacters
-            ? P.autoRetainerApi.GetOfflineCharacterData(Svc.ClientState.LocalContentId).OfflineSubmarineData.AsParallel().Any(x => x.ReturnTime <= DateTime.Now.ToUnixTimestamp())
-            : GetAllEnabledCharacters().Any(c => P.autoRetainerApi.GetOfflineCharacterData(c).OfflineSubmarineData.Any(x => x.ReturnTime <= DateTime.Now.ToUnixTimestamp()));
-    }
-
-    #endregion
 }

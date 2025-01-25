@@ -4,6 +4,7 @@ using Dalamud.Interface.Utility.Raii;
 using ECommons.ImGuiMethods;
 using ImGuiNET;
 using RootofRiches.Scheduler;
+using RootofRiches.Scheduler.Tasks;
 
 namespace RootofRiches.Ui.MainWindow;
 
@@ -130,6 +131,23 @@ internal class TurninUi
             FontAwesome.Print(ImGuiColors.DalamudRed, FontAwesome.Cross);
             ImGui.SameLine();
             ImGui.TextWrapped($"You're not on your homeworld! Can't sell {sellItem} to retainers. Please change settings or return back to main world to start.");
+        }
+        using (ImRaii.Disabled(!ClosetoVendor()))
+        {
+            if (ImGui.Button(P.taskManager.NumQueuedTasks > 0 ? "Stop" : "Turnin to Vendor"))
+            {
+                if (P.taskManager.NumQueuedTasks > 0)
+                    P.taskManager.Abort();
+                else
+                {
+                    if (!C.ChangeArmory)
+                    {
+                        TaskChangeArmorySetting.Enqueue();
+                        C.ChangeArmory = true;
+                    }
+                    TaskTurnIn.Enqueue();
+                }
+            }
         }
         if (!EnableTurnIn())
         {
