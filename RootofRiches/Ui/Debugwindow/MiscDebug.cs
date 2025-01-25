@@ -1,6 +1,7 @@
 using Dalamud.Game.ClientState.Objects.Types;
 using ECommons.DalamudServices;
 using ECommons.GameHelpers;
+using ECommons.Logging;
 using ImGuiNET;
 using Lumina.Excel.Sheets;
 using RootofRiches.Scheduler.Tasks;
@@ -11,6 +12,19 @@ namespace RootofRiches.Ui.Debugwindow;
 
 internal class MiscDebug
 {
+    private static int InputBox = 0;
+    private static int DictionaryValue = 0;
+    private static uint SkillID = 0;
+
+    private static string CurrentTask()
+    {
+        if (P.taskManager.NumQueuedTasks > 0 && P.taskManager.CurrentTask != null)
+        {
+            return P.taskManager.CurrentTask.Name?.ToString() ?? "None";
+        }
+        return "None";
+    }
+
     public static void Draw()
     {
         if (ImGui.Button("Teleport to Gridania"))
@@ -32,6 +46,47 @@ internal class MiscDebug
         FancyPluginUiString(isenabled, "Pandora Auto-select Turn-ins Test", "");
 
         ImGui.Text($"Job type: {GetJobType()}");
+
+        if (ImGui.Button("Quest Toast"))
+        {
+            Svc.Toasts.ShowQuest("Test Toast");
+        }
+        if (ImGui.Button("Normal Toast"))
+        {
+            Svc.Toasts.ShowNormal("Normal Toast");
+        }
+        if (ImGui.Button("Error Toast"))
+        {
+            Svc.Toasts.ShowError("Error Toast");
+        }
+
+        ImGui.SetNextItemWidth(100);
+        if (ImGui.InputInt("##SpellID", ref InputBox))
+        {
+            if (InputBox >= 0)
+            {
+                SkillID = (uint)InputBox;
+            }
+        }
+        ImGui.Text($"Current Recast Time: {GetRecastTime(SkillID)}");
+        ImGui.Text($"Real Recast Time: {GetRealRecastTime(SkillID)}");
+        ImGui.Text($"Recast Time Elasped: {GetRecastTimeElapsed(SkillID)}");
+        ImGui.Text($"Spell Cooldown: {GetSpellCooldown(SkillID)}");
+        if (ImGui.Button("Execute Action"))
+        {
+            ExecuteAction(SkillID);
+        }
+        ImGui.SetNextItemWidth(100);
+        if (ImGui.InputInt("##DictionaryID", ref DictionaryValue))
+        {
+            PluginLog.Log($"Dictionary value is: {DictionaryValue}");
+        };
+        if (ImGui.Button("Test Run of MCH Dictionary"))
+        {
+            TaskUseAction.Enqueue(DictionaryValue);
+        }
+        ImGui.Text($"Current Task: {P.taskManager.NumQueuedTasks}");
+
 
     }
 

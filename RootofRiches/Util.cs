@@ -32,7 +32,169 @@ namespace RootofRiches;
 
 public static unsafe class Util
 {
+    #region Player Information
+
+    public static uint GetCurrentWorld() => Svc.ClientState.LocalPlayer?.CurrentWorld.RowId ?? 0;
+    public static uint GetHomeWorld() => Svc.ClientState.LocalPlayer?.HomeWorld.RowId ?? 0;
+    public static bool IsBetweenAreas => (Svc.Condition[ConditionFlag.BetweenAreas] || Svc.Condition[ConditionFlag.BetweenAreas51]);
+    public static unsafe uint GetGil() => InventoryManager.Instance()->GetGil();
+    internal static unsafe float GetDistanceToPlayer(Vector3 v3) => Vector3.Distance(v3, Player.GameObject->Position);
+    internal static unsafe float GetDistanceToPlayer(IGameObject gameObject) => GetDistanceToPlayer(gameObject.Position);
+    public static GameObject* LPlayer() => GameObjectManager.Instance()->Objects.IndexSorted[0].Value;
     public static uint GetClassJobId() => Svc.ClientState.LocalPlayer!.ClassJob.RowId;
+    public static uint CurrentZoneID() => Svc.ClientState.TerritoryType;
+    public static bool IsInZone(uint zoneID) => Svc.ClientState.TerritoryType == zoneID;
+    public static byte GetPlayerGC() => UIState.Instance()->PlayerState.GrandCompany;
+
+    private static unsafe uint GetSpellActionId(uint actionId) => ActionManager.Instance()->GetAdjustedActionId(actionId);
+    public static unsafe float GetRecastTime(uint actionId) => ActionManager.Instance()->GetRecastTime(ActionType.Action, GetSpellActionId(actionId));
+    public static unsafe float GetRealRecastTime(uint actionId) => ActionManager.Instance()->GetRecastTime(ActionType.Action, actionId);
+    public static unsafe float GetRecastTimeElapsed(uint actionId) => ActionManager.Instance()->GetRecastTimeElapsed(ActionType.Action, GetSpellActionId(actionId));
+    public static unsafe float GetRealRecastTimeElapsed(uint actionId) => ActionManager.Instance()->GetRecastTimeElapsed(ActionType.Action, actionId);
+    public static float GetSpellCooldown(uint actionId) => Math.Abs(GetRecastTime(GetSpellActionId(actionId)) - GetRecastTimeElapsed(GetSpellActionId(actionId)));
+    public static unsafe void ExecuteAction(uint actionID) => ActionManager.Instance()->UseAction(ActionType.Action, actionID);
+    public static unsafe void ExecuteGeneralAction(uint actionID) => ActionManager.Instance()->UseAction(ActionType.GeneralAction, actionID);
+    public static unsafe void ExecuteAbility(uint actionID) => ActionManager.Instance()->UseAction(ActionType.Ability, actionID);
+
+    private static unsafe bool IsMoving()
+    {
+        return AgentMap.Instance()->IsPlayerMoving == 1;
+    }
+    public static Vector3 PlayerPosition()
+    {
+        var player = LPlayer();
+        return player != null ? player->Position : default;
+    }
+    public static float GetPlayerRawXPos()
+    {
+        return Svc.ClientState.LocalPlayer!.Position.X;
+    }
+    public static float GetPlayerRawYPos()
+    {
+        return Svc.ClientState.LocalPlayer!.Position.Y;
+    }
+    public static float GetPlayerRawZPos()
+    {
+        return Svc.ClientState.LocalPlayer!.Position.Z;
+    }
+    public static unsafe int GetInventoryFreeSlotCount()
+    {
+        InventoryType[] types = [InventoryType.Inventory1, InventoryType.Inventory2, InventoryType.Inventory3, InventoryType.Inventory4];
+        var slots = 0;
+        foreach (var x in types)
+        {
+            var cont = InventoryManager.Instance()->GetInventoryContainer(x);
+            for (var i = 0; i < cont->Size; i++)
+                if (cont->Items[i].ItemId == 0)
+                    slots++;
+        }
+        return slots;
+    }
+    public static unsafe bool NeedsRepair(float below = 0)
+    {
+        var im = InventoryManager.Instance();
+        if (im == null)
+        {
+            Svc.Log.Error("InventoryManager was null");
+            return false;
+        }
+
+        var equipped = im->GetInventoryContainer(InventoryType.EquippedItems);
+        if (equipped == null)
+        {
+            Svc.Log.Error("InventoryContainer was null");
+            return false;
+        }
+
+        if (equipped->Loaded == 0)
+        {
+            Svc.Log.Error($"InventoryContainer is not loaded");
+            return false;
+        }
+
+        for (var i = 0; i < equipped->Size; i++)
+        {
+            var item = equipped->GetInventorySlot(i);
+            if (item == null)
+                continue;
+
+            var itemCondition = Convert.ToInt32(Convert.ToDouble(item->Condition) / 30000.0 * 100.0);
+
+            if (itemCondition <= below)
+                return true;
+        }
+
+        return false;
+    }
+    public static bool CurrentlyInnInn()
+    {
+        return innZones.Contains(CurrentZoneID());
+    }
+    public static bool PlayerNotBusy()
+    {
+        return Player.Available
+               && Player.Object.CastActionId == 0
+               && !IsOccupied()
+               && !Svc.Condition[ConditionFlag.Jumping]
+               && Player.Object.IsTargetable
+               && !Player.IsAnimationLocked;
+    }
+
+    public static string GetRoleByNumber()
+    {
+        uint number = GetClassJobId();
+        switch (number)
+        {
+            // Tanks
+            case 19: // PLD
+            case 21: // WAR
+            case 32: // DRK
+            case 37: // GNB
+            // Melees
+            case 20: // MNK
+            case 22: // DRG
+            case 30: // NIN
+            case 39: // RPR
+            case 41: // VPR
+            // Range
+            case 23: // BRD
+            case 31: // MCH
+            case 38: // DNC
+                return "Melee";
+            // Healer
+            case 24: // WHM
+            case 28: // SCH
+            case 33: // AST
+            case 40: // SGE
+            // Caster
+            case 25: // BLM
+            case 27: // SMN
+            case 35: // RDM
+            case 42: // PCT
+                return "Caster";
+
+            default:
+                return "Unknown";
+        }
+    }
+
+    #endregion
+
+    #region Distance Functions
+
+    public static float GetDistanceToPoint(float x, float y, float z) => Vector3.Distance(Svc.ClientState.LocalPlayer?.Position ?? Vector3.Zero, new Vector3(x, y, z));
+    public static float GetDistanceToVectorPoint(Vector3 location) => Vector3.Distance(Svc.ClientState.LocalPlayer?.Position ?? Vector3.Zero, location);
+    public static bool PlayerInRange(Vector3 dest, float dist)
+    {
+        var d = dest - PlayerPosition();
+        return d.X * d.X + d.Z * d.Z <= dist * dist;
+    }
+    private static float Distance(this Vector3 v, Vector3 v2)
+    {
+        return new Vector2(v.X - v2.X, v.Z - v2.Z).Length();
+    }
+
+    #endregion
 
     public static string icurrentTask = "idle";
     public static void UpdateCurrentTask(string task)
@@ -75,15 +237,6 @@ public static unsafe class Util
             }
         }
         return false;
-    }
-
-    private static float Distance(this Vector3 v, Vector3 v2)
-    {
-        return new Vector2(v.X - v2.X, v.Z - v2.Z).Length();
-    }
-    private static unsafe bool IsMoving()
-    {
-        return AgentMap.Instance()->IsPlayerMoving == 1;
     }
 
     internal unsafe static bool? MoveToCombat(Vector3 targetPosition, float toleranceDistance = 3f)
@@ -169,29 +322,7 @@ public static unsafe class Util
         return false;
     }
 
-    public static uint GetCurrentWorld() => Svc.ClientState.LocalPlayer?.CurrentWorld.RowId ?? 0;
-    public static uint GetHomeWorld() => Svc.ClientState.LocalPlayer?.HomeWorld.RowId ?? 0;
-
-    public static bool IsBetweenAreas => (Svc.Condition[ConditionFlag.BetweenAreas] || Svc.Condition[ConditionFlag.BetweenAreas51]);
-    public static unsafe uint GetGil() => InventoryManager.Instance()->GetGil();
-    internal static unsafe float GetDistanceToPlayer(Vector3 v3) => Vector3.Distance(v3, Player.GameObject->Position);
-    internal static unsafe float GetDistanceToPlayer(IGameObject gameObject) => GetDistanceToPlayer(gameObject.Position);
     internal static IGameObject? GetObjectByName(string name) => Svc.Objects.OrderBy(GetDistanceToPlayer).FirstOrDefault(o => o.Name.TextValue.Equals(name, StringComparison.CurrentCultureIgnoreCase));
-    public static float GetDistanceToPoint(float x, float y, float z) => Vector3.Distance(Svc.ClientState.LocalPlayer?.Position ?? Vector3.Zero, new Vector3(x, y, z));
-    public static float GetDistanceToVectorPoint(Vector3 location) => Vector3.Distance(Svc.ClientState.LocalPlayer?.Position ?? Vector3.Zero, location);
-    public static unsafe int GetInventoryFreeSlotCount()
-    {
-        InventoryType[] types = [InventoryType.Inventory1, InventoryType.Inventory2, InventoryType.Inventory3, InventoryType.Inventory4];
-        var slots = 0;
-        foreach (var x in types)
-        {
-            var cont = InventoryManager.Instance()->GetInventoryContainer(x);
-            for (var i = 0; i < cont->Size; i++)
-                if (cont->Items[i].ItemId == 0)
-                    slots++;
-        }
-        return slots;
-    }
     public static unsafe int GetItemCount(int itemID, bool includeHQ = true)
        => includeHQ ? InventoryManager.Instance()->GetInventoryItemCount((uint)itemID, true) + InventoryManager.Instance()->GetInventoryItemCount((uint)itemID) + InventoryManager.Instance()->GetInventoryItemCount((uint)itemID + 500_000)
        : InventoryManager.Instance()->GetInventoryItemCount((uint)itemID) + InventoryManager.Instance()->GetInventoryItemCount((uint)itemID + 500_000);
@@ -199,19 +330,7 @@ public static unsafe class Util
     {
         return DalamudReflector.TryGetDalamudPlugin(name, out _, false, true);
     }
-    public static GameObject* LPlayer() => GameObjectManager.Instance()->Objects.IndexSorted[0].Value;
 
-    public static Vector3 PlayerPosition()
-    {
-        var player = LPlayer();
-        return player != null ? player->Position : default;
-    }
-
-    public static bool PlayerInRange(Vector3 dest, float dist)
-    {
-        var d = dest - PlayerPosition();
-        return d.X * d.X + d.Z * d.Z <= dist * dist;
-    }
     public static bool DidAmountChange(int arg, int argg)
     {
         if (arg == argg)
@@ -229,35 +348,7 @@ public static unsafe class Util
                 slots++;
         return slots;
     }
-    public static float GetPlayerRawXPos()
-    {
-        return Svc.ClientState.LocalPlayer!.Position.X;
-    }
-    public static float GetPlayerRawYPos()
-    {
-        return Svc.ClientState.LocalPlayer!.Position.Y;
-    }
-    public static float GetPlayerRawZPos()
-    {
-        return Svc.ClientState.LocalPlayer!.Position.Z;
-    }
-    public static byte GetPlayerGC() => UIState.Instance()->PlayerState.GrandCompany;
-    public static bool PlayerNotBusy()
-    {
-        return Player.Available
-               && Player.Object.CastActionId == 0
-               && !IsOccupied()
-               && !Svc.Condition[ConditionFlag.Jumping]
-               && Player.Object.IsTargetable
-               && !Player.IsAnimationLocked;
-    }
     internal static bool GenericThrottle => FrameThrottler.Throttle("RootofRichesGenericThrottle", 20);
-    public static uint CurrentZoneID() => Svc.ClientState.TerritoryType;
-    public static bool IsInZone(uint zoneID) => Svc.ClientState.TerritoryType == zoneID;
-    public static bool CurrentlyInnInn()
-    {
-        return innZones.Contains(CurrentZoneID());
-    }
 
     public static bool IsAddonActive(string AddonName) // bunu kullan
     {
@@ -274,12 +365,6 @@ public static unsafe class Util
     }
     public static TaskManagerConfiguration DConfig => new(timeLimitMS: 10 * 60 * 1000, abortOnTimeout: false);
 
-    private static readonly AbandonDuty ExitDuty = Marshal.GetDelegateForFunctionPointer<AbandonDuty>(Svc.SigScanner.ScanText("E8 ?? ?? ?? ?? 48 8B 43 28 41 B2 01"));
-
-    private delegate void AbandonDuty(bool a1);
-
-    public static void LeaveDuty() => ExitDuty(false);
-
     public static void RunCommand(string command)
     {
         ECommons.Automation.Chat.Instance.ExecuteCommand($"/{command}");
@@ -289,7 +374,6 @@ public static unsafe class Util
     {
         PluginLog.Information(message);
     }
-
     public static void PLogDebug(string message)
     {
         PluginLog.Debug(message);
@@ -405,6 +489,12 @@ public static unsafe class Util
         }
     }
 
+    #region Normal Raid Functions
+
+    private static readonly AbandonDuty ExitDuty = Marshal.GetDelegateForFunctionPointer<AbandonDuty>(Svc.SigScanner.ScanText("E8 ?? ?? ?? ?? 48 8B 43 28 41 B2 01"));
+    private delegate void AbandonDuty(bool a1);
+    public static void LeaveDuty() => ExitDuty(false);
+
     #region Wrath
     public static void EnableWrathAuto()
     {
@@ -413,10 +503,7 @@ public static unsafe class Util
         {
             var lease = (Guid)WrathIPC.CurrentLease!;
             // enable Wrath Combo Auto-Rotation
-            
-            WrathIPC.SetAutoRotationState(lease, true);
-            // make sure the job is ready for Auto-Rotation
-            
+
             WrathIPC.SetCurrentJobAutoRotationReady(lease);
             // if the job is ready, all the user's settings are locked
             // if the job is not ready, it turns on the job's simple modes, or if those don't
@@ -470,81 +557,6 @@ public static unsafe class Util
     }
     #endregion
 
-    public static unsafe bool NeedsRepair(float below = 0)
-    {
-        var im = InventoryManager.Instance();
-        if (im == null)
-        {
-            Svc.Log.Error("InventoryManager was null");
-            return false;
-        }
-
-        var equipped = im->GetInventoryContainer(InventoryType.EquippedItems);
-        if (equipped == null)
-        {
-            Svc.Log.Error("InventoryContainer was null");
-            return false;
-        }
-
-        if (equipped->Loaded == 0)
-        {
-            Svc.Log.Error($"InventoryContainer is not loaded");
-            return false;
-        }
-
-        for (var i = 0; i < equipped->Size; i++)
-        {
-            var item = equipped->GetInventorySlot(i);
-            if (item == null)
-                continue;
-
-            var itemCondition = Convert.ToInt32(Convert.ToDouble(item->Condition) / 30000.0 * 100.0);
-
-            if (itemCondition <= below)
-                return true;
-        }
-
-        return false;
-    }
-
-    public static string GetRoleByNumber()
-    {
-        uint number = GetClassJobId();
-        switch (number)
-        {
-            // Tanks
-            case 19: // PLD
-            case 21: // WAR
-            case 32: // DRK
-            case 37: // GNB
-            // Melees
-            case 20: // MNK
-            case 22: // DRG
-            case 30: // NIN
-            case 39: // RPR
-            case 41: // VPR
-            // Range
-            case 23: // BRD
-            case 31: // MCH
-            case 38: // DNC
-                return "Melee";
-            // Healer
-            case 24: // WHM
-            case 28: // SCH
-            case 33: // AST
-            case 40: // SGE
-            // Caster
-            case 25: // BLM
-            case 27: // SMN
-            case 35: // RDM
-            case 42: // PCT
-                return "Caster";
-
-            default:
-                return "Unknown";
-        }
-    }
-
     public static void SetBMRange(float range)
     {
         if (GetRoleByNumber() == "Melee")
@@ -554,6 +566,9 @@ public static unsafe class Util
         else
             P.bossmod.SetRange(2.5f);
     }
+
+    #endregion
+
 
     public static void FancyCheckmark(bool enabled)
     {

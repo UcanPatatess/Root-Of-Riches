@@ -883,4 +883,21 @@ public static class Data
 
     #endregion
 
+    #region Action Stuff
+
+    public class Action_Abilities
+    {
+        public required uint ActionID { get; set; }
+        public uint WeaveOneID { get; set; }
+        public uint WeaveTwoID { get; set; }
+    }
+
+    public static Dictionary<int, Action_Abilities> MCH_A4N { get; } = new Dictionary<int, Action_Abilities>
+    {
+        { 0, new Action_Abilities { ActionID = 7411} },
+        { 1, new Action_Abilities { ActionID = 7412, WeaveOneID = 36979, WeaveTwoID = 36980} }
+    };
+
+    #endregion
+
 }
