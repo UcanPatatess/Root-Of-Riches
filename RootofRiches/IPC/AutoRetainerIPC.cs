@@ -5,6 +5,8 @@ namespace RootofRiches.IPC
 {
     public class AutoRetainerIPC
     {
+        // IPC for auto Retainer
+
         public const string Name = "AutoRetainer";
         public const string Repo = "https://love.puni.sh/ment.json";
         #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
