@@ -203,6 +203,16 @@ public static unsafe class Util
         else return false;
     }
 
+    public static bool CloseToBell()
+    {
+        IGameObject? gameObject = null;
+        TryGetObjectByDataId(SummoningBell, out gameObject);
+        if (gameObject != null && PlayerInRange(gameObject.Position, 4))
+            return true;
+        else
+            return false;
+    }
+
     #endregion
 
     #region Normal Raid Functions

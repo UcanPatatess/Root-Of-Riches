@@ -5,6 +5,7 @@ using ECommons.Logging;
 using FFXIVClientStructs.FFXIV.Client.Game.Object;
 using FFXIVClientStructs.FFXIV.Component.GUI;
 using RootofRiches.Scheduler.Tasks;
+using System.Security.Permissions;
 
 namespace RootofRiches.Scheduler
 {
@@ -30,10 +31,12 @@ namespace RootofRiches.Scheduler
             P.navmesh.Stop();
             RunTurnin = false;
             RunNRaid = false;
+            FullRun = false;
+            JustTurnin = false;
+            JustSell = false;
             hasEnqueuedDutyFinder = false;
             P.stopwatch.Restart();
             P.stopwatch.Stop();
-            FullRun = false;
             NRaidTask = "idle";
             UpdateCurrentTask("idle");
             ToggleRotation(false);
@@ -42,6 +45,8 @@ namespace RootofRiches.Scheduler
 
         public static bool RunTurnin = false; // Used for Turnin Toggle
         public static bool RunNRaid = false; // Used for N-Raid Toggle
+        public static bool JustTurnin = false; // Used to ONLY Turnin
+        public static bool JustSell = false; // Used to ONLY Sell to vendor
         public static bool hasEnqueuedDutyFinder = false; // used for enque throtle flag
         public static string NRaidTask = "idle";
         public static int NRaidRun;
@@ -208,6 +213,23 @@ namespace RootofRiches.Scheduler
                         {
                             DisablePlugin();
                         }
+                    }
+                    else if (JustTurnin)
+                    {
+                        if (!C.ChangeArmory)
+                        {
+                            TaskChangeArmorySetting.Enqueue();
+                            C.ChangeArmory = true;
+                        }
+                        TaskMergeInv.Enqueue();
+                        TaskTurnIn.Enqueue();
+                        TaskMergeInv.Enqueue();
+                        P.taskManager.Enqueue(() => DisablePlugin());
+                    }
+                    else if (JustSell)
+                    {
+                        TaskSellVendor.Enqueue();
+                        P.taskManager.Enqueue(() => DisablePlugin());
                     }
                     else if (RunTurnin)
                     {

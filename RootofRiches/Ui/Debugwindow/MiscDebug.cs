@@ -90,7 +90,16 @@ internal class MiscDebug
             TaskUseAction.Enqueue(DictionaryValue);
         }
         ImGui.Text($"Current Task: {P.taskManager.NumQueuedTasks}");
-
+        if (CloseToBell())
+        {
+            ImGui.Text("Near Bell");
+        }
+        else if (!CloseToBell())
+        {
+            ImGui.Text("Not near bell");
+        }
+        else
+            ImGui.Text("Somehow... not an option");
 
     }
 

@@ -1,10 +1,12 @@
 using Dalamud.Interface;
 using Dalamud.Interface.Colors;
+using Dalamud.Interface.Components;
 using Dalamud.Interface.Utility.Raii;
 using ECommons.ImGuiMethods;
 using ImGuiNET;
 using RootofRiches.Scheduler;
 using RootofRiches.Scheduler.Tasks;
+using System.Numerics;
 
 namespace RootofRiches.Ui.MainWindow;
 
@@ -25,6 +27,8 @@ internal class TurninUi
             { "Alexandrian", "A9-12", $"{AlexandrianTurnInCount:N0}" },
             { "Deltascape", "O1-4", $"{DeltascapeTurnInCount:N0}" },
         };
+
+        int[] RaidTurninCount = { GordianTurnInCount, AlexandrianTurnInCount, DeltascapeTurnInCount };
 
         string sellItem = string.Empty;
 
@@ -102,21 +106,6 @@ internal class TurninUi
 
             ImGui.EndTable();
         }
-        using (ImRaii.Disabled(!EnableTurnIn() || !IsOnHomeWorld()))
-        {
-            if (ImGui.Button(SchedulerMain.DoWeTick ? "Stop" : "Start Turnin"))
-            {
-                if (SchedulerMain.DoWeTick)
-                {
-                    SchedulerMain.DisablePlugin(); // Call DisablePlugin if running
-                }
-                else
-                {
-                    SchedulerMain.EnablePlugin(); // Call EnablePlugin if not running
-                    SchedulerMain.RunTurnin = true;
-                }
-            }
-        }
         if (!IsOnHomeWorld())
         {
             if (C.VendorTurnIn)
@@ -132,22 +121,52 @@ internal class TurninUi
             ImGui.SameLine();
             ImGui.TextWrapped($"You're not on your homeworld! Can't sell {sellItem} to retainers. Please change settings or return back to main world to start.");
         }
-        using (ImRaii.Disabled(!ClosetoVendor()))
+        if (ImGui.BeginTable("Manual Buttons", 2))
         {
-            if (ImGui.Button(P.taskManager.NumQueuedTasks > 0 ? "Stop" : "Turnin to Vendor"))
+            ImGui.TableSetupColumn("Manual Turnin", ImGuiTableColumnFlags.WidthFixed, 200);
+            ImGui.TableSetupColumn("Manual Sell", ImGuiTableColumnFlags.WidthFixed, 200);
+
+            ImGui.TableNextRow();
+            ImGui.TableSetColumnIndex(0);
+            using (ImRaii.Disabled(!EnableTurnIn() || !IsOnHomeWorld() || SchedulerMain.DoWeTick))
             {
-                if (P.taskManager.NumQueuedTasks > 0)
-                    P.taskManager.Abort();
-                else
+                if (ImGui.Button("Start Turnin"))
                 {
-                    if (!C.ChangeArmory)
-                    {
-                        TaskChangeArmorySetting.Enqueue();
-                        C.ChangeArmory = true;
-                    }
-                    TaskTurnIn.Enqueue();
+                    SchedulerMain.EnablePlugin(); // Call EnablePlugin if not running
+                    SchedulerMain.RunTurnin = true;
                 }
             }
+
+            ImGui.TableSetColumnIndex(1);
+            if (ImGui.Button("Stop"))
+            {
+                SchedulerMain.DisablePlugin();
+            }
+
+            ImGui.TableNextRow();
+            ImGui.TableSetColumnIndex(0);
+            using (ImRaii.Disabled(!ClosetoVendor() || SchedulerMain.DoWeTick))
+            {
+                if (ImGui.Button("Buy Gear from Vendor"))
+                {
+                    SchedulerMain.EnablePlugin(); // Call EnablePlugin if not running
+                    SchedulerMain.JustTurnin = true;
+                }
+            }
+            ImGuiComponents.HelpMarker("Turnin with the settings that you have while you're near the vendor. \nOnly will do the turnins, won't do the pathing to and fro \nCan press this when you're near the vendor");
+
+            ImGui.TableSetColumnIndex(1);
+            using (ImRaii.Disabled(!IsOnHomeWorld() || SchedulerMain.DoWeTick))
+            {
+                if (ImGui.Button("Sell Items to Retainer"))
+                {
+                    SchedulerMain.EnablePlugin();
+                    SchedulerMain.JustSell = true;
+                }
+            }
+            ImGuiComponents.HelpMarker("Sell your items (Gear/Oilcloth) to the retainers. \nAlso adds gil gotten to the stat counter");
+
+            ImGui.EndTable();
         }
         if (!EnableTurnIn())
         {
@@ -165,6 +184,12 @@ internal class TurninUi
             FancyPluginUiString(P.autoRetainer.Installed, "AutoRetainer", "https://love.puni.sh/ment.json");
             FancyPluginUiString(P.deliveroo.Installed, "Deliveroo", "https://plugins.carvel.li");
             ImGui.Columns(1);
+        }
+        if (RaidTurninCount.Any(count => count > 2000))
+        {
+            FontAwesome.Print(ImGuiColors.DalamudYellow, FontAwesome.Info);
+            ImGui.SameLine();
+            ImGui.TextWrapped("You have a high number of items. I HIGHLY recommend you don't do this all in one sitting. There have been people that have been getting banned for running this for a long time. Please farm responsibility - Ice & UcanPatates");
         }
     }
 }

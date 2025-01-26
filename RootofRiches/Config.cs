@@ -11,7 +11,7 @@ public class Config : IEzConfig
     public int Version = CURRENT_CONFIG_VERSION;
 
     public bool TeleportToFC { get; set; } = false;
-    public bool MaxItem { get; set; } = true;
+    public bool MaxItem { get; set; } = false;
     public bool MaxArmory { get; set; } = false;
     public int MaxArmoryFreeSlot { get; set; } = 2;
     public bool VendorTurnIn { get; set; } = false;

@@ -66,7 +66,7 @@ namespace RootofRiches.Scheduler.Handlers
         {
             if (SchedulerMain.DoWeTick)
             {
-                if (SchedulerMain.RunTurnin)
+                if (SchedulerMain.RunTurnin || SchedulerMain.JustTurnin || SchedulerMain.JustSell)
                 {
                     //To update gill amounth
                     CheckGill();
