@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="Dalamud.Plugin.Bootstrap.targets" />
+<Project Sdk="Dalamud.NET.Sdk/12.0.2">
 
   <PropertyGroup>
-    <Version>0.0.0.27</Version>
+    <Version>0.0.0.28</Version>
     <Description>Time to make some gil..</Description>
     <PackageLicenseExpression>AGPL-3.0-or-later</PackageLicenseExpression>
-    <IsPackable>false</IsPackable>
+    <IsPackable>true</IsPackable>
     <RootNamespace>RootofRiches</RootNamespace>
+    <TargetFramework>net9.0-windows7.0</TargetFramework>
   </PropertyGroup>
     
     <ItemGroup>

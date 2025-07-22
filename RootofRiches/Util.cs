@@ -58,7 +58,7 @@ public static unsafe class Util
 
     private static unsafe bool IsMoving()
     {
-        return AgentMap.Instance()->IsPlayerMoving == 1;
+        return AgentMap.Instance()->IsPlayerMoving;
     }
     public static Vector3 PlayerPosition()
     {
@@ -106,7 +106,7 @@ public static unsafe class Util
             return false;
         }
 
-        if (equipped->Loaded == 0)
+        if (equipped->IsLoaded)
         {
             Svc.Log.Error($"InventoryContainer is not loaded");
             return false;
