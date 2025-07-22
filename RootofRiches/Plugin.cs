@@ -5,6 +5,7 @@ using ECommons;
 using ECommons.Automation.NeoTaskManager;
 using ECommons.Configuration;
 using ECommons.DalamudServices;
+using Pictomancy;
 using RootofRiches.IPC;
 using RootofRiches.IPC.Lifestream;
 using RootofRiches.Scheduler;
@@ -55,6 +56,7 @@ public class Plugin : IDalamudPlugin
     {
         P = this;
         ECommonsMain.Init(pluginInterface, P, ECommons.Module.DalamudReflector, ECommons.Module.ObjectFunctions);
+        PictoService.Initialize(pluginInterface);
         new ECommons.Schedulers.TickScheduler(Load);
     }
 
@@ -118,6 +120,7 @@ public class Plugin : IDalamudPlugin
         Safe(() => Svc.Framework.Update -= Tick);
         Safe(() => Svc.PluginInterface.UiBuilder.Draw -= windowSystem.Draw);
         ECommonsMain.Dispose();
+        PictoService.Dispose();
         Safe(TextAdvanceManager.UnlockTA);
         Safe(YesAlreadyManager.Unlock);
         autoRetainerApi.Dispose();

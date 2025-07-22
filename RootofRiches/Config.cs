@@ -1,4 +1,5 @@
 using ECommons.Configuration;
+using System.Numerics;
 using System.Text.Json.Serialization;
 
 namespace RootofRiches;
@@ -37,6 +38,12 @@ public class Config : IEzConfig
     public Stats Stats { get; set; } = new Stats();
     public Stats SessionStats { get; set; } = new Stats();
     public bool HasUpdatedStats = false;
+    public int PointCount { get; set; } = 20;
+    public float Radius { get; set; } = 10f;
+    public Vector3 TargetPos { get; set; } = Vector3.Zero;
+    public uint PictoCircleColor { get; set; } = 2650865663;
+    public uint PictoDotColor { get; set; } = 1748778218;
+    public float PictoDotRadius { get; set; } = 4.0f;
     public void UpdateStats(Action<Stats> updateAction)
     {
         updateAction(Stats);

@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RootofRiches", "RootofRiche
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoRetainerAPI", "AutoRetainerAPI\AutoRetainerAPI\AutoRetainerAPI.csproj", "{C40BE414-5930-412C-BC72-F67BF1F1ABFE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pictomancy", "ffxiv_pictomancy\Pictomancy\Pictomancy.csproj", "{825F17D8-2704-24F6-DF8B-2542AC92C765}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -27,6 +29,10 @@ Global
 		{C40BE414-5930-412C-BC72-F67BF1F1ABFE}.Debug|x64.Build.0 = Debug|x64
 		{C40BE414-5930-412C-BC72-F67BF1F1ABFE}.Release|x64.ActiveCfg = Release|x64
 		{C40BE414-5930-412C-BC72-F67BF1F1ABFE}.Release|x64.Build.0 = Release|x64
+		{825F17D8-2704-24F6-DF8B-2542AC92C765}.Debug|x64.ActiveCfg = Debug|x64
+		{825F17D8-2704-24F6-DF8B-2542AC92C765}.Debug|x64.Build.0 = Debug|x64
+		{825F17D8-2704-24F6-DF8B-2542AC92C765}.Release|x64.ActiveCfg = Release|x64
+		{825F17D8-2704-24F6-DF8B-2542AC92C765}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

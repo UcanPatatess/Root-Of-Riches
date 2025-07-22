@@ -13,5 +13,6 @@
     <ItemGroup>
         <ProjectReference Include="..\ECommons\ECommons\ECommons.csproj" />
         <ProjectReference Include="..\AutoRetainerAPI\AutoRetainerAPI\AutoRetainerAPI.csproj" />
+        <ProjectReference Include="..\ffxiv_pictomancy\Pictomancy\Pictomancy.csproj" />
     </ItemGroup>
 </Project>

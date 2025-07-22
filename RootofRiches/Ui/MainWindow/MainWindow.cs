@@ -162,7 +162,8 @@ internal class MainWindow : Window
                         ("Normal Raid Farm", NormalRaidFarm.Draw, null, true),
                         ("Stats", DrawStatsTab, null, true),
                         ("Calculator", CalculatorUi.Draw, null, true),
-                        ("About", AboutUi.Draw, null, true)
+                        ("About", AboutUi.Draw, null, true),
+                        ("Fun", FunMode.Draw, null, true)
                         );
     }
 }
