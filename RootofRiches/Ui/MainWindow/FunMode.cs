@@ -1,4 +1,5 @@
 using ECommons.DalamudServices;
+using ECommons.GameHelpers;
 using FFXIVClientStructs.FFXIV.Client.Game.Object;
 using ImGuiNET;
 using Pictomancy;
@@ -70,6 +71,7 @@ namespace RootofRiches.Ui.MainWindow
                 }
             }
 
+            ImGui.Text($"{Player.DistanceTo(targetPos):N2}");
             if (ImGui.DragFloat3("Target Position", ref targetPos))
             {
                 C.TargetPos = targetPos;
